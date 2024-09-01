@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { NgIf } from "@angular/common";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -18,9 +19,16 @@ export class LoginComponent {
     password: string = '';
     errorMessage: string = '';
 
-    constructor(private router: Router) {}
+    constructor(private router: Router, private authService: AuthService) {}
 
     login(): void {
-        console.log('trying to log in');
+        this.authService.login(this.username, this.password).subscribe({
+            next: (response) => {
+                this.router.navigate(['/dashboard']);
+            },
+            error: (error) => {
+                this.errorMessage = error;
+            }
+        });
     }
 }
