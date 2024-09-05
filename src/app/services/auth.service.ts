@@ -33,6 +33,16 @@ export class AuthService {
             );
     }
 
+    register(username: string, password: string, email: string, firstName: string, lastName: string): Observable<any> {
+        this.logout();
+
+        return this.http
+            .post<{ token: string }>(`${this.apiUrl}/register`, { username, password, email, firstName, lastName })
+            .pipe(
+                catchError(this.handleError('register', []))
+            );
+    }
+
     logout(): void {
         if (this.isBrowser) {
             localStorage.removeItem(this.tokenKey);
