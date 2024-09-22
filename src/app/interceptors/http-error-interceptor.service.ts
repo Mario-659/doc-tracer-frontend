@@ -11,16 +11,23 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(req).pipe(
-            catchError((error: HttpErrorResponse) => {
+            catchError((e: HttpErrorResponse) => {
                 let httpError: HttpError;
 
-                if (error.status === 0) {
-                    httpError = { type: 'Client-side', message: error.error.message }
+                if (e.status === 0) {
+                    httpError = { type: 'Client-side', message: e.error.message }
                 } else {
-                    httpError = { type: 'Server-side', message: error.error.message, status: error.status }
+                    httpError = { type: 'Server-side', message: e.error.message, status: e.status }
                 }
 
-                console.error(`${httpError.type} error. Message: ${httpError.message}, error: ${error.error}`)
+                const logMessage = `${httpError.type} error. Message: ${httpError.message}, error: `;
+
+                if (httpError.status && httpError.status < 500) {
+                    console.warn(logMessage, e)
+                } else {
+                    console.error(logMessage, e)
+                }
+
                 return throwError(() => httpError);
             })
         );
