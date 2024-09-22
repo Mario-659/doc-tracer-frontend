@@ -4,6 +4,7 @@ import { NgIf } from '@angular/common'
 import { Router } from '@angular/router'
 import { AuthService } from '../../services/auth.service'
 import { HttpErrorResponse } from '@angular/common/http'
+import { RegisterPayload } from "../../models/register-payload";
 
 @Component({
     selector: 'app-registration',
@@ -26,7 +27,15 @@ export class RegistrationComponent {
     ) {}
 
     register() {
-        this.authService.register(this.username, this.password, this.email, this.firstName, this.lastName).subscribe({
+        const payload: RegisterPayload = {
+            username: this.username,
+            password: this.password,
+            email: this.email,
+            firstName: this.firstName,
+            lastName: this.lastName
+        }
+
+        this.authService.register(payload).subscribe({
             next: () => {
                 // TODO handle success (show banner that registration was successful)
                 // this.router.navigate(['/login']);

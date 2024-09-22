@@ -3,7 +3,7 @@ import { Router } from '@angular/router'
 import { FormsModule } from '@angular/forms'
 import { NgIf } from '@angular/common'
 import { AuthService } from '../../services/auth.service'
-import { HttpError } from '../../model/http-error'
+import { HttpError } from '../../models/http-error'
 
 @Component({
     selector: 'app-login',
@@ -23,7 +23,7 @@ export class LoginComponent {
     ) {}
 
     login(): void {
-        this.authService.login(this.username, this.password).subscribe({
+        this.authService.login({username: this.username, password: this.password}).subscribe({
             next: () => this.router.navigate(['/dashboard']),
             error: (e: HttpError) => this.handleError(e),
         })
