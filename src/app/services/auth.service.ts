@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
+import { environment } from "../../environments/environment";
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
-    private apiUrl = 'http://localhost:8080/api/auth';
     private tokenKey = 'auth_token';
 
     constructor(
@@ -16,7 +16,7 @@ export class AuthService {
 
     login(username: string, password: string): Observable<any> {
         return this.http
-            .post<{ token: string }>(`${this.apiUrl}/login`, { username, password })
+            .post<{ token: string }>(`${environment.apiUrl}/login`, { username, password })
             .pipe(
                 tap((response) => {
                     localStorage.setItem(this.tokenKey, response.token);
@@ -29,7 +29,7 @@ export class AuthService {
         this.logout();
 
         return this.http
-            .post<{ token: string }>(`${this.apiUrl}/register`, { username, password, email, firstName, lastName })
+            .post<{ token: string }>(`${environment.apiUrl}/register`, { username, password, email, firstName, lastName })
             .pipe(
                 catchError(this.handleError('register', []))
             );
