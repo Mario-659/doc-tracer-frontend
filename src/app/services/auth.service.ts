@@ -38,4 +38,8 @@ export class AuthService {
     isAuthenticated(): boolean {
         return !!localStorage.getItem(this.tokenKey);
     }
+
+    getAuthToken(): string | null {
+        return localStorage.getItem(this.tokenKey);
+    }
 }
