@@ -1,5 +1,5 @@
 export interface HttpError {
-    message: string,
+    message: string
     type: 'Client-side' | 'Server-side'
     status?: number
 }
