@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { NgIf } from "@angular/common";
 import { AuthService } from "../../services/auth.service";
+import { HttpError } from "../../model/http-error";
 
 @Component({
   selector: 'app-login',
@@ -23,12 +24,18 @@ export class LoginComponent {
 
     login(): void {
         this.authService.login(this.username, this.password).subscribe({
-            next: () => {
-                this.router.navigate(['/dashboard']);
-            },
-            error: (error) => {
-                this.errorMessage = error;
-            }
+            next: () => this.router.navigate(['/dashboard']),
+            error: (e: HttpError) => this.handleError(e)
         });
+    }
+
+    private handleError(error: HttpError) {
+        if (error.type === 'Client-side' || !error.status) {
+            this.errorMessage = 'Network issue occurred while connecting to server';
+        } else if (error.status >= 400 && error.status < 500) {
+            this.errorMessage = error.message;
+        } else {
+            this.errorMessage = 'A server-side error occurred';
+        }
     }
 }
