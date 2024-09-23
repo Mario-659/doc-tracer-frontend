@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms'
 import { NgIf } from '@angular/common'
 import { AuthService } from '../../services/auth.service'
 import { HttpError } from '../../models/http-error'
+import { NotificationService } from "../../services/notification.service";
 
 @Component({
     selector: 'app-login',
@@ -15,27 +16,33 @@ import { HttpError } from '../../models/http-error'
 export class LoginComponent {
     username: string = ''
     password: string = ''
-    errorMessage: string = ''
 
     constructor(
         private router: Router,
-        private authService: AuthService
+        private authService: AuthService,
+        private notificationService: NotificationService
     ) {}
 
     login(): void {
-        this.authService.login({username: this.username, password: this.password}).subscribe({
-            next: () => this.router.navigate(['/dashboard']),
+        this.authService.login({ username: this.username, password: this.password }).subscribe({
+            next: () => {
+                this.notificationService.showNotification({ message: 'Login successful', type: "success" });
+                this.router.navigate(['/dashboard'])
+            },
             error: (e: HttpError) => this.handleError(e),
         })
     }
 
     private handleError(error: HttpError) {
+        let errorMessage: string;
         if (error.type === 'Client-side' || !error.status) {
-            this.errorMessage = 'Network issue occurred while connecting to server'
+            errorMessage = 'Network issue occurred while connecting to server'
         } else if (error.status >= 400 && error.status < 500) {
-            this.errorMessage = error.message
+            errorMessage = error.message
         } else {
-            this.errorMessage = 'A server-side error occurred'
+            errorMessage = 'A server-side error occurred'
         }
+
+        this.notificationService.showNotification({ message: errorMessage, type: "error" });
     }
 }

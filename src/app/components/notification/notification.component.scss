@@ -1,0 +1,29 @@
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    color: white;
+    font-weight: bold;
+    opacity: 0.9;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.success {
+    background-color: #4caf50; /* Green for success */
+}
+
+.error {
+    background-color: #f44336; /* Red for error */
+}
+
+.warning {
+    background-color: #ff9800; /* Orange for warning */
+}
+
+.info {
+    background-color: #2196f3; /* Blue for info */
+}

@@ -3,8 +3,9 @@ import { FormsModule } from '@angular/forms'
 import { NgIf } from '@angular/common'
 import { Router } from '@angular/router'
 import { AuthService } from '../../services/auth.service'
-import { HttpErrorResponse } from '@angular/common/http'
-import { RegisterPayload } from "../../models/register-payload";
+import { RegisterPayload } from '../../models/register-payload'
+import { NotificationService } from "../../services/notification.service";
+import { HttpError } from "../../models/http-error";
 
 @Component({
     selector: 'app-registration',
@@ -19,11 +20,11 @@ export class RegistrationComponent {
     email: string = ''
     firstName: string = ''
     lastName: string = ''
-    errorMessage: string = ''
 
     constructor(
         private router: Router,
-        private authService: AuthService
+        private authService: AuthService,
+        private notificationService: NotificationService
     ) {}
 
     register() {
@@ -32,21 +33,29 @@ export class RegistrationComponent {
             password: this.password,
             email: this.email,
             firstName: this.firstName,
-            lastName: this.lastName
+            lastName: this.lastName,
         }
 
         this.authService.register(payload).subscribe({
             next: () => {
-                // TODO handle success (show banner that registration was successful)
-                // this.router.navigate(['/login']);
+                this.notificationService.showNotification({ message: 'Registration successful', type: 'success'});
+                this.router.navigate(['/login']);
             },
-            error: (errorResponse: HttpErrorResponse) => {
-                console.log(errorResponse)
-                console.log(errorResponse.error)
-                console.log(errorResponse.error.message)
-
-                this.errorMessage = errorResponse.error.message
-            },
+            error: (e: HttpError) => this.handleError(e)
         })
+    }
+
+    // TODO remove duplication below (with login component)
+    private handleError(error: HttpError) {
+        let errorMessage: string;
+        if (error.type === 'Client-side' || !error.status) {
+            errorMessage = 'Network issue occurred while connecting to server'
+        } else if (error.status >= 400 && error.status < 500) {
+            errorMessage = error.message
+        } else {
+            errorMessage = 'A server-side error occurred'
+        }
+
+        this.notificationService.showNotification({ message: errorMessage, type: "error" });
     }
 }
