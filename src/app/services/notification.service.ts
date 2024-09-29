@@ -11,15 +11,21 @@ export class NotificationService {
 
     constructor() {}
 
-    showNotification(notification: Notification) {
+    /**
+     * Shows notification
+     *
+     * @param notification
+     * @param timeout - timeout in milliseconds
+     */
+    showNotification(notification: Notification, timeout: number = 15000) {
         this.notificationSubject.next(notification)
 
         setTimeout(() => {
             this.clearMessage()
-        }, 15000)
+        }, timeout)
     }
 
-    clearMessage() {
+    private clearMessage() {
         this.notificationSubject.next(null)
     }
 }
