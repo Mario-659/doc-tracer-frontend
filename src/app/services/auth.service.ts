@@ -18,7 +18,7 @@ export class AuthService {
         return this.http
             .post<{
                 token: string
-            }>(`${environment.apiUrl}/login`, payload)
+            }>(`${environment.apiUrl}/auth/login`, payload)
             .pipe(
                 tap((response) => {
                     localStorage.setItem(this.tokenKey, response.token)
@@ -29,7 +29,7 @@ export class AuthService {
     register(payload: RegisterPayload): Observable<any> {
         this.logout()
 
-        return this.http.post<{ token: string }>(`${environment.apiUrl}/register`, payload)
+        return this.http.post<{ token: string }>(`${environment.apiUrl}/auth/register`, payload)
     }
 
     logout(): void {
