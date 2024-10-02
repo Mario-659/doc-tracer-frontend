@@ -15,12 +15,10 @@ import { Observable, of } from "rxjs";
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit {
-    protected loggedInUser: Observable<string | null> = of(null);
+export class HeaderComponent {
+    protected loggedInUser$: Observable<string | null>
 
-    constructor(private authService: AuthService) { }
-
-    ngOnInit() {
-        // this.loggedInUser = this.authService.user
+    constructor(private authService: AuthService) {
+        this.loggedInUser$ = this.authService.loggedInUser$
     }
 }
