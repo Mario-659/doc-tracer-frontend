@@ -1,34 +1,7 @@
-.header {
-    background-color: #f8f9fa;
-    padding: 5px;
+.navbar-brand {
+    font-weight: bold;
 }
 
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.ul {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.nav-links {
-    list-style-type: none;
-    display: flex;
-    gap: 15px;
-}
-
-.nav-links li {
-    cursor: pointer;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: #007bff;
-}
-
-.nav-links li:hover {
-    text-decoration: underline;
+.nav-link {
+    margin-right: 15px;
 }

@@ -21,6 +21,6 @@ export class HeaderComponent implements OnInit {
     constructor(private authService: AuthService) { }
 
     ngOnInit() {
-        this.loggedInUser = this.authService.user
+        // this.loggedInUser = this.authService.user
     }
 }
