@@ -1,0 +1,16 @@
+<header class="header">
+    <nav class="navbar">
+        <ul class="nav-links">
+
+            <div *ngIf="loggedInUser | async, else loggedOut">
+                <li>Logged in as {{loggedInUser}}</li>
+                <li><a routerLink="/logout">Logout</a></li>
+            </div>
+
+            <ng-template #loggedOut>
+                <li><a routerLink="/login">Login</a></li>
+                <li><a routerLink="/register">Register</a></li>
+            </ng-template>
+        </ul>
+    </nav>
+</header>
