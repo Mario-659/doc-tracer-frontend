@@ -4,8 +4,9 @@ import { NgIf } from '@angular/common'
 import { Router } from '@angular/router'
 import { AuthService } from '../../services/auth.service'
 import { RegisterPayload } from '../../models/register-payload'
-import { NotificationService } from "../../services/notification.service";
-import { HttpError } from "../../models/http-error";
+import { NotificationService } from '../../services/notification.service'
+import { HttpError } from '../../models/http-error'
+import { NotificationType } from '../../models/notification'
 
 @Component({
     selector: 'app-registration',
@@ -38,7 +39,7 @@ export class RegistrationComponent {
 
         this.authService.register(payload).subscribe({
             next: () => {
-                this.notificationService.showNotification({ message: 'Registration successful', type: 'success'});
+                this.notificationService.showNotification({ message: 'Registration successful', type: NotificationType.success});
                 this.router.navigate(['/login']);
             },
             error: (e: HttpError) => this.handleError(e)
@@ -56,6 +57,6 @@ export class RegistrationComponent {
             errorMessage = 'A server-side error occurred'
         }
 
-        this.notificationService.showNotification({ message: errorMessage, type: "error" });
+        this.notificationService.showNotification({ message: errorMessage, type: NotificationType.error });
     }
 }

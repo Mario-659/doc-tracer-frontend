@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms'
 import { NgIf } from '@angular/common'
 import { AuthService } from '../../services/auth.service'
 import { HttpError } from '../../models/http-error'
-import { NotificationService } from "../../services/notification.service";
+import { NotificationService } from '../../services/notification.service'
+import { NotificationType } from '../../models/notification'
 
 @Component({
     selector: 'app-login',
@@ -26,7 +27,7 @@ export class LoginComponent {
     login(): void {
         this.authService.login({ username: this.username, password: this.password }).subscribe({
             next: () => {
-                this.notificationService.showNotification({ message: 'Login successful', type: "success" });
+                this.notificationService.showNotification({ message: 'Login successful', type: NotificationType.success });
                 this.router.navigate(['/dashboard'])
             },
             error: (e: HttpError) => this.handleError(e),
@@ -43,6 +44,6 @@ export class LoginComponent {
             errorMessage = 'A server-side error occurred'
         }
 
-        this.notificationService.showNotification({ message: errorMessage, type: "error" });
+        this.notificationService.showNotification({ message: errorMessage, type: NotificationType.warning });
     }
 }
