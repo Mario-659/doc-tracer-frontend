@@ -1,28 +1,24 @@
-body {
-    min-height: 100vh;
+html, body {
+    height: 100%;
     margin: 0;
 }
-
-header {
-    min-height: 50px;
-    background: lightcyan;
-}
-
-footer {
-    min-height: 50px;
-    background: PapayaWhip;
-}
-
-/* The article fills all the space between header & footer */
 
 body {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
 
-main {
-    flex: 1;
+app-root {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
+
+router-outlet {
+    flex-grow: 1;
+}
+
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
