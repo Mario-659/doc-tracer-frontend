@@ -9,7 +9,6 @@ import { NgIf } from '@angular/common'
 import { Router } from '@angular/router'
 import { AuthService } from '../../services/auth.service'
 import { NotificationService } from '../../services/notification.service'
-import { HttpError } from '../../models/http-error'
 import { NotificationType } from '../../models/notification'
 
 @Component({
@@ -46,22 +45,7 @@ export class RegistrationComponent implements OnInit {
                     type: NotificationType.success,
                 })
                 this.router.navigate(['/login'])
-            },
-            error: (e: HttpError) => this.handleError(e),
+            }
         })
-    }
-
-    // TODO remove duplication below (with login component)
-    private handleError(error: HttpError) {
-        let errorMessage: string
-        if (error.type === 'Client-side' || !error.status) {
-            errorMessage = 'Network issue occurred while connecting to server'
-        } else if (error.status >= 400 && error.status < 500) {
-            errorMessage = error.message
-        } else {
-            errorMessage = 'A server-side error occurred'
-        }
-
-        this.notificationService.showNotification({ message: errorMessage, type: NotificationType.error })
     }
 }

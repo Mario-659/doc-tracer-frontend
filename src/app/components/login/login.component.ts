@@ -3,7 +3,6 @@ import { Router } from '@angular/router'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { NgIf } from '@angular/common'
 import { AuthService } from '../../services/auth.service'
-import { HttpError } from '../../models/http-error'
 import { NotificationService } from '../../services/notification.service'
 import { NotificationType } from '../../models/notification'
 
@@ -35,21 +34,7 @@ export class LoginComponent implements OnInit {
             next: () => {
                 this.notificationService.showNotification({ message: 'Login successful', type: NotificationType.success });
                 this.router.navigate(['/dashboard'])
-            },
-            error: (e: HttpError) => this.handleError(e),
+            }
         })
-    }
-
-    private handleError(error: HttpError) {
-        let errorMessage: string;
-        if (error.type === 'Client-side' || !error.status) {
-            errorMessage = 'Network issue occurred while connecting to server'
-        } else if (error.status >= 400 && error.status < 500) {
-            errorMessage = error.message
-        } else {
-            errorMessage = 'A server-side error occurred'
-        }
-
-        this.notificationService.showNotification({ message: errorMessage, type: NotificationType.warning });
     }
 }
