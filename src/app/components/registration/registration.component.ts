@@ -8,7 +8,6 @@ import {
 import { NgIf } from '@angular/common'
 import { Router } from '@angular/router'
 import { AuthService } from '../../services/auth.service'
-import { RegisterPayload } from '../../models/register-payload'
 import { NotificationService } from '../../services/notification.service'
 import { HttpError } from '../../models/http-error'
 import { NotificationType } from '../../models/notification'
@@ -22,7 +21,6 @@ import { NotificationType } from '../../models/notification'
 })
 export class RegistrationComponent implements OnInit {
     registrationFormGroup: any
-    registrationData = <RegisterPayload>{};
 
     constructor(
         private router: Router,
@@ -31,17 +29,17 @@ export class RegistrationComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.registrationFormGroup = new FormGroup<any>({
-            username: new FormControl(this.registrationData.username, [Validators.required, Validators.min(5), Validators.max(15)]),
-            password: new FormControl(this.registrationData.password, [Validators.required, Validators.min(8), Validators.max(15)]),
-            email: new FormControl(this.registrationData.email, [Validators.email, Validators.required, Validators.min(3)]),
-            firstName: new FormControl(this.registrationData.firstName, [Validators.required]),
-            lastName: new FormControl(this.registrationData.lastName, [Validators.required]),
+        this.registrationFormGroup = new FormGroup({
+            username: new FormControl('', [Validators.required, Validators.min(5), Validators.max(15)]),
+            password: new FormControl('', [Validators.required, Validators.min(8), Validators.max(15)]),
+            email: new FormControl('', [Validators.email, Validators.required, Validators.min(3)]),
+            firstName: new FormControl('', [Validators.required]),
+            lastName: new FormControl('', [Validators.required]),
         })
     }
 
     register() {
-        this.authService.register(this.registrationData).subscribe({
+        this.authService.register(this.registrationFormGroup.value).subscribe({
             next: () => {
                 this.notificationService.showNotification({
                     message: 'Registration successful',
