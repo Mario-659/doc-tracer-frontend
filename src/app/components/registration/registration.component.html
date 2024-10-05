@@ -3,6 +3,7 @@
         <div class="col-md-6">
             <h2 class="text-center mb-4">Register</h2>
             <form [formGroup]="registrationFormGroup" (ngSubmit)="register()">
+
                 <div class="mb-3">
                     <label for="username" class="form-label">Username:</label>
                     <input
@@ -12,6 +13,11 @@
                         formControlName="username"
                         required
                     />
+                    <div *ngIf="registrationFormGroup.get('username').invalid && (registrationFormGroup.get('username').touched || registrationFormGroup.get('username').dirty)" class="text-danger">
+                        <small *ngIf="registrationFormGroup.get('username').errors?.required">Username is required.</small>
+                        <small *ngIf="registrationFormGroup.get('username').errors?.min">Username should contain at least 5 characters.</small>
+                        <small *ngIf="registrationFormGroup.get('username').errors?.max">Username should contain maximum of 15 characters.</small>
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -23,6 +29,11 @@
                         formControlName="password"
                         required
                     />
+                    <div *ngIf="registrationFormGroup.get('password').invalid && (registrationFormGroup.get('password').touched || registrationFormGroup.get('password').dirty)" class="text-danger">
+                        <small *ngIf="registrationFormGroup.get('password').errors?.required">Password is required.</small>
+                        <small *ngIf="registrationFormGroup.get('password').errors?.min">Password should contain at least 5 characters.</small>
+                        <small *ngIf="registrationFormGroup.get('password').errors?.max">Password should contain maximum of 15 characters.</small>
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -34,6 +45,11 @@
                         formControlName="email"
                         required
                     />
+                    <div *ngIf="registrationFormGroup.get('email').invalid && (registrationFormGroup.get('email').touched || registrationFormGroup.get('email').dirty)" class="text-danger">
+                        <small *ngIf="registrationFormGroup.get('email').errors?.required">Email is required.</small>
+                        <small *ngIf="registrationFormGroup.get('email').errors?.email">Please enter a valid email address.</small>
+                        <small *ngIf="registrationFormGroup.get('email').errors?.min">Email should contain at least 5 characters.</small>
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -45,6 +61,9 @@
                         formControlName="firstName"
                         required
                     />
+                    <div *ngIf="registrationFormGroup.get('firstName').invalid && (registrationFormGroup.get('firstName').touched || registrationFormGroup.get('firstName').dirty)" class="text-danger">
+                        <small *ngIf="registrationFormGroup.get('firstName').errors?.required">First name is required.</small>
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -56,6 +75,9 @@
                         formControlName="lastName"
                         required
                     />
+                    <div *ngIf="registrationFormGroup.get('lastName').invalid && (registrationFormGroup.get('lastName').touched || registrationFormGroup.get('lastName').dirty)" class="text-danger">
+                        <small *ngIf="registrationFormGroup.get('lastName').errors?.required">Last name is required.</small>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100" [disabled]="!registrationFormGroup.valid">Register</button>
@@ -63,4 +85,3 @@
         </div>
     </div>
 </div>
-

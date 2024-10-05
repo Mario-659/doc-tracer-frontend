@@ -22,11 +22,7 @@ import { NotificationType } from '../../models/notification'
 })
 export class RegistrationComponent implements OnInit {
     registrationFormGroup: any
-    username: string = ''
-    password: string = ''
-    email: string = ''
-    firstName: string = ''
-    lastName: string = ''
+    registrationData = <RegisterPayload>{};
 
     constructor(
         private router: Router,
@@ -36,24 +32,16 @@ export class RegistrationComponent implements OnInit {
 
     ngOnInit() {
         this.registrationFormGroup = new FormGroup<any>({
-            username: new FormControl(this.username, [Validators.required, Validators.min(5)]),
-            password: new FormControl(this.password, [Validators.required, Validators.min(8)]),
-            email: new FormControl(this.email, [Validators.email, Validators.required]),
-            firstName: new FormControl(this.firstName, [Validators.required]),
-            lastName: new FormControl(this.lastName, [Validators.required]),
+            username: new FormControl(this.registrationData.username, [Validators.required, Validators.min(5), Validators.max(15)]),
+            password: new FormControl(this.registrationData.password, [Validators.required, Validators.min(8), Validators.max(15)]),
+            email: new FormControl(this.registrationData.email, [Validators.email, Validators.required, Validators.min(3)]),
+            firstName: new FormControl(this.registrationData.firstName, [Validators.required]),
+            lastName: new FormControl(this.registrationData.lastName, [Validators.required]),
         })
     }
 
     register() {
-        const payload: RegisterPayload = {
-            username: this.username,
-            password: this.password,
-            email: this.email,
-            firstName: this.firstName,
-            lastName: this.lastName,
-        }
-
-        this.authService.register(payload).subscribe({
+        this.authService.register(this.registrationData).subscribe({
             next: () => {
                 this.notificationService.showNotification({
                     message: 'Registration successful',
