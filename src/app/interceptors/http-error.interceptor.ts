@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http'
 import { catchError, throwError } from 'rxjs'
 import { inject } from '@angular/core'
 import { NotificationService } from '../services/notification.service'
-import { NotificationType } from '../models/notification'
+import { AppNotification, NotificationType } from '../models/notification'
 
 export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
     const notificationService = inject(NotificationService)
@@ -37,7 +37,7 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
                 notificationMessage = 'A server-side error occurred'
             }
 
-            notificationService.showNotification({message: notificationMessage, type: NotificationType.error});
+            notificationService.showNotification(new AppNotification(notificationMessage, NotificationType.error));
 
             return throwError(() => httpError)
         })

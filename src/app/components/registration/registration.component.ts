@@ -9,7 +9,7 @@ import { NgIf } from '@angular/common'
 import { Router } from '@angular/router'
 import { AuthService } from '../../services/auth.service'
 import { NotificationService } from '../../services/notification.service'
-import { NotificationType } from '../../models/notification'
+import { AppNotification, NotificationType } from '../../models/notification'
 
 @Component({
     selector: 'app-registration',
@@ -40,10 +40,10 @@ export class RegistrationComponent implements OnInit {
     register() {
         this.authService.register(this.registrationFormGroup.value).subscribe({
             next: () => {
-                this.notificationService.showNotification({
-                    message: 'Registration successful',
-                    type: NotificationType.success,
-                })
+                this.notificationService.showNotification(new AppNotification(
+                    'Registration successful',
+                    NotificationType.success,
+                ))
                 this.router.navigate(['/login'])
             }
         })

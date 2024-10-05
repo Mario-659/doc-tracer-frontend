@@ -4,7 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { NgIf } from '@angular/common'
 import { AuthService } from '../../services/auth.service'
 import { NotificationService } from '../../services/notification.service'
-import { NotificationType } from '../../models/notification'
+import { AppNotification, NotificationType } from '../../models/notification'
 
 @Component({
     selector: 'app-login',
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     login(): void {
         this.authService.login(this.loginFormGroup.value).subscribe({
             next: () => {
-                this.notificationService.showNotification({ message: 'Login successful', type: NotificationType.success });
+                this.notificationService.showNotification(new AppNotification('Login successful', NotificationType.success));
                 this.router.navigate(['/dashboard'])
             }
         })

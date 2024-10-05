@@ -1,31 +1,26 @@
 import { Injectable } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
-import { Notification } from '../models/notification'
+import { AppNotification } from '../models/notification'
 
 @Injectable({
     providedIn: 'root',
 })
 export class NotificationService {
-    // TODO make multiple notifications at once
-    notificationSubject = new BehaviorSubject<Notification | null>(null);
+    private notificationsSubject = new BehaviorSubject<AppNotification[]>([]);
+    public notifications$ = this.notificationsSubject.asObservable();
 
-    constructor() {}
+    showNotification(notification: AppNotification, timeout: number = 10000) {
+        console.log('show notification called')
+        console.log(this.notificationsSubject.getValue())
+        const currentNotifications = this.notificationsSubject.getValue();
+        this.notificationsSubject.next([...currentNotifications, notification]);
 
-    /**
-     * Shows notification
-     *
-     * @param notification
-     * @param timeout - timeout in milliseconds
-     */
-    showNotification(notification: Notification, timeout: number = 15000) {
-        this.notificationSubject.next(notification)
-
-        setTimeout(() => {
-            this.clearMessage()
-        }, timeout)
+        setTimeout(() => this.removeNotification(notification.id), timeout);
     }
 
-    private clearMessage() {
-        this.notificationSubject.next(null)
+    removeNotification(id: number) {
+        const currentNotifications = this.notificationsSubject.getValue();
+        const updatedNotifications = currentNotifications.filter((notification) => notification.id !== id);
+        this.notificationsSubject.next(updatedNotifications);
     }
 }

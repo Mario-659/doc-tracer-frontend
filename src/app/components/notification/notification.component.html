@@ -1,3 +1,6 @@
-<div *ngIf="notification" [ngClass]="this.bootstrapNotificationTypeMap.get(notification.type)" class="alert">
-    {{ notification.message }}
+<div class="notifications-container">
+    <div *ngFor="let alert of notifications$ | async" class="alert" [ngClass]="this.bootstrapNotificationTypeMap.get(alert.type)">
+        <p>{{ alert.message }}</p>
+        <button type="button" class="btn-close" aria-label="Dismiss" (click)="dismiss(alert.id)"></button>
+    </div>
 </div>

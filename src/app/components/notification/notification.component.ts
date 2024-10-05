@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { NotificationService } from '../../services/notification.service'
-import { Notification, NotificationType } from '../../models/notification'
-import { NgClass, NgIf } from '@angular/common'
+import { NotificationType } from '../../models/notification'
+import { AsyncPipe, NgClass, NgForOf, NgIf } from '@angular/common'
+import { Observable } from 'rxjs'
 
 @Component({
     selector: 'app-notification',
@@ -9,12 +10,14 @@ import { NgClass, NgIf } from '@angular/common'
     imports: [
         NgIf,
         NgClass,
+        AsyncPipe,
+        NgForOf,
     ],
     templateUrl: './notification.component.html',
     styleUrl: './notification.component.scss',
 })
 export class NotificationComponent implements OnInit {
-    notification: Notification | null = null
+    notifications$: any;
     bootstrapNotificationTypeMap = new Map<NotificationType, string>([
         [NotificationType.success, 'alert-success'],
         [NotificationType.info, 'alert-info'],
@@ -26,6 +29,10 @@ export class NotificationComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.notificationService.notificationSubject.subscribe((notification) => (this.notification = notification))
+        this.notifications$ = this.notificationService.notifications$
+    }
+
+    dismiss(id: number) {
+        this.notificationService.removeNotification(id)
     }
 }
