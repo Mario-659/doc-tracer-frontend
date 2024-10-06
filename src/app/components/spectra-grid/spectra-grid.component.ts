@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { AgGridAngular } from 'ag-grid-angular'; // Angular Data Grid Component
-import { ColDef } from 'ag-grid-community'; // Column Definition Type Interface
+import { AgGridAngular } from 'ag-grid-angular';
+import { ColDef } from 'ag-grid-community';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-spectra-grid',
@@ -12,6 +13,13 @@ import { ColDef } from 'ag-grid-community'; // Column Definition Type Interface
   styleUrl: './spectra-grid.component.scss'
 })
 export class SpectraGridComponent {
+
+    constructor(private router: Router) {}
+
+    goSpectrumDetails(spectrumId: number) {
+        this.router.navigate([`spectra/details/${spectrumId}`])
+    }
+
     rowData = [
         {
             id: 1,
@@ -54,7 +62,9 @@ export class SpectraGridComponent {
         {
             headerName: "Id",
             field: "id",
-            filter: "agNumberColumnFilter"
+            filter: "agNumberColumnFilter",
+            onCellClicked: (event) => this.goSpectrumDetails(event.data.id),
+            cellClass: ['link-primary']
         },
         {
             headerName: "Measurement Date",
