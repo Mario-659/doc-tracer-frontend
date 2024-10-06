@@ -14,7 +14,7 @@ import { AppNotification, NotificationType } from '../../models/notification'
     styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
-    loginFormGroup: any;
+    loginFormGroup: any
 
     constructor(
         private router: Router,
@@ -25,16 +25,18 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.loginFormGroup = new FormGroup({
             username: new FormControl<string>('', [Validators.required]),
-            password: new FormControl<string>('', [Validators.required])
+            password: new FormControl<string>('', [Validators.required]),
         })
     }
 
     login(): void {
         this.authService.login(this.loginFormGroup.value).subscribe({
             next: () => {
-                this.notificationService.showNotification(new AppNotification('Login successful', NotificationType.success));
+                this.notificationService.showNotification(
+                    new AppNotification('Login successful', NotificationType.success)
+                )
                 this.router.navigate(['/dashboard'])
-            }
+            },
         })
     }
 }

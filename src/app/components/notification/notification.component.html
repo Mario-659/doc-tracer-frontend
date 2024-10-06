@@ -1,5 +1,9 @@
 <div class="notifications-container container-sm">
-    <div *ngFor="let alert of notifications$ | async" class="alert alert-dismissible fade show" [ngClass]="this.bootstrapNotificationTypeMap.get(alert.type)">
+    <div
+        *ngFor="let alert of notifications$ | async"
+        class="alert alert-dismissible fade show"
+        [ngClass]="this.bootstrapNotificationTypeMap.get(alert.type)"
+    >
         <p>{{ alert.message }}</p>
         <button type="button" class="btn-close" aria-label="Dismiss" (click)="dismiss(alert.id)"></button>
     </div>

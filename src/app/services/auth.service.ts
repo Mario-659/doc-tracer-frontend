@@ -14,7 +14,7 @@ export class AuthService {
     private usernameKey = 'username'
     private loggedInUser = new BehaviorSubject<string | null>(null)
 
-    public loggedInUser$ = this.loggedInUser.asObservable();
+    public loggedInUser$ = this.loggedInUser.asObservable()
 
     constructor(private http: HttpClient) {
         const loggedInUser = this.getUser()

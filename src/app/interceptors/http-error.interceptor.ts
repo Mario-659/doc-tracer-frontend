@@ -28,16 +28,16 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
                 console.error(logMessage, e)
             }
 
-            let notificationMessage;
+            let notificationMessage
             if (httpError.type === 'Client-side' || !httpError.status) {
-                 notificationMessage = 'Network issue occurred while connecting to server'
+                notificationMessage = 'Network issue occurred while connecting to server'
             } else if (httpError.status >= 400 && httpError.status < 500) {
                 notificationMessage = httpError.message
             } else {
                 notificationMessage = 'A server-side error occurred'
             }
 
-            notificationService.showNotification(new AppNotification(notificationMessage, NotificationType.error));
+            notificationService.showNotification(new AppNotification(notificationMessage, NotificationType.error))
 
             return throwError(() => httpError)
         })

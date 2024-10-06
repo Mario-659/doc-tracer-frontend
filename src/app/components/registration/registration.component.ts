@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import {
-    FormControl,
-    FormGroup,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms'
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { NgIf } from '@angular/common'
 import { Router } from '@angular/router'
 import { AuthService } from '../../services/auth.service'
@@ -40,12 +35,11 @@ export class RegistrationComponent implements OnInit {
     register() {
         this.authService.register(this.registrationFormGroup.value).subscribe({
             next: () => {
-                this.notificationService.showNotification(new AppNotification(
-                    'Registration successful',
-                    NotificationType.success,
-                ))
+                this.notificationService.showNotification(
+                    new AppNotification('Registration successful', NotificationType.success)
+                )
                 this.router.navigate(['/login'])
-            }
+            },
         })
     }
 }
