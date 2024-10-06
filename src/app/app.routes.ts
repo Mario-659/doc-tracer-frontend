@@ -10,6 +10,7 @@ import {
 } from './components/spectrum-similarities-main/spectrum-similarities-main.component'
 import { SamplesMainComponent } from './components/samples-main/samples-main.component'
 import { MeasuringDevicesMainComponent } from './components/sample-devices-main/measuring-devices-main.component'
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component'
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -41,4 +42,5 @@ export const routes: Routes = [
         canActivate: [authGuard],
     },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: '**', component: PageNotFoundComponent },
 ]
