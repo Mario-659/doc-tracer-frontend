@@ -41,6 +41,6 @@ export const routes: Routes = [
         component: MeasuringDevicesMainComponent,
         canActivate: [authGuard],
     },
-    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: '**', component: PageNotFoundComponent },
 ]
