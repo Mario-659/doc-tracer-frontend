@@ -9,6 +9,7 @@ import { SpectrumSimilaritiesMainComponent } from './components/spectrum-similar
 import { SamplesMainComponent } from './components/samples-main/samples-main.component'
 import { MeasuringDevicesMainComponent } from './components/sample-devices-main/measuring-devices-main.component'
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component'
+import { SpectrumDetailsComponent } from './components/spectrum-details/spectrum-details.component'
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -22,6 +23,11 @@ export const routes: Routes = [
     {
         path: 'spectra',
         component: SpectraMainComponent,
+        canActivate: [authGuard],
+    },
+    {
+        path: 'spectra/:id',
+        component: SpectrumDetailsComponent,
         canActivate: [authGuard],
     },
     {

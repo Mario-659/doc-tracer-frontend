@@ -1,0 +1,18 @@
+<div *ngIf="spectrumDetails$ | async as spectrum" class="container mt-4">
+    <h2  class="mb-4">Spectrum Details</h2>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Spectrum ID: {{ spectrum.id }}</h5>
+            <p class="card-text">
+                <strong>Measurement Date:</strong> {{ spectrum.measurementDate }}<br />
+                <strong>Spectrum Type:</strong> {{ spectrum.spectrumTypeId }}<br />
+                <strong>Device:</strong> {{ spectrum.deviceId }}<br />
+                <strong>User:</strong> {{ spectrum.userId }}
+            </p>
+            <button class="btn btn-primary" (click)="downloadSpectrumData(spectrum)">Download Spectrum Data</button>
+        </div>
+    </div>
+
+    <h4 class="mb-3">Spectrum Data</h4>
+    <pre>{{ spectrum.spectrumSamples | json }}</pre>
+</div>
