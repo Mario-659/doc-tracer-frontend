@@ -17,7 +17,7 @@ export class SpectraGridComponent {
     constructor(private router: Router) {}
 
     goSpectrumDetails(spectrumId: number) {
-        this.router.navigate([`spectra/details/${spectrumId}`])
+        this.router.navigate([`spectra/${spectrumId}`])
     }
 
     rowData = [
