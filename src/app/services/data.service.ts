@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core'
 import { Observable, of } from 'rxjs'
 import { Spectrum } from '../models/spectrum'
+import { HttpClient } from '@angular/common/http'
+import { environment } from '../../environments/environment'
 
 @Injectable({
     providedIn: 'root',
@@ -39,10 +41,13 @@ export class DataService {
         },
     ]
 
-    constructor() {
+    constructor(private http: HttpClient) {}
+
+    getSpectra(): Observable<Spectrum[]> {
+        return this.http.get<Spectrum[]>('${environment.apiUrl}/spectra')
     }
 
-    getSpectrum(id: number): Observable<Spectrum | undefined> {
-        return of(this.mockSpectraList.find(val => val.id === id))
+    getSpectrum(id: number): Observable<Spectrum> {
+        return this.http.get<Spectrum>(`${environment.apiUrl}/spectra/${id}`)
     }
 }
