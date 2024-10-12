@@ -1,7 +1,9 @@
-<ag-grid-angular
-    class="ag-theme-quartz"
-    style="height: 500px;"
-    [rowData]="rowData"
-    [columnDefs]="colDefs"
-/>
-
+<div *ngIf="$rowData | async as rowData">
+    <ag-grid-angular
+        class="ag-theme-quartz"
+        style="height: 500px;"
+        [rowData]="rowData"
+        [columnDefs]="colDefs"
+    />
+</div>
+<!--TODO add spinner on else-->
