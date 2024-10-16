@@ -10,8 +10,6 @@ export class NotificationService {
     public notifications$ = this.notificationsSubject.asObservable()
 
     showNotification(notification: AppNotification, timeout: number = 10000) {
-        console.log('show notification called')
-        console.log(this.notificationsSubject.getValue())
         const currentNotifications = this.notificationsSubject.getValue()
         this.notificationsSubject.next([...currentNotifications, notification])
 
