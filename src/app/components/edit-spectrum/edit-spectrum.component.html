@@ -32,7 +32,8 @@
 
         <div class="mb-3">
             <label for="measurementDate" class="form-label">Measurement Date</label>
-            <input type="date" id="measurementDate" class="form-control" formControlName="measurementDate" />
+<!--            TODO check whether datetime-local below is really working      -->
+            <input type="datetime-local" id="measurementDate" class="form-control" formControlName="measurementDate" />
         </div>
 
         <button type="submit" class="btn btn-success" [disabled]="spectrumForm.invalid">Save</button>
