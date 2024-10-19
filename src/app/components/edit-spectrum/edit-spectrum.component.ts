@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { DataService } from '../../services/data.service'
-import { switchMap, tap } from 'rxjs/operators'
-import { NgIf } from '@angular/common'
+import { NgForOf, NgIf } from '@angular/common'
+import { Device } from '../../models/device'
+import { SpectrumType } from '../../models/spectrum-type'
 
 @Component({
     selector: 'app-edit-spectrum',
@@ -13,11 +14,13 @@ import { NgIf } from '@angular/common'
     imports: [
         ReactiveFormsModule,
         NgIf,
+        NgForOf,
     ],
 })
 export class EditSpectrumComponent implements OnInit {
     spectrumForm: FormGroup
-    deviceNames: string[] | undefined
+    devices: Device[] | undefined
+    spectrumTypes: SpectrumType[] | undefined
 
     constructor(
         private route: ActivatedRoute,
@@ -41,6 +44,7 @@ export class EditSpectrumComponent implements OnInit {
             params => this.loadSpectrumDetails(Number(params.get('id'))),
         )
         this.loadDeviceNames()
+        this.loadSpectrumTypes()
     }
 
     loadSpectrumDetails(id: number): void {
@@ -55,7 +59,12 @@ export class EditSpectrumComponent implements OnInit {
     }
 
     loadDeviceNames(): void {
-        this.dataService.getDeviceNames().pipe(tap(devices => this.deviceNames = devices.map(d => d.name)))
+        this.dataService.getDeviceNames().subscribe(devices => this.devices = devices)
+    }
+
+
+    loadSpectrumTypes(): void {
+        this.dataService.getSpectrumTypes().subscribe(spectraTypes => this.spectrumTypes = spectraTypes)
     }
 
     save(): void {

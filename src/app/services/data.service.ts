@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment'
 import { SpectrumGridRow } from '../models/spectrum-grid-row'
 import { tap } from 'rxjs/operators'
 import { Device } from '../models/device'
+import { SpectrumType } from '../models/spectrum-type'
 
 @Injectable({
     providedIn: 'root',
@@ -27,5 +28,9 @@ export class DataService {
 
     getDeviceNames() {
         return this.http.get<Device[]>(`${environment.apiUrl}/devices`)
+    }
+
+    getSpectrumTypes() {
+        return this.http.get<SpectrumType[]>(`${environment.apiUrl}/spectra-types`)
     }
 }
