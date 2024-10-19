@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Observable, switchMap } from 'rxjs'
 import { DataService } from '../../services/data.service'
-import { AsyncPipe, JsonPipe, NgIf } from '@angular/common'
+import { AsyncPipe, DatePipe, JsonPipe, NgIf } from '@angular/common'
 import { Spectrum } from '../../models/spectrum'
 
 @Component({
@@ -12,6 +12,7 @@ import { Spectrum } from '../../models/spectrum'
         NgIf,
         AsyncPipe,
         JsonPipe,
+        DatePipe,
     ],
   templateUrl: './spectrum-details.component.html',
   styleUrl: './spectrum-details.component.scss'
@@ -41,4 +42,6 @@ export class SpectrumDetailsComponent implements OnInit {
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
     }
+
+    protected readonly JSON = JSON
 }
