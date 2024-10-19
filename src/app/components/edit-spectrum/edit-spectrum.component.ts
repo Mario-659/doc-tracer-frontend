@@ -5,6 +5,9 @@ import { DataService } from '../../services/data.service'
 import { NgForOf, NgIf } from '@angular/common'
 import { Device } from '../../models/device'
 import { SpectrumType } from '../../models/spectrum-type'
+import { SpectrumUpdateRequest } from '../../models/spectrum-update-request'
+import { NotificationService } from '../../services/notification.service'
+import { AppNotification, NotificationType } from '../../models/notification'
 
 @Component({
     selector: 'app-edit-spectrum',
@@ -21,9 +24,10 @@ export class EditSpectrumComponent implements OnInit {
     spectrumForm: FormGroup
     devices: Device[] | undefined
     spectrumTypes: SpectrumType[] | undefined
-    spectrumId: number | undefined
+    spectrumId: number = -1
 
     constructor(
+        private notificationService: NotificationService,
         private route: ActivatedRoute,
         private router: Router,
         private dataService: DataService,
@@ -73,12 +77,17 @@ export class EditSpectrumComponent implements OnInit {
     }
 
     save(): void {
-        if (this.spectrumForm.valid) {
-            // this.dataService.updateSpectrum(this.spectrumId, this.spectrumForm.value).subscribe(() => {
-            //     // Navigate back to the details page or show a success message
-            //     this.router.navigate(['/spectrum', this.spectrumId]);
-            // });
+        if (!this.spectrumForm.valid) return
+
+        const updateRequest: SpectrumUpdateRequest = {
+
         }
+
+        this.dataService.updateSpectrum(this.spectrumId, updateRequest).subscribe(() => {
+            this.notificationService.showNotification(new AppNotification(`Spectrum with id ${this.spectrumId} has been updated`, NotificationType.success))
+            this.router.navigate(['/spectrum', this.spectrumId]);
+        });
+
     }
 
     goSpectrumDetails() {

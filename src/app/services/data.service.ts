@@ -7,6 +7,7 @@ import { SpectrumGridRow } from '../models/spectrum-grid-row'
 import { tap } from 'rxjs/operators'
 import { Device } from '../models/device'
 import { SpectrumType } from '../models/spectrum-type'
+import { SpectrumUpdateRequest } from '../models/spectrum-update-request'
 
 @Injectable({
     providedIn: 'root',
@@ -32,5 +33,9 @@ export class DataService {
 
     getSpectrumTypes() {
         return this.http.get<SpectrumType[]>(`${environment.apiUrl}/spectra-types`)
+    }
+
+    updateSpectrum(spectrumId: number, updateRequest: SpectrumUpdateRequest) {
+        return this.http.put(`${environment.apiUrl}/spectra/${spectrumId}`, updateRequest)
     }
 }
