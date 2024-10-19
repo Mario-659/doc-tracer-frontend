@@ -21,6 +21,7 @@ export class EditSpectrumComponent implements OnInit {
     spectrumForm: FormGroup
     devices: Device[] | undefined
     spectrumTypes: SpectrumType[] | undefined
+    spectrumId: number | undefined
 
     constructor(
         private route: ActivatedRoute,
@@ -40,8 +41,12 @@ export class EditSpectrumComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        // TODO forkjoin these requests
         this.route.paramMap.subscribe(
-            params => this.loadSpectrumDetails(Number(params.get('id'))),
+            params => {
+                this.spectrumId = Number(params.get('id'))
+                this.loadSpectrumDetails(this.spectrumId)
+            },
         )
         this.loadDeviceNames()
         this.loadSpectrumTypes()
@@ -74,6 +79,10 @@ export class EditSpectrumComponent implements OnInit {
             //     this.router.navigate(['/spectrum', this.spectrumId]);
             // });
         }
+    }
+
+    goSpectrumDetails() {
+        this.router.navigate([`/spectra/${this.spectrumId}`])
     }
 }
 
