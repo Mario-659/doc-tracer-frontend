@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { Observable, switchMap } from 'rxjs'
 import { DataService } from '../../services/data.service'
 import { AsyncPipe, DatePipe, JsonPipe, NgIf } from '@angular/common'
 import { Spectrum } from '../../models/spectrum'
+import { NotificationService } from '../../services/notification.service'
+import { AppNotification, NotificationType } from '../../models/notification'
 
 @Component({
   selector: 'app-spectrum-details',
@@ -19,10 +21,13 @@ import { Spectrum } from '../../models/spectrum'
 })
 export class SpectrumDetailsComponent implements OnInit {
     spectrumDetails$: Observable<Spectrum | undefined> | undefined;
+    protected readonly JSON = JSON
 
     constructor(
         private route: ActivatedRoute,
-        private dataService: DataService
+        private dataService: DataService,
+        private notificationService:  NotificationService,
+        private router: Router
     ) {
     }
 
@@ -43,5 +48,19 @@ export class SpectrumDetailsComponent implements OnInit {
         downloadAnchorNode.remove();
     }
 
-    protected readonly JSON = JSON
+    editSpectrum(id: number) {
+        this.router.navigate([`/spectra/${id}/edit`])
+
+    }
+
+    deleteSpectrum(id: number) {
+        console.log('called deleteSpectrum with id ', id)
+        this.dataService.deleteSpectrum(id).subscribe({
+            next: () => {
+                this.notificationService.showNotification(new AppNotification(`Spectrum with id ${id} deleted`, NotificationType.success))
+                this.router.navigate(["/spectra"])
+            }
+        })
+    }
+
 }
