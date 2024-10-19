@@ -39,16 +39,6 @@
             <input type="date" id="measurementDate" class="form-control" formControlName="measurementDate" />
         </div>
 
-        <div class="mb-3">
-            <label for="createdAt" class="form-label">Created At</label>
-            <input type="date" id="createdAt" class="form-control" formControlName="createdAt" />
-        </div>
-
-        <div class="mb-3">
-            <label for="updatedAt" class="form-label">Updated At</label>
-            <input type="date" id="updatedAt" class="form-control" formControlName="updatedAt" />
-        </div>
-
         <button type="submit" class="btn btn-success" [disabled]="spectrumForm.invalid">Save</button>
 <!--        <button type="button" class="btn btn-secondary ms-2" (click)="router.navigate(['/spectrum', spectrumId])">Cancel</button>-->
     </form>

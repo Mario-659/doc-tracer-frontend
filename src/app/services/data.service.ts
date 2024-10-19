@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from '../../environments/environment'
 import { SpectrumGridRow } from '../models/spectrum-grid-row'
 import { tap } from 'rxjs/operators'
+import { Device } from '../models/device'
 
 @Injectable({
     providedIn: 'root',
@@ -21,6 +22,10 @@ export class DataService {
     }
 
     deleteSpectrum(id: number) {
-        return this.http.delete<void>(`${environment.apiUrl}/spectra/${id}`).pipe(tap(console.log))
+        return this.http.delete<void>(`${environment.apiUrl}/spectra/${id}`)
+    }
+
+    getDeviceNames() {
+        return this.http.get<Device[]>(`${environment.apiUrl}/devices`)
     }
 }

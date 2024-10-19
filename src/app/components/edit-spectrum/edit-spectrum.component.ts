@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { DataService } from '../../services/data.service'
-import { tap } from 'rxjs/operators'
+import { switchMap, tap } from 'rxjs/operators'
 import { NgIf } from '@angular/common'
 
 @Component({
@@ -16,13 +16,14 @@ import { NgIf } from '@angular/common'
     ],
 })
 export class EditSpectrumComponent implements OnInit {
-    spectrumForm: FormGroup;
+    spectrumForm: FormGroup
+    deviceNames: string[] | undefined
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private dataService: DataService,
-        private fb: FormBuilder
+        private fb: FormBuilder,
     ) {
         this.spectrumForm = this.fb.group({
             spectrumTypeName: ['', Validators.required],
@@ -31,20 +32,30 @@ export class EditSpectrumComponent implements OnInit {
             createdBy: ['', Validators.required],
             measurementDate: ['', Validators.required],
             createdAt: ['', Validators.required],
-            updatedAt: ['', Validators.required]
-        });
+            updatedAt: ['', Validators.required],
+        })
     }
 
     ngOnInit(): void {
-        this.route.paramMap.pipe(
-            tap(params => this.loadSpectrumDetails(Number(params.get('id'))))
+        this.route.paramMap.subscribe(
+            params => this.loadSpectrumDetails(Number(params.get('id'))),
         )
+        this.loadDeviceNames()
     }
 
     loadSpectrumDetails(id: number): void {
         this.dataService.getSpectrum(id).subscribe(spectrum => {
-            this.spectrumForm.patchValue(spectrum);
-        });
+            const measurementDate = spectrum.measurementDate ? spectrum.measurementDate.split('T')[0] : '';
+
+            this.spectrumForm.patchValue({
+                ...spectrum,
+                measurementDate: measurementDate
+            })
+        })
+    }
+
+    loadDeviceNames(): void {
+        this.dataService.getDeviceNames().pipe(tap(devices => this.deviceNames = devices.map(d => d.name)))
     }
 
     save(): void {
