@@ -1,0 +1,55 @@
+<div class="container mt-4">
+    <h2 class="mb-4">Edit Spectrum</h2>
+
+    <form [formGroup]="spectrumForm" (ngSubmit)="save()">
+        <div class="mb-3">
+            <label for="spectrumTypeName" class="form-label">Spectrum Type</label>
+            <input type="text" id="spectrumTypeName" class="form-control" formControlName="spectrumTypeName" />
+            <div *ngIf="spectrumForm.get('spectrumTypeName')?.invalid && spectrumForm.get('spectrumTypeName')?.touched" class="text-danger">
+                Spectrum Type is required
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="deviceName" class="form-label">Device Name</label>
+            <input type="text" id="deviceName" class="form-control" formControlName="deviceName" />
+            <div *ngIf="spectrumForm.get('deviceName')?.invalid && spectrumForm.get('deviceName')?.touched" class="text-danger">
+                Device Name is required
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="sampleId" class="form-label">Sample ID</label>
+            <input type="text" id="sampleId" class="form-control" formControlName="sampleId" />
+            <div *ngIf="spectrumForm.get('sampleId')?.invalid && spectrumForm.get('sampleId')?.touched" class="text-danger">
+                Sample ID is required
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="createdBy" class="form-label">Created By</label>
+            <input type="text" id="createdBy" class="form-control" formControlName="createdBy" />
+            <div *ngIf="spectrumForm.get('createdBy')?.invalid && spectrumForm.get('createdBy')?.touched" class="text-danger">
+                Created By is required
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="measurementDate" class="form-label">Measurement Date</label>
+            <input type="date" id="measurementDate" class="form-control" formControlName="measurementDate" />
+        </div>
+
+        <div class="mb-3">
+            <label for="createdAt" class="form-label">Created At</label>
+            <input type="date" id="createdAt" class="form-control" formControlName="createdAt" />
+        </div>
+
+        <div class="mb-3">
+            <label for="updatedAt" class="form-label">Updated At</label>
+            <input type="date" id="updatedAt" class="form-control" formControlName="updatedAt" />
+        </div>
+
+        <button type="submit" class="btn btn-success" [disabled]="spectrumForm.invalid">Save</button>
+<!--        <button type="button" class="btn btn-secondary ms-2" (click)="router.navigate(['/spectrum', spectrumId])">Cancel</button>-->
+    </form>
+</div>

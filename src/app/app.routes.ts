@@ -10,6 +10,7 @@ import { SamplesMainComponent } from './components/samples-main/samples-main.com
 import { MeasuringDevicesMainComponent } from './components/sample-devices-main/measuring-devices-main.component'
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component'
 import { SpectrumDetailsComponent } from './components/spectrum-details/spectrum-details.component'
+import { EditSpectrumComponent } from './components/edit-spectrum/edit-spectrum.component'
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -28,6 +29,11 @@ export const routes: Routes = [
     {
         path: 'spectra/:id',
         component: SpectrumDetailsComponent,
+        canActivate: [authGuard],
+    },
+    {
+        path: 'spectra/:id/edit',
+        component: EditSpectrumComponent,
         canActivate: [authGuard],
     },
     {
