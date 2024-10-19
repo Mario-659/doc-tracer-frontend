@@ -1,10 +1,9 @@
 export interface SpectrumGridRow {
     id: number;
-    spectrumSamples: JSON;
-    measurementDate: Date;
-    spectrumTypeId: number;
-    deviceId: number;
+    measurementDate: string;
+    spectrumType: string;
+    sampleId: number
     userId: number;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
 }

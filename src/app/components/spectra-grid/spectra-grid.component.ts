@@ -21,7 +21,10 @@ import { AsyncPipe, NgIf } from '@angular/common'
 export class SpectraGridComponent implements OnInit {
     $rowData: Observable<SpectrumGridRow[]> | undefined
 
-    constructor(private router: Router, private dataService: DataService) {}
+    constructor(
+        private router: Router,
+        private dataService: DataService
+    ) {}
 
     ngOnInit() {
         this.$rowData = this.dataService.getSpectra()
@@ -43,7 +46,8 @@ export class SpectraGridComponent implements OnInit {
         {
             headerName: "Measurement Date",
             field: "measurementDate",
-            filter: "agDateColumnFilter"
+            filter: "agDateColumnFilter",
+            valueFormatter: this.formatDate
         },
         {
             headerName: "Spectrum Type",
@@ -51,14 +55,25 @@ export class SpectraGridComponent implements OnInit {
             filter: "agTextColumnFilter"
         },
         {
-            headerName: "Sample",
-            field: "sample",
-            filter: "agTextColumnFilter"
+            headerName: "Sample Id",
+            field: "sampleId",
+            filter: "agNumberColumnFilter"
         },
         {
             headerName: "Created By",
             field: "createdBy",
-            filter: "agTextColumnFilter"
+            filter: "agTextColumnFilter",
+        },
+        {
+            headerName: "Created At",
+            field: "createdAt",
+            filter: "agDateColumnFilter",
+            valueFormatter: this.formatDate
         }
     ];
+
+    formatDate(params: any): string {
+        const date = new Date(params.value);
+        return date.toLocaleString();
+    }
 }
