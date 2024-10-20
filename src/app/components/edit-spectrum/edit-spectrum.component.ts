@@ -67,7 +67,8 @@ export class EditSpectrumComponent implements OnInit {
         this.dataService.getSpectrum(id).subscribe(spectrum => {
             this.originalSpectrum = spectrum
 
-            const measurementDate = spectrum.measurementDate ? spectrum.measurementDate.split('T')[0] : ''
+            // TODO probably temporary solution, as it strips timezone value
+            const measurementDate = spectrum.measurementDate ? spectrum.measurementDate.slice(0, -4) : ''
             this.spectrumForm.patchValue({
                 ...spectrum,
                 measurementDate: measurementDate,
