@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { DataService } from '../../services/data.service'
@@ -8,6 +8,7 @@ import { SpectrumType } from '../../models/spectrum-type'
 import { SpectrumUpdateRequest } from '../../models/spectrum-update-request'
 import { NotificationService } from '../../services/notification.service'
 import { AppNotification, NotificationType } from '../../models/notification'
+import { JsonEditorComponent, JsonEditorOptions, NgJsonEditorModule } from 'ang-jsoneditor'
 
 @Component({
     selector: 'app-edit-spectrum',
@@ -18,6 +19,7 @@ import { AppNotification, NotificationType } from '../../models/notification'
         ReactiveFormsModule,
         NgIf,
         NgForOf,
+        NgJsonEditorModule
     ],
 })
 export class EditSpectrumComponent implements OnInit {
@@ -26,6 +28,9 @@ export class EditSpectrumComponent implements OnInit {
     spectrumTypes: SpectrumType[] | undefined
     spectrumId: number = -1
     originalSpectrum: any
+    @ViewChild(JsonEditorComponent, { static: false }) editor: JsonEditorComponent | undefined;
+    public editorOptions: JsonEditorOptions
+    public data: any
 
     constructor(
         private notificationService: NotificationService,
@@ -34,13 +39,18 @@ export class EditSpectrumComponent implements OnInit {
         private dataService: DataService,
         private fb: FormBuilder,
     ) {
+        this.editorOptions = new JsonEditorOptions()
+        this.editorOptions.modes = ['code', 'text', 'tree', 'view'];
+        this.data = {"products":[{"name":"car","product":[{"name":"honda","model":[{"id":"civic","name":"civic"},{"id":"accord","name":"accord"},{"id":"crv","name":"crv"},{"id":"pilot","name":"pilot"},{"id":"odyssey","name":"odyssey"}]}]}]}
+
         this.spectrumForm = this.fb.group({
             spectrumTypeName: ['', Validators.required],
             deviceName: ['', Validators.required],
             sampleId: ['', Validators.required],
             createdBy: ['', Validators.required],
             measurementDate: ['', Validators.required],
-        })
+            spectrumSamples: ['', Validators.required]
+        });
     }
 
     ngOnInit(): void {
@@ -120,6 +130,10 @@ export class EditSpectrumComponent implements OnInit {
 
     goSpectrumDetails() {
         this.router.navigate([`/spectra/${this.spectrumId}`]);
+    }
+
+    getData($event: any) {
+        // this.EditedData = JSON.stringify(d, null, 2);
     }
 }
 

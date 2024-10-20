@@ -36,6 +36,13 @@
             <input type="datetime-local" id="measurementDate" class="form-control" formControlName="measurementDate" />
         </div>
 
+<!--        <div class="mb-3">-->
+<!--            <label for="spectrumSamples">Spectrum Samples (JSON)</label>-->
+<!--            <textarea id="spectrumSamples" class="form-control" formControlName="spectrumSamples" rows="5"></textarea>-->
+<!--        </div>-->
+
+        <json-editor [options]="editorOptions" [data]="data" (change)="getData($event)"></json-editor>
+
         <button type="submit" class="btn btn-success" [disabled]="spectrumForm.invalid">Save</button>
         <button type="button" class="btn btn-secondary ms-2" (click)="goSpectrumDetails()">Cancel</button>
     </form>
