@@ -40,6 +40,7 @@ export class EditSpectrumComponent implements OnInit {
     ) {
         this.editorOptions = new JsonEditorOptions()
         this.editorOptions.modes = ['code', 'text', 'tree', 'view'];
+        this.editorOptions.mode = "code"
 
         this.spectrumForm = this.fb.group({
             spectrumTypeName: ['', Validators.required],
