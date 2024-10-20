@@ -28,6 +28,7 @@ export class EditSpectrumComponent implements OnInit {
     spectrumTypes: SpectrumType[] | undefined
     spectrumId: number = -1
     originalSpectrum: any
+    // extract json editor component to separate angular component
     @ViewChild(JsonEditorComponent, { static: false }) editor: JsonEditorComponent | undefined;
     public editorOptions: JsonEditorOptions
 
@@ -109,10 +110,12 @@ export class EditSpectrumComponent implements OnInit {
         }
 
         if (formValues.deviceName !== originalSpectrum.deviceName) {
+            // TODO make device name in database unique and update by it's name
             updateRequest.deviceId = this.devices.find(d => d.name === formValues.deviceName)?.id
         }
 
         if (formValues.sampleId !== originalSpectrum.sampleId) {
+            // TODO maybe better than sampleID???
             updateRequest.sampleId = formValues.sampleId;
         }
 
@@ -121,9 +124,11 @@ export class EditSpectrumComponent implements OnInit {
         }
 
         if (formValues.measurementDate !== originalSpectrum.measurementDate.split('T')[0]) {
+            // TODO .toISOString will always return the same timezone, fix it -> https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
             updateRequest.measurementDate = new Date(formValues.measurementDate).toISOString();
         }
 
+        // TODO fix comparison below (formValues.spectrumSamples is json object, originalSpectrum.spectrumSamples is string)
         if (formValues.specrumSamples !== originalSpectrum.spectrumSamples) {
             updateRequest.spectrumSample = JSON.stringify(formValues.spectrumSamples);
         }
