@@ -1,6 +1,12 @@
-<div *ngIf="$rowData | async as rowData; else spinner">
-    <ag-grid-angular class="ag-theme-quartz" style="height: 500px" [rowData]="rowData" [columnDefs]="colDefs" />
+<div class="mt-2 mb-2">
+    <div *ngIf="$rowData | async as rowData; else spinner">
+        <ag-grid-angular class="ag-theme-quartz" style="height: 500px" [rowData]="rowData" [columnDefs]="colDefs" />
+    </div>
+    <ng-template #spinner>
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </ng-template>
 </div>
-<ng-template #spinner>
-    <div class="spinner-border" role="status"></div>
-</ng-template>
