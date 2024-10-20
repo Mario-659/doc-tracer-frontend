@@ -32,7 +32,7 @@ export class SpectrumDetailsComponent implements OnInit {
     }
 
     downloadSpectrumData(spectrum: Spectrum) {
-        const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(spectrum.spectrumSamples))
+        const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(JSON.parse(spectrum.spectrumSamples)))
         const downloadAnchorNode = document.createElement('a')
 
         downloadAnchorNode.setAttribute('href', dataStr)
