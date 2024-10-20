@@ -30,7 +30,6 @@ export class EditSpectrumComponent implements OnInit {
     originalSpectrum: any
     @ViewChild(JsonEditorComponent, { static: false }) editor: JsonEditorComponent | undefined;
     public editorOptions: JsonEditorOptions
-    public data: any
 
     constructor(
         private notificationService: NotificationService,
@@ -41,7 +40,6 @@ export class EditSpectrumComponent implements OnInit {
     ) {
         this.editorOptions = new JsonEditorOptions()
         this.editorOptions.modes = ['code', 'text', 'tree', 'view'];
-        this.data = {"products":[{"name":"car","product":[{"name":"honda","model":[{"id":"civic","name":"civic"},{"id":"accord","name":"accord"},{"id":"crv","name":"crv"},{"id":"pilot","name":"pilot"},{"id":"odyssey","name":"odyssey"}]}]}]}
 
         this.spectrumForm = this.fb.group({
             spectrumTypeName: ['', Validators.required],
@@ -55,7 +53,6 @@ export class EditSpectrumComponent implements OnInit {
 
     ngOnInit(): void {
         // TODO forkjoin these requests
-        // TODO add spectrum json edit
         this.route.paramMap.subscribe(params => {
             this.spectrumId = Number(params.get('id'));
             this.loadSpectrumDetails(this.spectrumId);
@@ -71,7 +68,8 @@ export class EditSpectrumComponent implements OnInit {
             const measurementDate = spectrum.measurementDate ? spectrum.measurementDate.split('T')[0] : ''
             this.spectrumForm.patchValue({
                 ...spectrum,
-                measurementDate: measurementDate
+                measurementDate: measurementDate,
+                spectrumSamples: JSON.parse(spectrum.spectrumSamples)
             })
         })
     }
