@@ -6,6 +6,7 @@ import { Device } from '../../models/device'
 import { ColDef } from 'ag-grid-community'
 import { AsyncPipe, NgIf } from '@angular/common'
 import { AgGridAngular } from 'ag-grid-angular'
+import { AppGridComponent } from '../app-grid/app-grid.component'
 
 @Component({
     selector: 'app-measuring-devices-main',
@@ -14,6 +15,7 @@ import { AgGridAngular } from 'ag-grid-angular'
         AsyncPipe,
         AgGridAngular,
         NgIf,
+        AppGridComponent,
     ],
     templateUrl: './measuring-devices-main.component.html',
     styleUrl: 'measuring-devices-main.component.scss',
@@ -22,7 +24,6 @@ export class MeasuringDevicesMainComponent implements OnInit {
     $devices: Observable<Device[]> | undefined
 
     constructor(
-        private router: Router,
         private dataService: DataService
     ) {}
 

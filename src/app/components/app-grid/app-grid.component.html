@@ -1,0 +1,11 @@
+<div *ngIf="$rowData | async as rowData, else spinner">
+    <ag-grid-angular
+        class="ag-theme-quartz"
+        style="height: 500px;"
+        [rowData]="rowData"
+        [columnDefs]="colDefs"
+    />
+</div>
+<ng-template #spinner>
+    <div class="spinner-border" role="status"></div>
+</ng-template>
