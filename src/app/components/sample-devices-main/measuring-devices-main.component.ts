@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core'
-import { Router } from '@angular/router'
 import { DataService } from '../../services/data.service'
 import { Observable } from 'rxjs'
 import { Device } from '../../models/device'
@@ -56,12 +55,6 @@ export class MeasuringDevicesMainComponent implements OnInit {
         {
             headerName: 'Updated At',
             field: 'updatedAt',
-            filter: 'agDateColumnFilter',
-            valueFormatter: this.formatDate,
-        },
-        {
-            headerName: 'Created At',
-            field: 'createdAt',
             filter: 'agDateColumnFilter',
             valueFormatter: this.formatDate,
         },
