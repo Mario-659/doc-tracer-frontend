@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core'
-import { SpectraGridComponent } from '../spectra-grid/spectra-grid.component'
 import { Router } from '@angular/router'
 import { AppGridComponent } from '../app-grid/app-grid.component'
 import { Observable } from 'rxjs'
@@ -11,7 +10,6 @@ import { ColDef } from 'ag-grid-community'
     selector: 'app-spectra-main',
     standalone: true,
     imports: [
-        SpectraGridComponent,
         AppGridComponent,
     ],
     templateUrl: './spectra-main.component.html',
