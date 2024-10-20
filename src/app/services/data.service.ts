@@ -27,7 +27,7 @@ export class DataService {
         return this.http.delete<void>(`${environment.apiUrl}/spectra/${id}`)
     }
 
-    getDeviceNames() {
+    getDevices() {
         return this.http.get<Device[]>(`${environment.apiUrl}/devices`)
     }
 

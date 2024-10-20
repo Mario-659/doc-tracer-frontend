@@ -78,7 +78,7 @@ export class EditSpectrumComponent implements OnInit {
     }
 
     loadDeviceNames(): void {
-        this.dataService.getDeviceNames().subscribe(devices => this.devices = devices)
+        this.dataService.getDevices().subscribe(devices => this.devices = devices)
     }
 
     loadSpectrumTypes(): void {
