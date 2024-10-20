@@ -4,10 +4,10 @@ import { Spectrum } from '../models/spectrum'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../environments/environment'
 import { SpectrumGridRow } from '../models/spectrum-grid-row'
-import { tap } from 'rxjs/operators'
 import { Device } from '../models/device'
 import { SpectrumType } from '../models/spectrum-type'
 import { SpectrumUpdateRequest } from '../models/spectrum-update-request'
+import { Sample } from '../models/sample'
 
 @Injectable({
     providedIn: 'root',
@@ -37,5 +37,13 @@ export class DataService {
 
     updateSpectrum(spectrumId: number, updateRequest: SpectrumUpdateRequest) {
         return this.http.put(`${environment.apiUrl}/spectra/${spectrumId}`, updateRequest)
+    }
+
+    getSamples(): Observable<Sample[]> {
+        return this.http.get<Sample[]>(`${environment.apiUrl}/samples`)
+    }
+
+    getSample(id: number): Observable<Sample> {
+        return this.http.get<Sample>(`${environment.apiUrl}/samples/${id}`)
     }
 }
