@@ -124,6 +124,10 @@ export class EditSpectrumComponent implements OnInit {
             updateRequest.measurementDate = new Date(formValues.measurementDate).toISOString();
         }
 
+        if (formValues.specrumSamples !== originalSpectrum.spectrumSamples) {
+            updateRequest.spectrumSample = JSON.stringify(formValues.spectrumSamples);
+        }
+
         return updateRequest;
     }
 
