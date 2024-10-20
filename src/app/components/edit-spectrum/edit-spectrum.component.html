@@ -38,10 +38,7 @@
 
         <div class="mb-3">
             <label for="spectrumSamples" style="margin-bottom: 0.5rem">Spectrum Samples (JSON)</label>
-            <json-editor
-                [options]="editorOptions"
-                formControlName="spectrumSamples" id="spectrumSamples"
-            ></json-editor>
+            <json-editor [options]="editorOptions" formControlName="spectrumSamples" id="spectrumSamples"></json-editor>
         </div>
 
         <button type="submit" class="btn btn-success" [disabled]="spectrumForm.invalid">Save</button>

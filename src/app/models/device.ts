@@ -1,9 +1,9 @@
 export interface Device {
     id: number
-    name: string,
+    name: string
     description: string
-    manufacturer: string,
-    createdAt: string,
-    updatedAt: string,
-    deletedAt?: string,
+    manufacturer: string
+    createdAt: string
+    updatedAt: string
+    deletedAt?: string
 }

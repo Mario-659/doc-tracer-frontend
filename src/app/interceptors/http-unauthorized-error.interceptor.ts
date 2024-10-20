@@ -9,10 +9,10 @@ export const httpUnauthorizedErrorInterceptor: HttpInterceptorFn = (req, next) =
     return next(req).pipe(
         catchError((e: HttpErrorResponse) => {
             if (e.status === 401) {
-                router.navigate(["/logout"])
+                router.navigate(['/logout'])
             }
 
             return throwError(() => e)
         })
     )
-};
+}

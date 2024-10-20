@@ -25,4 +25,4 @@ export const httpErrorNotificationInterceptor: HttpInterceptorFn = (req, next) =
             return throwError(() => e)
         })
     )
-};
+}

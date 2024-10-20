@@ -1,23 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { AppGridComponent } from './app-grid.component';
+import { AppGridComponent } from './app-grid.component'
 
 describe('AppGridComponent', () => {
-  let component: AppGridComponent;
-  let fixture: ComponentFixture<AppGridComponent>;
+    let component: AppGridComponent
+    let fixture: ComponentFixture<AppGridComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AppGridComponent]
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [AppGridComponent],
+        }).compileComponents()
+
+        fixture = TestBed.createComponent(AppGridComponent)
+        component = fixture.componentInstance
+        fixture.detectChanges()
     })
-    .compileComponents();
 
-    fixture = TestBed.createComponent(AppGridComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    it('should create', () => {
+        expect(component).toBeTruthy()
+    })
+})

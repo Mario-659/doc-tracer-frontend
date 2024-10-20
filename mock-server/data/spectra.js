@@ -31,43 +31,42 @@ const spectraList = [
     },
 ]
 
-const spectraGridList =
-    [
-        {
-            id: 1,
-            measurementDate: '2024-09-25',
-            spectrumType: 'Infrared',
-            sample: 'Ink Sample A',
-            createdBy: 'John Doe',
-        },
-        {
-            id: 2,
-            measurementDate: '2024-09-26',
-            spectrumTypes: 'UV',
-            sample: 'Paper Sample B',
-            createdBy: 'Jane Smith',
-        },
-        {
-            id: 3,
-            measurementDate: '2024-09-27',
-            spectrumType: 'X-Ray',
-            sample: 'Plastic Sample C',
-            createdBy: 'Emily White',
-        },
-        {
-            id: 4,
-            measurementDate: '2024-09-28',
-            spectrumType: 'NIR',
-            sample: 'Fabric Sample D',
-            createdBy: 'Michael Brown',
-        },
-        {
-            id: 5,
-            measurementDate: '2024-09-29',
-            spectrumType: 'Infrared',
-            sample: 'Ink Sample E',
-            createdBy: 'Alice Green',
-        },
-    ]
+const spectraGridList = [
+    {
+        id: 1,
+        measurementDate: '2024-09-25',
+        spectrumType: 'Infrared',
+        sample: 'Ink Sample A',
+        createdBy: 'John Doe',
+    },
+    {
+        id: 2,
+        measurementDate: '2024-09-26',
+        spectrumTypes: 'UV',
+        sample: 'Paper Sample B',
+        createdBy: 'Jane Smith',
+    },
+    {
+        id: 3,
+        measurementDate: '2024-09-27',
+        spectrumType: 'X-Ray',
+        sample: 'Plastic Sample C',
+        createdBy: 'Emily White',
+    },
+    {
+        id: 4,
+        measurementDate: '2024-09-28',
+        spectrumType: 'NIR',
+        sample: 'Fabric Sample D',
+        createdBy: 'Michael Brown',
+    },
+    {
+        id: 5,
+        measurementDate: '2024-09-29',
+        spectrumType: 'Infrared',
+        sample: 'Ink Sample E',
+        createdBy: 'Alice Green',
+    },
+]
 
 module.exports = { spectraList, spectraGridList }

@@ -35,20 +35,20 @@ app.post('/api/auth/register', (req, res) => {
 })
 
 // ---------------- SPECTRA ------------------ //
-const { spectraList, spectraGridList } = require('./data/spectra');
+const { spectraList, spectraGridList } = require('./data/spectra')
 
 app.get('/api/spectra', (req, res) => {
-    res.status(200).json(spectraGridList);
+    res.status(200).json(spectraGridList)
 })
 
 app.get('/api/spectra/:id', (req, res) => {
     const spectrumId = parseInt(req.params.id)
-    const spectrum = spectraList.find(spectra => spectra.id === spectrumId)
+    const spectrum = spectraList.find((spectra) => spectra.id === spectrumId)
 
     if (spectrum) {
-        res.status(200).json(spectrum);
+        res.status(200).json(spectrum)
     } else {
-        res.status(404).send();
+        res.status(404).send()
     }
 })
 
