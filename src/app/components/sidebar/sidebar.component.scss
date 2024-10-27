@@ -4,6 +4,8 @@
     transition: width 0.3s;
     overflow: hidden;
 
+    background-color: #a6a6a6;
+
     &.collapsed {
         width: 60px;
     }
@@ -15,6 +17,7 @@
     }
 
     .logo-container {
+        padding-top: 5px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -36,5 +39,10 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
+        color: black;
+        &.active {
+            background-color: white;
+            color: black;
+        }
     }
 }

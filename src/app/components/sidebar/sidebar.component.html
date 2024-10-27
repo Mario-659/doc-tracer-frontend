@@ -1,13 +1,13 @@
-<div class="d-flex flex-column flex-shrink-0 bg-dark sidebar" [ngClass]="{ 'expanded': isSidebarExpanded, 'collapsed': !isSidebarExpanded }">
+<div class="d-flex flex-column flex-shrink-0 sidebar" [ngClass]="{ 'expanded': isSidebarExpanded, 'collapsed': !isSidebarExpanded }">
 
     <a href="/" class="d-block mx-auto mb-auto navbar-brand logo-container" title="Document Analysis App">
         <img ngSrc="/logo.png" alt="Document Analysis App" class="logo-image" height="500" width="500" />
     </a>
 
     <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-        <li class="nav-item py-3 border-bottom" *ngFor="let item of navItems">
+        <li class="nav-item py-3" *ngFor="let item of navItems">
             <a
-                class="nav-link py-3 border-bottom"
+                class="nav-link py-3"
                 [routerLink]="item.link"
                 routerLinkActive="active"
                 aria-current="page"
@@ -23,13 +23,13 @@
             <span class="material-icons">{{ isSidebarExpanded ? 'chevron_left' : 'chevron_right' }}</span>
         </button>
 
-        <li class="nav-item py-3 border-top">
+        <li class="nav-item py-3">
             <a class="nav-link">
                 <span class="material-icons d-block">account_circle</span>
                 <span *ngIf="isSidebarExpanded">johny</span>
             </a>
         </li>
-        <li class="nav-item py-3 border-top">
+        <li class="nav-item py-3">
             <a class="nav-link" routerLink="/logout" routerLinkActive="active">
                 <span class="material-icons d-block">logout</span>
                 <span *ngIf="isSidebarExpanded">Logout</span>
