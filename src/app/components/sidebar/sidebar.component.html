@@ -1,4 +1,4 @@
-<div class="d-flex flex-column flex-shrink-0 bg-light">
+<div class="d-flex flex-column flex-shrink-0 bg-light sidebar">
     <a href="/" class="d-block p-3 navbar-brand" title="Document Analysis App" style="font-weight: bold">
         Document Analysis App
     </a>
@@ -10,7 +10,8 @@
                 routerLinkActive="active"
                 aria-current="page"
             >
-                <span class="material-icons">dashboard</span> Dashboard
+                <span class="material-icons d-block">dashboard</span>
+                Dashboard
             </a>
         </li>
         <li class="nav-item py-3 border-bottom">
@@ -20,7 +21,8 @@
                 routerLinkActive="active"
                 aria-current="page"
             >
-                <span class="material-icons">insights</span> Spectra
+                <span class="material-icons d-block">insights</span>
+                Spectra
             </a>
         </li>
         <li class="nav-item py-3 border-bottom">
@@ -30,7 +32,8 @@
                 routerLinkActive="active"
                 aria-current="page"
             >
-                <span class="material-icons">compare</span> Spectra Similarities
+                <span class="material-icons d-block">compare</span>
+                Spectra Similarities
             </a>
         </li>
         <li class="nav-item py-3 border-bottom">
@@ -40,7 +43,8 @@
                 routerLinkActive="active"
                 aria-current="page"
             >
-                <span class="material-icons">inventory</span> Samples
+                <span class="material-icons d-block">inventory</span>
+                Samples
             </a>
         </li>
         <li class="nav-item py-3 border-bottom">
@@ -50,25 +54,24 @@
                 routerLinkActive="active"
                 aria-current="page"
             >
-                <span class="material-icons">precision_manufacturing</span> Measuring Devices
+                <span class="material-icons d-block">precision_manufacturing</span>
+                Measuring Devices
             </a>
         </li>
-        <div class="vr"></div>
-        <li class="nav-item py-3 border-bottom">
-            <a class="nav-link navbar-username">
-                <span class="material-icons">account_circle</span> johny
+    </ul>
+
+    <ul class="nav nav-pills nav-flush flex-column mt-auto text-center">
+        <li class="nav-item py-3 border-top">
+            <a class="nav-link">
+                <span class="material-icons d-block">account_circle</span>
+                johny
             </a>
         </li>
-        <li class="nav-item py-3 border-bottom">
-            <a
-                class="nav-link py-3 border-bottom"
-                routerLink="/logout"
-                routerLinkActive="active"
-            >
-                <span class="material-icons">logout</span> Logout
+        <li class="nav-item py-3 border-top">
+            <a class="nav-link" routerLink="/logout" routerLinkActive="active">
+                <span class="material-icons d-block">logout</span>
+                Logout
             </a>
         </li>
     </ul>
 </div>
-
-
