@@ -1,6 +1,6 @@
-<div class="d-flex flex-column flex-shrink-0 bg-light sidebar" [ngClass]="{ 'expanded': isSidebarExpanded, 'collapsed': !isSidebarExpanded }">
+<div class="d-flex flex-column flex-shrink-0 bg-dark sidebar" [ngClass]="{ 'expanded': isSidebarExpanded, 'collapsed': !isSidebarExpanded }">
 
-    <a href="/" class="d-block p-3 mx-auto mb-auto navbar-brand logo-container" title="Document Analysis App">
+    <a href="/" class="d-block mx-auto mb-auto navbar-brand logo-container" title="Document Analysis App">
         <img ngSrc="/logo.png" alt="Document Analysis App" class="logo-image" height="500" width="500" />
     </a>
 
@@ -19,7 +19,7 @@
     </ul>
 
     <ul class="nav nav-pills nav-flush flex-column mt-auto text-center">
-        <button (click)="toggleSidebar()" class="toggle-btn">
+        <button (click)="toggleSidebar()" class="toggle-btn bg-light">
             <span class="material-icons">{{ isSidebarExpanded ? 'chevron_left' : 'chevron_right' }}</span>
         </button>
 

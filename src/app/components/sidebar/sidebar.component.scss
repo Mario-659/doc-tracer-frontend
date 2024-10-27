@@ -11,6 +11,7 @@
     .toggle-btn {
         align-self: flex-end;
         margin: 0.5rem;
+        border: none;
     }
 
     .logo-container {
@@ -21,7 +22,7 @@
     }
 
     .logo-image {
-        max-height: 40px;
+        max-height: 60px;
         width: auto;
         transition: transform 0.3s ease;
 
