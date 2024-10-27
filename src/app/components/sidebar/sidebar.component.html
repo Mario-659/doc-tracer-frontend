@@ -1,61 +1,22 @@
-<div class="d-flex flex-column flex-shrink-0 bg-light sidebar">
-    <a href="/" class="d-block p-3 navbar-brand" title="Document Analysis App" style="font-weight: bold">
-        Document Analysis App
+<div class="d-flex flex-column flex-shrink-0 bg-light sidebar" [ngClass]="{ 'expanded': isSidebarExpanded, 'collapsed': !isSidebarExpanded }">
+    <button (click)="toggleSidebar()" class="toggle-btn">
+        <span class="material-icons">{{ isSidebarExpanded ? 'chevron_left' : 'chevron_right' }}</span>
+    </button>
+
+    <a href="/" class="d-block p-3 mb-auto navbar-brand" title="Document Analysis App">
+        <img src="/logo.png" alt="Document Analysis App"/>
     </a>
+
     <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-        <li class="nav-item py-3 border-bottom">
+        <li class="nav-item py-3 border-bottom" *ngFor="let item of navItems">
             <a
                 class="nav-link py-3 border-bottom"
-                routerLink="/dashboard"
+                [routerLink]="item.link"
                 routerLinkActive="active"
                 aria-current="page"
             >
-                <span class="material-icons d-block">dashboard</span>
-                Dashboard
-            </a>
-        </li>
-        <li class="nav-item py-3 border-bottom">
-            <a
-                class="nav-link py-3 border-bottom"
-                routerLink="/spectra"
-                routerLinkActive="active"
-                aria-current="page"
-            >
-                <span class="material-icons d-block">insights</span>
-                Spectra
-            </a>
-        </li>
-        <li class="nav-item py-3 border-bottom">
-            <a
-                class="nav-link py-3 border-bottom"
-                routerLink="/spectrum-similarities"
-                routerLinkActive="active"
-                aria-current="page"
-            >
-                <span class="material-icons d-block">compare</span>
-                Spectra Similarities
-            </a>
-        </li>
-        <li class="nav-item py-3 border-bottom">
-            <a
-                class="nav-link py-3 border-bottom"
-                routerLink="/samples"
-                routerLinkActive="active"
-                aria-current="page"
-            >
-                <span class="material-icons d-block">inventory</span>
-                Samples
-            </a>
-        </li>
-        <li class="nav-item py-3 border-bottom">
-            <a
-                class="nav-link py-3 border-bottom"
-                routerLink="/measuring-devices"
-                routerLinkActive="active"
-                aria-current="page"
-            >
-                <span class="material-icons d-block">precision_manufacturing</span>
-                Measuring Devices
+                <span class="material-icons d-block">{{ item.icon }}</span>
+                <span *ngIf="isSidebarExpanded">{{ item.label }}</span>
             </a>
         </li>
     </ul>
@@ -64,13 +25,13 @@
         <li class="nav-item py-3 border-top">
             <a class="nav-link">
                 <span class="material-icons d-block">account_circle</span>
-                johny
+                <span *ngIf="isSidebarExpanded">johny</span>
             </a>
         </li>
         <li class="nav-item py-3 border-top">
             <a class="nav-link" routerLink="/logout" routerLinkActive="active">
                 <span class="material-icons d-block">logout</span>
-                Logout
+                <span *ngIf="isSidebarExpanded">Logout</span>
             </a>
         </li>
     </ul>
