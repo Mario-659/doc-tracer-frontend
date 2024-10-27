@@ -7,29 +7,33 @@
     &.collapsed {
         width: 60px;
     }
-}
 
-.nav-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    .toggle-btn {
+        align-self: flex-end;
+        margin: 0.5rem;
+    }
 
-.nav-link .material-icons {
-    font-size: 24px;
-    margin-bottom: 4px;
-}
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: transform 0.3s ease;
+    }
 
-.toggle-btn {
-    position: absolute;
-    top: 15px;
-    right: -15px;
-    z-index: 1;
-    background: #ffffff;
-    border: none;
-    cursor: pointer;
-}
+    .logo-image {
+        max-height: 40px;
+        width: auto;
+        transition: transform 0.3s ease;
 
-.navbar-brand img {
-    max-height: 40px;
+        .sidebar.collapsed & {
+            transform: scale(0.7);
+        }
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
 }
