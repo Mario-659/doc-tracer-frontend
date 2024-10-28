@@ -24,11 +24,11 @@ import { SidebarComponent } from './components/sidebar/sidebar.component'
 })
 export class AppComponent {
     title = 'doc-tracer-frontend'
-    showSidebar = false;
+    authenticationPage = true;
 
     constructor(protected router: Router) {
         this.router.events.subscribe(() => {
-            this.showSidebar = this.router.url !== '/login' && this.router.url !== '/register';
+            this.authenticationPage = this.router.url === '/login' || this.router.url === '/register';
         });
     }
 }

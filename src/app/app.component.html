@@ -1,19 +1,17 @@
+<app-notification/>
 
-<div class="container-fluid">
-    <div class="row">
-        <app-sidebar *ngIf="showSidebar" class="col-auto sticky-top" style="padding-left: 0"/>
-        <div class="col-sm p-3 min-vh-100">
-            <app-notification></app-notification>
-            <router-outlet/>
-        </div>
-    </div>
+<div *ngIf="authenticationPage else mainApp" class="bg-light">
+    <router-outlet/>
+<!--    <app-footer></app-footer>-->
 </div>
 
-
-<!--    <app-footer></app-footer>-->
-<!--        <app-header></app-header>-->
-
-
-
-
-<!--    <div class="main-content d-flex flex-column align-items-stretch flex-shrink-0 bg-white">-->
+<ng-template #mainApp>
+    <div class="container-fluid">
+        <div class="row">
+            <app-sidebar class="col-auto sticky-top" style="padding-left: 0"/>
+            <div class="col-sm p-3 min-vh-100">
+                <router-outlet/>
+            </div>
+        </div>
+    </div>
+</ng-template>
