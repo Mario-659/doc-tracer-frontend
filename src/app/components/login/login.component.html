@@ -1,41 +1,43 @@
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-4">
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="text-center mb-4">Login</h2>
-                    <form [formGroup]="loginFormGroup" (ngSubmit)="login()">
-                        <div class="form-group mb-3">
-                            <label for="username">Username:</label>
-                            <input
-                                type="text"
-                                id="username"
-                                class="form-control"
-                                formControlName="username"
-                                required
-                                placeholder="Enter your username"
-                            />
-                        </div>
+<div class="container d-flex align-items-center justify-content-center vh-100">
+    <div class="col-sm-4">
+        <div class="card shadow-sm rounded-4 border-0">
+            <div class="card-body p-5">
+                <h2 class="text-center mb-4">Welcome Back</h2>
+                <form [formGroup]="loginFormGroup" (ngSubmit)="login()">
+                    <div class="form-group mb-4">
+                        <label for="username" class="form-label">Username</label>
+                        <input
+                            type="text"
+                            id="username"
+                            class="form-control rounded-3"
+                            formControlName="username"
+                            required
+                            placeholder="Username"
+                        />
+                    </div>
 
-                        <div class="form-group mb-3">
-                            <label for="password">Password:</label>
-                            <input
-                                type="password"
-                                id="password"
-                                class="form-control"
-                                formControlName="password"
-                                name="password"
-                                required
-                                placeholder="Enter your password"
-                            />
-                        </div>
+                    <div class="form-group mb-4">
+                        <label for="password" class="form-label">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            class="form-control rounded-3"
+                            formControlName="password"
+                            required
+                            placeholder="Password"
+                        />
+                    </div>
 
-                        <button type="submit" class="btn btn-primary w-100" [disabled]="!loginFormGroup.valid">
-                            Login
-                        </button>
-                         Don't have an account? <a routerLink="/register">Create account</a>
-                    </form>
-                </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100 rounded-3" [disabled]="!loginFormGroup.valid">
+                        Log In
+                    </button>
+
+                    <div class="text-center mt-3">
+                        <small class="text-muted">Don't have an account?
+                            <a routerLink="/register" class="text-decoration-none">Create Account</a>
+                        </small>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
