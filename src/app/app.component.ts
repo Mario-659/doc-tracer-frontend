@@ -1,10 +1,12 @@
 import { Component } from '@angular/core'
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router'
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router'
 import { CommonModule } from '@angular/common'
 import { FooterComponent } from './components/footer/footer.component'
 import { NotificationComponent } from './components/notification/notification.component'
 import { HeaderComponent } from './components/header/header.component'
 import { SidebarComponent } from './components/sidebar/sidebar.component'
+import { AuthService } from './services/auth.service'
+import { Observable } from 'rxjs'
 
 @Component({
     selector: 'app-root',
@@ -24,4 +26,11 @@ import { SidebarComponent } from './components/sidebar/sidebar.component'
 })
 export class AppComponent {
     title = 'doc-tracer-frontend'
+    showSidebar = false;
+
+    constructor(protected router: Router) {
+        this.router.events.subscribe(() => {
+            this.showSidebar = this.router.url !== '/login';
+        });
+    }
 }
