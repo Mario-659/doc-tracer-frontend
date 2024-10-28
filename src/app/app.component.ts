@@ -5,8 +5,6 @@ import { FooterComponent } from './components/footer/footer.component'
 import { NotificationComponent } from './components/notification/notification.component'
 import { HeaderComponent } from './components/header/header.component'
 import { SidebarComponent } from './components/sidebar/sidebar.component'
-import { AuthService } from './services/auth.service'
-import { Observable } from 'rxjs'
 
 @Component({
     selector: 'app-root',
@@ -30,7 +28,7 @@ export class AppComponent {
 
     constructor(protected router: Router) {
         this.router.events.subscribe(() => {
-            this.showSidebar = this.router.url !== '/login';
+            this.showSidebar = this.router.url !== '/login' && this.router.url !== '/register';
         });
     }
 }

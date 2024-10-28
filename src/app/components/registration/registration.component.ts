@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { NgIf } from '@angular/common'
-import { Router } from '@angular/router'
+import { Router, RouterLink } from '@angular/router'
 import { AuthService } from '../../services/auth.service'
 import { NotificationService } from '../../services/notification.service'
 import { AppNotification, NotificationType } from '../../models/notification'
@@ -9,7 +9,7 @@ import { AppNotification, NotificationType } from '../../models/notification'
 @Component({
     selector: 'app-registration',
     standalone: true,
-    imports: [ReactiveFormsModule, NgIf],
+    imports: [ReactiveFormsModule, NgIf, RouterLink],
     templateUrl: './registration.component.html',
     styleUrl: './registration.component.scss',
 })

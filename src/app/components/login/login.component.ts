@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { Router } from '@angular/router'
+import { Router, RouterLink } from '@angular/router'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { NgIf } from '@angular/common'
 import { AuthService } from '../../services/auth.service'
@@ -9,7 +9,7 @@ import { AppNotification, NotificationType } from '../../models/notification'
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [ReactiveFormsModule, NgIf],
+    imports: [ReactiveFormsModule, NgIf, RouterLink],
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss',
 })
