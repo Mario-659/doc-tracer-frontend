@@ -20,10 +20,10 @@ export class SidebarComponent {
     isSidebarExpanded = false;
     navItems = [
         { label: 'Dashboard', icon: 'dashboard', link: '/dashboard' },
-        { label: 'Spectra', icon: 'insights', link: '/spectra' },
-        { label: 'Spectra Similarities', icon: 'compare', link: '/spectrum-similarities' },
-        { label: 'Samples', icon: 'inventory', link: '/samples' },
-        { label: 'Measuring Devices', icon: 'precision_manufacturing', link: '/measuring-devices' }
+        { label: 'Spectra', icon: 'query_stats', link: '/spectra' },
+        { label: 'Spectra Similarities', icon: 'text_compare', link: '/spectrum-similarities' },
+        { label: 'Samples', icon: 'labs', link: '/samples' },
+        { label: 'Measuring Devices', icon: 'tablet_camera', link: '/measuring-devices' }
     ];
 
     toggleSidebar() {

@@ -12,7 +12,7 @@
                 routerLinkActive="active"
                 aria-current="page"
             >
-                <span class="material-icons d-block">{{ item.icon }}</span>
+                <span class="material-symbols-outlined d-block">{{ item.icon }}</span>
                 <span *ngIf="isSidebarExpanded">{{ item.label }}</span>
             </a>
         </li>
@@ -20,18 +20,18 @@
 
     <ul class="nav nav-pills nav-flush flex-column mt-auto text-center">
         <button (click)="toggleSidebar()" class="toggle-btn bg-light">
-            <span class="material-icons">{{ isSidebarExpanded ? 'chevron_left' : 'chevron_right' }}</span>
+            <span class="material-symbols-outlined">{{ isSidebarExpanded ? 'chevron_left' : 'chevron_right' }}</span>
         </button>
 
         <li class="nav-item py-3">
             <a class="nav-link">
-                <span class="material-icons d-block">account_circle</span>
+                <span class="material-symbols-outlined d-block">account_circle</span>
                 <span *ngIf="isSidebarExpanded">johny</span>
             </a>
         </li>
         <li class="nav-item py-3">
             <a class="nav-link" routerLink="/logout" routerLinkActive="active">
-                <span class="material-icons d-block">logout</span>
+                <span class="material-symbols-outlined d-block">logout</span>
                 <span *ngIf="isSidebarExpanded">Logout</span>
             </a>
         </li>
