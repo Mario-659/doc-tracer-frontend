@@ -5,7 +5,7 @@
     </a>
 
     <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-        <li class="nav-item py-3" *ngFor="let item of navItems">
+        <li class="nav-item py-1" *ngFor="let item of navItems">
             <a
                 class="nav-link py-3"
                 [routerLink]="item.link"
@@ -13,7 +13,7 @@
                 aria-current="page"
             >
                 <span class="material-symbols-outlined d-block">{{ item.icon }}</span>
-                <span *ngIf="isSidebarExpanded">{{ item.label }}</span>
+                <span *ngIf="isSidebarExpanded" class="">{{ item.label }}</span>
             </a>
         </li>
     </ul>
@@ -23,13 +23,13 @@
             <span class="material-symbols-outlined">{{ isSidebarExpanded ? 'chevron_left' : 'chevron_right' }}</span>
         </button>
 
-        <li class="nav-item py-3">
+        <li class="nav-item py-1">
             <a class="nav-link">
                 <span class="material-symbols-outlined d-block">account_circle</span>
                 <span *ngIf="isSidebarExpanded">johny</span>
             </a>
         </li>
-        <li class="nav-item py-3">
+        <li class="nav-item py-1">
             <a class="nav-link" routerLink="/logout" routerLinkActive="active">
                 <span class="material-symbols-outlined d-block">logout</span>
                 <span *ngIf="isSidebarExpanded">Logout</span>
