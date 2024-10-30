@@ -23,17 +23,19 @@
             <span class="material-symbols-outlined">{{ isSidebarExpanded ? 'chevron_left' : 'chevron_right' }}</span>
         </button>
 
-        <li class="nav-item py-1">
-            <a class="nav-link">
-                <span class="material-symbols-outlined d-block">account_circle</span>
-                <span *ngIf="isSidebarExpanded">johny</span>
-            </a>
-        </li>
-        <li class="nav-item py-1">
-            <a class="nav-link" routerLink="/logout" routerLinkActive="active">
-                <span class="material-symbols-outlined d-block">logout</span>
-                <span *ngIf="isSidebarExpanded">Logout</span>
-            </a>
-        </li>
+        <div *ngIf="this.loggedInUser$ | async as loggedInUser">
+            <li class="nav-item py-1">
+                <a class="nav-link">
+                    <span class="material-symbols-outlined d-block">account_circle</span>
+                    <span *ngIf="isSidebarExpanded">{{loggedInUser}}</span>
+                </a>
+            </li>
+            <li class="nav-item py-1">
+                <a class="nav-link" routerLink="/logout" routerLinkActive="active">
+                    <span class="material-symbols-outlined d-block">logout</span>
+                    <span *ngIf="isSidebarExpanded">Logout</span>
+                </a>
+            </li>
+        </div>
     </ul>
 </div>
