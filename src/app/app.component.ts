@@ -3,7 +3,6 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 import { CommonModule } from '@angular/common'
 import { FooterComponent } from './components/footer/footer.component'
 import { NotificationComponent } from './components/notification/notification.component'
-import { HeaderComponent } from './components/header/header.component'
 import { SidebarComponent } from './components/sidebar/sidebar.component'
 
 @Component({
@@ -16,7 +15,6 @@ import { SidebarComponent } from './components/sidebar/sidebar.component'
         RouterLinkActive,
         FooterComponent,
         NotificationComponent,
-        HeaderComponent,
         SidebarComponent,
     ],
     templateUrl: './app.component.html',
