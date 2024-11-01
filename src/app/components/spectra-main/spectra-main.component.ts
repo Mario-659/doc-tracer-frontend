@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { AppGridComponent } from '../app-grid/app-grid.component'
 import { Observable } from 'rxjs'
-import { SpectrumGridRow } from '../../models/spectrum-grid-row'
+import { SpectrumGridRow } from '../../models/api/spectrum-grid-row'
 import { DataService } from '../../services/data.service'
 import { ColDef } from 'ag-grid-community'
 

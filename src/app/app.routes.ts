@@ -11,6 +11,7 @@ import { MeasuringDevicesMainComponent } from './components/sample-devices-main/
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component'
 import { SpectrumDetailsComponent } from './components/spectrum-details/spectrum-details.component'
 import { EditSpectrumComponent } from './components/edit-spectrum/edit-spectrum.component'
+import { AdminControlComponent } from './components/admin-control/admin-control.component'
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -50,6 +51,11 @@ export const routes: Routes = [
         path: 'measuring-devices',
         component: MeasuringDevicesMainComponent,
         canActivate: [authGuard],
+    },
+    {
+        path: 'admin',
+        component: AdminControlComponent,
+        canActivate: [authGuard], // TODO add entitlements guard
     },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: '**', component: PageNotFoundComponent },

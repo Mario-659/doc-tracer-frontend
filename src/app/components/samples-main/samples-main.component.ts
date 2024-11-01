@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { AppGridComponent } from '../app-grid/app-grid.component'
 import { Observable } from 'rxjs'
-import { Sample } from '../../models/sample'
+import { Sample } from '../../models/api/sample'
 import { DataService } from '../../services/data.service'
 import { ColDef } from 'ag-grid-community'
 

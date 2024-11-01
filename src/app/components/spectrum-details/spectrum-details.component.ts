@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { Observable, switchMap } from 'rxjs'
 import { DataService } from '../../services/data.service'
 import { AsyncPipe, DatePipe, JsonPipe, NgIf } from '@angular/common'
-import { Spectrum } from '../../models/spectrum'
+import { Spectrum } from '../../models/api/spectrum'
 import { NotificationService } from '../../services/notification.service'
 import { AppNotification, NotificationType } from '../../models/notification'
 

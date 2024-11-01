@@ -3,6 +3,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router'
 import { AsyncPipe, NgClass, NgForOf, NgIf, NgOptimizedImage } from '@angular/common'
 import { AuthService } from '../../services/auth.service'
 import { Observable } from 'rxjs'
+import { User } from '../../models/User'
 
 @Component({
   selector: 'app-sidebar',
@@ -21,7 +22,7 @@ import { Observable } from 'rxjs'
 })
 export class SidebarComponent {
     isSidebarExpanded = false;
-    protected loggedInUser$: Observable<string | null>
+    protected loggedInUser$: Observable<User | null>
     navItems = [
         { label: 'Dashboard', icon: 'dashboard', link: '/dashboard' },
         { label: 'Spectra', icon: 'query_stats', link: '/spectra' },

@@ -3,16 +3,19 @@ import { HttpClient } from '@angular/common/http'
 import { BehaviorSubject, Observable, of } from 'rxjs'
 import { tap } from 'rxjs/operators'
 import { environment } from '../../environments/environment'
-import { LoginPayload } from '../models/login-payload'
-import { RegisterPayload } from '../models/register-payload'
+import { LoginPayload } from '../models/api/login-payload'
+import { RegisterPayload } from '../models/api/register-payload'
+import { jwtDecode } from 'jwt-decode'
+import { User } from '../models/User'
+
+const TOKEN_LOCALSTORAGE_KEY = 'jwt_token'
+const USER_LOCALSTORAGE_KEY = 'jwt_user'
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
-    private tokenKey = 'auth_token'
-    private usernameKey = 'username'
-    private loggedInUser = new BehaviorSubject<string | null>(null)
+    private loggedInUser = new BehaviorSubject<User | null>(null)
 
     public loggedInUser$ = this.loggedInUser.asObservable()
 
@@ -30,10 +33,17 @@ export class AuthService {
             }>(`${environment.apiUrl}/auth/login`, payload)
             .pipe(
                 tap((response) => {
-                    localStorage.setItem(this.tokenKey, response.token)
-                    localStorage.setItem(this.usernameKey, payload.username)
+                    localStorage.setItem(TOKEN_LOCALSTORAGE_KEY, response.token)
 
-                    this.loggedInUser.next(payload.username)
+                    const decoded: any = jwtDecode(response.token)
+                    const user: User = {
+                        username: decoded.sub,
+                        roles: decoded.roles,
+                        expirationTimestamp: decoded.exp
+                    }
+
+                    localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify(user))
+                    this.loggedInUser.next(user)
                 })
             )
     }
@@ -45,20 +55,22 @@ export class AuthService {
     }
 
     logout(): void {
-        localStorage.removeItem(this.tokenKey)
-        localStorage.removeItem(this.usernameKey)
+        localStorage.removeItem(TOKEN_LOCALSTORAGE_KEY)
+        localStorage.removeItem(USER_LOCALSTORAGE_KEY)
         this.loggedInUser.next(null)
     }
 
     isAuthenticated(): boolean {
-        return !!localStorage.getItem(this.tokenKey)
+        return !!localStorage.getItem(TOKEN_LOCALSTORAGE_KEY)
     }
 
     getAuthToken(): string | null {
-        return localStorage.getItem(this.tokenKey)
+        return localStorage.getItem(TOKEN_LOCALSTORAGE_KEY)
     }
 
-    getUser(): string | null {
-        return localStorage.getItem(this.usernameKey)
+    private getUser(): User | null {
+        const value = localStorage.getItem(USER_LOCALSTORAGE_KEY)
+        if (value) return JSON.parse(value)
+        return null
     }
 }

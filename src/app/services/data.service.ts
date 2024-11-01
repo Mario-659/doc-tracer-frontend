@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
-import { Spectrum } from '../models/spectrum'
+import { Spectrum } from '../models/api/spectrum'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../environments/environment'
-import { SpectrumGridRow } from '../models/spectrum-grid-row'
-import { Device } from '../models/device'
-import { SpectrumType } from '../models/spectrum-type'
-import { SpectrumUpdateRequest } from '../models/spectrum-update-request'
-import { Sample } from '../models/sample'
+import { SpectrumGridRow } from '../models/api/spectrum-grid-row'
+import { Device } from '../models/api/device'
+import { SpectrumType } from '../models/api/spectrum-type'
+import { SpectrumUpdateRequest } from '../models/api/spectrum-update-request'
+import { Sample } from '../models/api/sample'
 
 @Injectable({
     providedIn: 'root',

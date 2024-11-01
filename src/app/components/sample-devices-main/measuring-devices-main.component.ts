@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { DataService } from '../../services/data.service'
 import { Observable } from 'rxjs'
-import { Device } from '../../models/device'
+import { Device } from '../../models/api/device'
 import { ColDef } from 'ag-grid-community'
 import { AsyncPipe, NgIf } from '@angular/common'
 import { AgGridAngular } from 'ag-grid-angular'
