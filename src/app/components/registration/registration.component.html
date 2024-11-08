@@ -6,35 +6,72 @@
                 <form [formGroup]="registrationFormGroup" (ngSubmit)="register()">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" id="username" class="form-control rounded-3" formControlName="username" required />
+                        <input
+                            type="text"
+                            id="username"
+                            class="form-control rounded-3"
+                            formControlName="username"
+                            required
+                        />
                     </div>
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" id="password" class="form-control rounded-3" formControlName="password" required />
+                        <input
+                            type="password"
+                            id="password"
+                            class="form-control rounded-3"
+                            formControlName="password"
+                            required
+                        />
                     </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" id="email" class="form-control rounded-3" formControlName="email" required />
+                        <input
+                            type="email"
+                            id="email"
+                            class="form-control rounded-3"
+                            formControlName="email"
+                            required
+                        />
                     </div>
 
                     <div class="mb-3">
                         <label for="firstName" class="form-label">First Name</label>
-                        <input type="text" id="firstName" class="form-control rounded-3" formControlName="firstName" required />
+                        <input
+                            type="text"
+                            id="firstName"
+                            class="form-control rounded-3"
+                            formControlName="firstName"
+                            required
+                        />
                     </div>
 
                     <div class="mb-3">
                         <label for="lastName" class="form-label">Last Name</label>
-                        <input type="text" id="lastName" class="form-control rounded-3" formControlName="lastName" required />
+                        <input
+                            type="text"
+                            id="lastName"
+                            class="form-control rounded-3"
+                            formControlName="lastName"
+                            required
+                        />
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-lg w-100 rounded-3" [disabled]="!registrationFormGroup.valid">
+                    <button
+                        type="submit"
+                        class="btn btn-primary btn-lg w-100 rounded-3"
+                        [disabled]="!registrationFormGroup.valid"
+                    >
                         Register
                     </button>
 
                     <div class="text-center mt-3">
-                        <small class="text-muted">Already have an account? <a routerLink="/login" class="text-decoration-none">Sign In</a></small>
+                        <small class="text-muted"
+                            >Already have an account?
+                            <a routerLink="/login" class="text-decoration-none">Sign In</a></small
+                        >
                     </div>
                 </form>
             </div>

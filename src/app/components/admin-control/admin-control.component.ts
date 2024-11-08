@@ -1,12 +1,10 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
-  selector: 'app-admin-control',
-  standalone: true,
-  imports: [],
-  templateUrl: './admin-control.component.html',
-  styleUrl: './admin-control.component.scss'
+    selector: 'app-admin-control',
+    standalone: true,
+    imports: [],
+    templateUrl: './admin-control.component.html',
+    styleUrl: './admin-control.component.scss',
 })
-export class AdminControlComponent {
-
-}
+export class AdminControlComponent {}

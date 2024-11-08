@@ -8,17 +8,14 @@ import { ColDef } from 'ag-grid-community'
 @Component({
     selector: 'app-samples-main',
     standalone: true,
-    imports: [
-        AppGridComponent,
-    ],
+    imports: [AppGridComponent],
     templateUrl: './samples-main.component.html',
     styleUrl: './samples-main.component.scss',
 })
 export class SamplesMainComponent implements OnInit {
     $samples: Observable<Sample[]> | undefined
 
-    constructor(private dataService: DataService) {
-    }
+    constructor(private dataService: DataService) {}
 
     ngOnInit() {
         this.$samples = this.dataService.getSamples()

@@ -5,6 +5,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http'
 import { authInterceptor } from './interceptors/auth.interceptor'
 import { httpErrorNotificationInterceptor } from './interceptors/http-error-notification.interceptor'
 import { httpUnauthorizedErrorInterceptor } from './interceptors/http-unauthorized-error.interceptor'
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -13,5 +14,6 @@ export const appConfig: ApplicationConfig = {
         provideHttpClient(
             withInterceptors([authInterceptor, httpErrorNotificationInterceptor, httpUnauthorizedErrorInterceptor])
         ),
+        provideAnimationsAsync(),
     ],
 }

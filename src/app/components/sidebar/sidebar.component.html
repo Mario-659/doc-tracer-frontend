@@ -1,17 +1,14 @@
-<div class="d-flex flex-column flex-shrink-0 sidebar" [ngClass]="{ 'expanded': isSidebarExpanded, 'collapsed': !isSidebarExpanded }">
-
+<div
+    class="d-flex flex-column flex-shrink-0 sidebar"
+    [ngClass]="{ expanded: isSidebarExpanded, collapsed: !isSidebarExpanded }"
+>
     <a href="/" class="d-block mx-auto mb-auto navbar-brand logo-container" title="Document Analysis App">
         <img ngSrc="/logo.png" alt="Document Analysis App" class="logo-image" height="500" width="500" />
     </a>
 
     <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
         <li class="nav-item py-1" *ngFor="let item of navItems">
-            <a
-                class="nav-link py-3"
-                [routerLink]="item.link"
-                routerLinkActive="active"
-                aria-current="page"
-            >
+            <a class="nav-link py-3" [routerLink]="item.link" routerLinkActive="active" aria-current="page">
                 <span class="material-symbols-outlined d-block">{{ item.icon }}</span>
                 <span *ngIf="isSidebarExpanded" class="">{{ item.label }}</span>
             </a>
@@ -27,7 +24,7 @@
             <li class="nav-item py-1">
                 <a class="nav-link">
                     <span class="material-symbols-outlined d-block">account_circle</span>
-                    <span *ngIf="isSidebarExpanded">{{loggedInUser.username}}</span>
+                    <span *ngIf="isSidebarExpanded">{{ loggedInUser.username }}</span>
                 </a>
             </li>
             <li class="nav-item py-1">

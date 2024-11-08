@@ -39,7 +39,7 @@ export class AuthService {
                     const user: User = {
                         username: decoded.sub,
                         roles: decoded.roles,
-                        expirationTimestamp: decoded.exp
+                        expirationTimestamp: decoded.exp,
                     }
 
                     localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify(user))
