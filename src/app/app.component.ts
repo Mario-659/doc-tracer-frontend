@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common'
 import { FooterComponent } from './components/footer/footer.component'
 import { NotificationComponent } from './components/notification/notification.component'
 import { SidebarComponent } from './components/sidebar/sidebar.component'
+import { LayoutComponent } from './layout/layout.component'
 
 @Component({
     selector: 'app-root',
@@ -16,6 +17,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component'
         FooterComponent,
         NotificationComponent,
         SidebarComponent,
+        LayoutComponent,
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
