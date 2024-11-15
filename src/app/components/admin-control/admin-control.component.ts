@@ -24,7 +24,6 @@ import { AsyncPipe, NgIf } from '@angular/common'
 export class AdminControlComponent implements OnInit {
     $users: Observable<UserResponse[]> | undefined
     private gridApi: GridApi<any> | undefined
-    private gridColumnApi: any
 
     protected modified: boolean = false
 
@@ -49,7 +48,6 @@ export class AdminControlComponent implements OnInit {
 
     onGridReady(params: any) {
         this.gridApi = params.api;
-        this.gridColumnApi = params.columnApi;
     }
 
     onCellValueChanged(event: any) {
@@ -74,19 +72,15 @@ export class AdminControlComponent implements OnInit {
             roles: Object.keys(Role)
                 .filter(role => row[role.toLowerCase()])
                 .map(role => role.toUpperCase()),
-            isActive: row.isActive,
+            isActive: row.active,
         }));
 
 
         this.dataService.updateUsers(payload).subscribe({
-            next: (response) => {
-                console.log("Changes saved successfully:", response);
+            next: () => {
                 this.modified = false;
-                this.$users = this.dataService.getUsers();
-            },
-            error: (error) => {
-                console.error("Error saving changes:", error);
-            },
+                this.loadData();
+            }
         });
     }
 
