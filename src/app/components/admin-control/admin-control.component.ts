@@ -46,11 +46,35 @@ export class AdminControlComponent implements OnInit {
     }
 
     saveModifiedRows() {
-        const allRowData: any = [];
+        const allRowData: any[] = [];
         this.gridApi?.forEachNode(node => allRowData.push(node.data));
+
         const modifiedRows = allRowData.filter((row: any) => row['modified']);
 
-        console.log(modifiedRows)
+        if (modifiedRows.length === 0) {
+            console.log("No changes to save.");
+            return;
+        }
+
+        const payload = modifiedRows.map(row => ({
+            id: row.id,
+            roles: Object.keys(Role)
+                .filter(role => row[role.toLowerCase()])
+                .map(role => role.toUpperCase()),
+            isActive: row.isActive,
+        }));
+
+
+        this.dataService.updateUsers(payload).subscribe({
+            next: (response) => {
+                console.log("Changes saved successfully:", response);
+                this.modified = false;
+                this.$users = this.dataService.getUsers();
+            },
+            error: (error) => {
+                console.error("Error saving changes:", error);
+            },
+        });
     }
 
     roleColumns: ColDef[] = Object.keys(Role).map(role => ({

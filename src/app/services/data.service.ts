@@ -52,4 +52,8 @@ export class DataService {
     getUsers(): Observable<UserResponse[]> {
         return this.http.get<UserResponse[]>(`${environment.apiUrl}/admin/users`)
     }
+
+    updateUsers(payload: any[]) {
+        return this.http.put(`${environment.apiUrl}/admin/users/bulk-update`, payload)
+    }
 }
