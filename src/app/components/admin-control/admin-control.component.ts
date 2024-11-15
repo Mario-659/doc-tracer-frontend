@@ -3,7 +3,7 @@ import { AgGridAngular } from 'ag-grid-angular'
 import { AppGridComponent } from '../app-grid/app-grid.component'
 import { ColDef } from 'ag-grid-community'
 import { DataService } from '../../services/data.service'
-import { Observable } from 'rxjs'
+import { map, Observable } from 'rxjs'
 import { UserResponse } from '../../models/api/user-response'
 import { Role } from '../../models/User'
 import { GridApi, GridReadyEvent } from '@ag-grid-community/core'
@@ -31,7 +31,20 @@ export class AdminControlComponent implements OnInit {
     constructor(private dataService: DataService) { }
 
     ngOnInit() {
-        this.$users = this.dataService.getUsers()
+        this.loadData()
+    }
+
+    loadData() {
+        this.$users = this.dataService.getUsers().pipe(
+            map(users =>
+                users.map(user => ({
+                    ...user,
+                    admin: user.roles.includes('ADMIN'),
+                    viewer: user.roles.includes('VIEWER'),
+                    editor: user.roles.includes('EDITOR'),
+                }))
+            )
+        );
     }
 
     onGridReady(params: any) {
@@ -109,9 +122,12 @@ export class AdminControlComponent implements OnInit {
         ...this.roleColumns,
         {
             headerName: 'Is Active',
-            field: 'isActive',
+            field: 'active',
             cellRenderer: 'agCheckboxCellRenderer',
             editable: true,
+            cellRendererParams: {
+                checkbox: true,
+            },
             flex: 1,
         },
         {
