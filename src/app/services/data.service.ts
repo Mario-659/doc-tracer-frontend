@@ -8,6 +8,8 @@ import { Device } from '../models/api/device'
 import { SpectrumType } from '../models/api/spectrum-type'
 import { SpectrumUpdateRequest } from '../models/api/spectrum-update-request'
 import { Sample } from '../models/api/sample'
+import { User } from '../models/User'
+import { UserResponse } from '../models/api/user-response'
 
 @Injectable({
     providedIn: 'root',
@@ -45,5 +47,9 @@ export class DataService {
 
     getSample(id: number): Observable<Sample> {
         return this.http.get<Sample>(`${environment.apiUrl}/samples/${id}`)
+    }
+
+    getUsers(): Observable<UserResponse[]> {
+        return this.http.get<UserResponse[]>(`${environment.apiUrl}/admin/users`)
     }
 }

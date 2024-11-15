@@ -1,6 +1,6 @@
 <div class="mt-2 mb-2">
     <div *ngIf="$rowData | async as rowData; else spinner">
-        <ag-grid-angular class="ag-theme-quartz" style="height: 500px" [rowData]="rowData" [columnDefs]="colDefs" />
+        <ag-grid-angular class="ag-theme-quartz" style="height: 500px" [rowData]="rowData" [columnDefs]="colDefs" [gridOptions]="gridOptions" />
     </div>
     <ng-template #spinner>
         <div class="d-flex justify-content-center">
