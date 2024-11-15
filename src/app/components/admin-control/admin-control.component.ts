@@ -31,42 +31,48 @@ export class AdminControlComponent implements OnInit {
             headerName: 'Id',
             field: 'id',
             filter: 'agNumberColumnFilter',
+            flex: 1,
         },
         {
-            headerName: 'username',
+            headerName: 'Username',
             field: 'username',
             filter: 'agTextColumnFilter',
+            flex: 2,
         },
         {
             headerName: 'Email',
             field: 'email',
             filter: 'agTextColumnFilter',
+            flex: 2,
         },
         {
             headerName: 'Is Active',
             field: 'isActive',
             cellDataType: 'boolean',
-            // filter: 'agTextColumnFilter',
+            flex: 1,
         },
         {
             headerName: 'Last Login',
             field: 'lastLogin',
             filter: 'agDateColumnFilter',
             valueFormatter: this.formatDate,
+            flex: 2,
         },
         {
             headerName: 'Created At',
             field: 'createdAt',
             filter: 'agDateColumnFilter',
             valueFormatter: this.formatDate,
+            flex: 2,
         },
         {
             headerName: 'Updated At',
             field: 'updatedAt',
             filter: 'agDateColumnFilter',
             valueFormatter: this.formatDate,
+            flex: 2,
         },
-    ]
+    ];
 
     formatDate(params: any): string {
         const date = new Date(params.value)
