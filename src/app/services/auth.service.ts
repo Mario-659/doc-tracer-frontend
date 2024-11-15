@@ -15,14 +15,12 @@ const USER_LOCALSTORAGE_KEY = 'jwt_user'
     providedIn: 'root',
 })
 export class AuthService {
-    private loggedInUser = new BehaviorSubject<User | null>(null)
-
-    public loggedInUser$ = this.loggedInUser.asObservable()
+    public loggedInUser$ = new BehaviorSubject<User | null>(null)
 
     constructor(private http: HttpClient) {
         const loggedInUser = this.getUser()
         if (loggedInUser) {
-            this.loggedInUser.next(loggedInUser)
+            this.loggedInUser$.next(loggedInUser)
         }
     }
 
@@ -43,7 +41,7 @@ export class AuthService {
                     }
 
                     localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify(user))
-                    this.loggedInUser.next(user)
+                    this.loggedInUser$.next(user)
                 })
             )
     }
@@ -57,7 +55,7 @@ export class AuthService {
     logout(): void {
         localStorage.removeItem(TOKEN_LOCALSTORAGE_KEY)
         localStorage.removeItem(USER_LOCALSTORAGE_KEY)
-        this.loggedInUser.next(null)
+        this.loggedInUser$.next(null)
     }
 
     isAuthenticated(): boolean {

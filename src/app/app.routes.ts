@@ -53,7 +53,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
     },
     {
-        path: 'admin',
+        path: 'admin-control',
         component: AdminControlComponent,
         canActivate: [authGuard], // TODO add entitlements guard
     },

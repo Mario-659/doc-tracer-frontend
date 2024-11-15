@@ -24,10 +24,21 @@
         </button>
 
         <div *ngIf="this.loggedInUser$ | async as loggedInUser">
+            <li *ngIf="roleService.hasRole(Role.ADMIN)" class="nav-item py-1">
+                <a
+                    class="nav-link"
+                    [routerLink]="'/admin-control'"
+                    routerLinkActive="active"
+                    aria-current="page"
+                >
+                    <span class="material-symbols-outlined d-block">shield_person</span>
+                    <span *ngIf="isSidebarExpanded">Admin Panel</span>
+                </a>
+            </li>
             <li class="nav-item py-1">
                 <a class="nav-link">
                     <span class="material-symbols-outlined d-block">account_circle</span>
-                    <span *ngIf="isSidebarExpanded">{{loggedInUser.username}}</span>
+                    <span *ngIf="isSidebarExpanded" class="font-italic">{{loggedInUser.username}}</span>
                 </a>
             </li>
             <li class="nav-item py-1">

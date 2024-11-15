@@ -3,7 +3,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router'
 import { AsyncPipe, NgClass, NgForOf, NgIf, NgOptimizedImage } from '@angular/common'
 import { AuthService } from '../../services/auth.service'
 import { Observable } from 'rxjs'
-import { User } from '../../models/User'
+import { Role, User } from '../../models/User'
+import { RoleService } from '../../services/role.service'
 
 @Component({
   selector: 'app-sidebar',
@@ -21,6 +22,8 @@ import { User } from '../../models/User'
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
+    protected readonly Role = Role
+
     isSidebarExpanded = false;
     protected loggedInUser$: Observable<User | null>
     navItems = [
@@ -31,7 +34,10 @@ export class SidebarComponent {
         { label: 'Measuring Devices', icon: 'tablet_camera', link: '/measuring-devices' }
     ];
 
-    constructor(private authService: AuthService) {
+    constructor(
+        private authService: AuthService,
+        protected roleService: RoleService
+    ) {
         this.loggedInUser$ = this.authService.loggedInUser$
     }
 
