@@ -6,6 +6,8 @@ import { DataService } from '../../services/data.service'
 import { Observable } from 'rxjs'
 import { UserResponse } from '../../models/api/user-response'
 import { Role } from '../../models/User'
+import { GridApi, GridReadyEvent } from '@ag-grid-community/core'
+import { AsyncPipe, NgIf } from '@angular/common'
 
 @Component({
   selector: 'app-admin-control',
@@ -13,17 +15,42 @@ import { Role } from '../../models/User'
     imports: [
         AgGridAngular,
         AppGridComponent,
+        NgIf,
+        AsyncPipe,
     ],
   templateUrl: './admin-control.component.html',
   styleUrl: './admin-control.component.scss'
 })
 export class AdminControlComponent implements OnInit {
     $users: Observable<UserResponse[]> | undefined
+    private gridApi: GridApi<any> | undefined
+    private gridColumnApi: any
+
+    protected modified: boolean = false
 
     constructor(private dataService: DataService) { }
 
     ngOnInit() {
         this.$users = this.dataService.getUsers()
+    }
+
+    onGridReady(params: any) {
+        this.gridApi = params.api;
+        this.gridColumnApi = params.columnApi;
+    }
+
+    onCellValueChanged(event: any) {
+        this.modified = true
+        console.log(event.data)
+        event.data.modified = true;
+    }
+
+    saveModifiedRows() {
+        const allRowData: any = [];
+        this.gridApi?.forEachNode(node => allRowData.push(node.data));
+        const modifiedRows = allRowData.filter((row: any) => row['modified']);
+
+        console.log(modifiedRows)
     }
 
     roleColumns: ColDef[] = Object.keys(Role).map(role => ({
