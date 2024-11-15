@@ -5,6 +5,7 @@ import { ColDef } from 'ag-grid-community'
 import { DataService } from '../../services/data.service'
 import { Observable } from 'rxjs'
 import { UserResponse } from '../../models/api/user-response'
+import { Role } from '../../models/User'
 
 @Component({
   selector: 'app-admin-control',
@@ -25,6 +26,15 @@ export class AdminControlComponent implements OnInit {
         this.$users = this.dataService.getUsers()
     }
 
+    roleColumns: ColDef[] = Object.keys(Role).map(role => ({
+        field: role.toLowerCase(),
+        cellRenderer: 'agCheckboxCellRenderer',
+        cellRendererParams: {
+            checkbox: true,
+        },
+        editable: true,
+        flex: 1,
+    }));
 
     colDefs: ColDef[] = [
         {
@@ -45,10 +55,12 @@ export class AdminControlComponent implements OnInit {
             filter: 'agTextColumnFilter',
             flex: 2,
         },
+        ...this.roleColumns,
         {
             headerName: 'Is Active',
             field: 'isActive',
-            cellDataType: 'boolean',
+            cellRenderer: 'agCheckboxCellRenderer',
+            editable: true,
             flex: 1,
         },
         {
@@ -71,7 +83,7 @@ export class AdminControlComponent implements OnInit {
             filter: 'agDateColumnFilter',
             valueFormatter: this.formatDate,
             flex: 2,
-        },
+        }
     ];
 
     formatDate(params: any): string {
