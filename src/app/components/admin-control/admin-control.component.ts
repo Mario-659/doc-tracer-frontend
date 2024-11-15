@@ -7,7 +7,8 @@ import { map, Observable } from 'rxjs'
 import { UserResponse } from '../../models/api/user-response'
 import { Role } from '../../models/User'
 import { GridApi, GridReadyEvent } from '@ag-grid-community/core'
-import { AsyncPipe, NgIf } from '@angular/common'
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common'
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-admin-control',
@@ -17,6 +18,7 @@ import { AsyncPipe, NgIf } from '@angular/common'
         AppGridComponent,
         NgIf,
         AsyncPipe,
+        NgForOf,
     ],
   templateUrl: './admin-control.component.html',
   styleUrl: './admin-control.component.scss'
@@ -26,6 +28,7 @@ export class AdminControlComponent implements OnInit {
     private gridApi: GridApi<any> | undefined
 
     protected modified: boolean = false
+    protected pendingChanges: any[] = [];
 
     constructor(private dataService: DataService) { }
 
@@ -67,7 +70,7 @@ export class AdminControlComponent implements OnInit {
             return;
         }
 
-        const payload = modifiedRows.map(row => ({
+        this.pendingChanges = modifiedRows.map(row => ({
             id: row.id,
             roles: Object.keys(Role)
                 .filter(role => row[role.toLowerCase()])
@@ -75,13 +78,32 @@ export class AdminControlComponent implements OnInit {
             isActive: row.active,
         }));
 
+        const confirmationModalElement = document.getElementById('confirmationModal');
+        if (confirmationModalElement) {
+            const confirmationModal = new Modal(confirmationModalElement);
+            confirmationModal.show();
+        }
+    }
 
-        this.dataService.updateUsers(payload).subscribe({
-            next: () => {
+
+    confirmSave() {
+        this.dataService.updateUsers(this.pendingChanges).subscribe({
+            next: (response) => {
                 this.modified = false;
-                this.loadData();
-            }
+                this.pendingChanges = [];
+                this.$users = this.dataService.getUsers(); // Refresh the data
+            },
+            error: (error) => {
+                console.error("Error saving changes:", error);
+            },
         });
+
+        const confirmationModalElement = document.getElementById('confirmationModal');
+        if (confirmationModalElement) {
+            const confirmationModal = new Modal(confirmationModalElement);
+            confirmationModal.hide();
+        }
+
     }
 
     roleColumns: ColDef[] = Object.keys(Role).map(role => ({
