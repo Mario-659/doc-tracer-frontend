@@ -75,7 +75,7 @@ export class AdminControlComponent implements OnInit {
         const rolesToRemove = currentRoles.filter((role: any) => !updatedRoles.includes(role));
 
         const hasRoleChanges = rolesToAdd.length > 0 || rolesToRemove.length > 0;
-        const hasActivationChange = data.isActive !== event.oldValue?.isActive;
+        const hasActivationChange = data.active !== event.oldValue?.active;
 
         if (hasRoleChanges || hasActivationChange) {
             const existingChangeIndex = this.pendingChanges.findIndex(change => change.id === data.id);
@@ -85,7 +85,7 @@ export class AdminControlComponent implements OnInit {
                     username: data.username,
                     rolesToAdd,
                     rolesToRemove,
-                    isActive: data.isActive,
+                    isActive: data.active,
                 };
             } else {
                 this.pendingChanges.push({
@@ -93,7 +93,7 @@ export class AdminControlComponent implements OnInit {
                     username: data.username,
                     rolesToAdd,
                     rolesToRemove,
-                    isActive: data.isActive,
+                    isActive: data.active,
                 });
             }
         } else {
