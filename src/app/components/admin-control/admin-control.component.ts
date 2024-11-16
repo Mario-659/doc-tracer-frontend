@@ -6,9 +6,18 @@ import { DataService } from '../../services/data.service'
 import { map, Observable } from 'rxjs'
 import { UserResponse } from '../../models/api/user-response'
 import { Role } from '../../models/User'
-import { GridApi, GridReadyEvent } from '@ag-grid-community/core'
+import { GridApi } from '@ag-grid-community/core'
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common'
-import { Modal } from 'bootstrap';
+import { Modal } from 'bootstrap'
+import { NotificationService } from '../../services/notification.service'
+import { AppNotification, NotificationType } from '../../models/notification'
+
+// interface PendingChange {
+//     userId: string,
+//     rolesToAdd: string[],
+//     rolesToRemove: string[],
+//     activationSwitch:
+// }
 
 @Component({
   selector: 'app-admin-control',
@@ -30,7 +39,9 @@ export class AdminControlComponent implements OnInit {
     protected modified: boolean = false
     protected pendingChanges: any[] = [];
 
-    constructor(private dataService: DataService) { }
+    constructor(
+        private dataService: DataService,
+        private notificationService: NotificationService) { }
 
     ngOnInit() {
         this.loadData()
@@ -54,30 +65,45 @@ export class AdminControlComponent implements OnInit {
     }
 
     onCellValueChanged(event: any) {
-        this.modified = true
-        console.log(event.data)
-        event.data.modified = true;
+        const { data } = event;
+        const currentRoles = data.roles || [];
+        const updatedRoles = Object.keys(Role)
+            .filter(role => data[role.toLowerCase()])
+            .map(role => role.toUpperCase());
+
+        const rolesToAdd = updatedRoles.filter(role => !currentRoles.includes(role));
+        const rolesToRemove = currentRoles.filter((role: any) => !updatedRoles.includes(role));
+
+        const hasRoleChanges = rolesToAdd.length > 0 || rolesToRemove.length > 0;
+        const hasActivationChange = data.isActive !== event.oldValue?.isActive;
+
+        if (hasRoleChanges || hasActivationChange) {
+            const existingChangeIndex = this.pendingChanges.findIndex(change => change.id === data.id);
+            if (existingChangeIndex > -1) {
+                this.pendingChanges[existingChangeIndex] = {
+                    id: data.id,
+                    username: data.username,
+                    rolesToAdd,
+                    rolesToRemove,
+                    isActive: data.isActive,
+                };
+            } else {
+                this.pendingChanges.push({
+                    id: data.id,
+                    username: data.username,
+                    rolesToAdd,
+                    rolesToRemove,
+                    isActive: data.isActive,
+                });
+            }
+        } else {
+            this.pendingChanges = this.pendingChanges.filter(change => change.id !== data.id);
+        }
+
+        this.modified = this.pendingChanges.length > 0;
     }
 
     saveModifiedRows() {
-        const allRowData: any[] = [];
-        this.gridApi?.forEachNode(node => allRowData.push(node.data));
-
-        const modifiedRows = allRowData.filter((row: any) => row['modified']);
-
-        if (modifiedRows.length === 0) {
-            console.log("No changes to save.");
-            return;
-        }
-
-        this.pendingChanges = modifiedRows.map(row => ({
-            id: row.id,
-            roles: Object.keys(Role)
-                .filter(role => row[role.toLowerCase()])
-                .map(role => role.toUpperCase()),
-            isActive: row.active,
-        }));
-
         const confirmationModalElement = document.getElementById('confirmationModal');
         if (confirmationModalElement) {
             const confirmationModal = new Modal(confirmationModalElement);
@@ -85,17 +111,14 @@ export class AdminControlComponent implements OnInit {
         }
     }
 
-
     confirmSave() {
         this.dataService.updateUsers(this.pendingChanges).subscribe({
-            next: (response) => {
+            next: () => {
+                this.notificationService.showNotification(new AppNotification('Users have been successfully updated', NotificationType.success))
                 this.modified = false;
                 this.pendingChanges = [];
-                this.$users = this.dataService.getUsers(); // Refresh the data
-            },
-            error: (error) => {
-                console.error("Error saving changes:", error);
-            },
+                this.loadData();
+            }
         });
 
         const confirmationModalElement = document.getElementById('confirmationModal');

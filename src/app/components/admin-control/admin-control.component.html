@@ -26,10 +26,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to save the changes for following users?</p>
+                <p>Are you sure you want to save the following changes?</p>
                 <ul>
                     <li *ngFor="let change of pendingChanges">
-                        User ID: {{ change.id }}, Roles: {{ change.roles.join(', ') }}, Active: {{ change.isActive }}
+                        <strong>User:</strong> {{ change.username }}<br>
+                        <strong>Roles to Add:</strong> {{ change.rolesToAdd.join(', ') || 'None' }}<br>
+                        <strong>Roles to Remove:</strong> {{ change.rolesToRemove.join(', ') || 'None' }}<br>
+                        <strong>Active Status:</strong> {{ change.isActive ? 'Activate' : 'Deactivate' }}
                     </li>
                 </ul>
             </div>
@@ -40,3 +43,4 @@
         </div>
     </div>
 </div>
+
