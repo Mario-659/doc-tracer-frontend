@@ -24,6 +24,8 @@ export class SampleDetailsComponent implements OnInit {
         private notificationService: NotificationService,
         private router: Router
     ) {}
+    showProperties = true;
+    showSpectralData = true;
 
     ngOnInit() {
         this.sample$ = this.route.paramMap.pipe(
@@ -56,5 +58,13 @@ export class SampleDetailsComponent implements OnInit {
                 this.router.navigate(['/samples']);
             },
         });
+    }
+
+    toggleProperties() {
+        this.showProperties = !this.showProperties;
+    }
+
+    toggleSpectralData() {
+        this.showSpectralData = !this.showSpectralData;
     }
 }
