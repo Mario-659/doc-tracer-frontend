@@ -6,6 +6,9 @@ import { AsyncPipe, DatePipe, JsonPipe, NgIf } from '@angular/common'
 import { NotificationService } from '../../services/notification.service'
 import { AppNotification, NotificationType } from '../../models/notification'
 import { Sample } from '../../models/api/sample'
+import { Chart, registerables  } from 'chart.js'
+
+Chart.register(...registerables);
 
 @Component({
     selector: 'app-sample-details',
@@ -16,6 +19,11 @@ import { Sample } from '../../models/api/sample'
 })
 export class SampleDetailsComponent implements OnInit {
     sample$: Observable<Sample | undefined> | undefined
+    showProperties = true;
+    showSpectralData = true;
+    showChart = false;
+    chart: Chart | undefined;
+
     protected readonly JSON = JSON
 
     constructor(
@@ -24,8 +32,6 @@ export class SampleDetailsComponent implements OnInit {
         private notificationService: NotificationService,
         private router: Router
     ) {}
-    showProperties = true;
-    showSpectralData = true;
 
     ngOnInit() {
         this.sample$ = this.route.paramMap.pipe(
@@ -88,5 +94,77 @@ export class SampleDetailsComponent implements OnInit {
 
     toggleSpectralData() {
         this.showSpectralData = !this.showSpectralData;
+    }
+
+    toggleChart(sample: Sample): void {
+        this.showChart = !this.showChart;
+
+        if (this.showChart) {
+            this.renderChart(sample.spectralData)
+        } else {
+            this.destroyChart();
+        }
+    }
+
+    private renderChart(spectralData: any): void {
+        spectralData = JSON.parse(spectralData)
+
+        // const labels = spectralData.map((point: { wavelength: number }) => point.wavelength);
+        // const data = spectralData.map((point: { intensity: number }) => point.intensity);
+
+        // console.log(labels)
+        // console.log(data)
+
+        const ctx = document.getElementById('spectralDataChart') as HTMLCanvasElement;
+
+        console.log(ctx)
+
+        if (this.chart) {
+            this.chart.destroy();
+        }
+
+        this.chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: spectralData.map((row: any) => row.wavelenght),
+                datasets: [
+                    {
+                        label: 'Spectral Intensity',
+                        data: spectralData.map((row: any) => row.intensity),
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        tension: 0.3,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Wavelength (nm)',
+                        },
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Intensity',
+                        },
+                    },
+                },
+            },
+        });
+    }
+
+    private destroyChart(): void {
+        if (this.chart) {
+            this.chart.destroy();
+        }
     }
 }
