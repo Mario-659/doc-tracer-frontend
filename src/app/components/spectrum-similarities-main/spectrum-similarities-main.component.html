@@ -1,1 +1,41 @@
-<p>spectrum-similarities-main works!</p>
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title">Spectrum Comparisons</h2>
+            <p class="card-subtitle py-2">Select samples to compare their spectral data.</p>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="sample1" class="form-label">Sample 1</label>
+                    <select
+                        id="sample1"
+                        class="form-select"
+                        [(ngModel)]="selectedSample1"
+                        (change)="updateChart()"
+                    >
+                        <option *ngFor="let sample of samples" [ngValue]="sample">
+                            {{ sample.name }}
+                        </option>
+                    </select>
+
+                </div>
+                <div class="col-md-6">
+                    <label for="sample2" class="form-label">Sample 2</label>
+                    <select
+                        id="sample2"
+                        class="form-select"
+                        [(ngModel)]="selectedSample2"
+                        (change)="updateChart()"
+                    >
+                        <option *ngFor="let sample of samples" [ngValue]="sample">{{ sample.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <h5 class="py-2">Comparison Chart</h5>
+                <canvas id="spectrumComparisonChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
