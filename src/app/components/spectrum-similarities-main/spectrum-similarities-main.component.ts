@@ -45,8 +45,7 @@ export class SpectrumSimilaritiesMainComponent implements OnInit {
 
     onMeasurementChange(): void {
         if (this.selectedMeasurement) {
-            // update to get by measurement id
-            this.dataService.getSamples().subscribe((samples) => {
+            this.dataService.getSamplesByMeasurementId(this.selectedMeasurement.id).subscribe((samples) => {
                 this.availableSamples = samples;
                 this.selectedSamples = [];
                 this.addEmptySample();

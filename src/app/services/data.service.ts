@@ -47,6 +47,10 @@ export class DataService {
         return this.http.get<Sample[]>(`${environment.apiUrl}/samples`)
     }
 
+    getSamplesByMeasurementId(measurementId: number): Observable<Sample[]> {
+        return this.http.get<Sample[]>(`${environment.apiUrl}/measurements/${measurementId}/samples`)
+    }
+
     getSample(id: number): Observable<Sample> {
         return this.http.get<Sample>(`${environment.apiUrl}/samples/${id}`)
     }

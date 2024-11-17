@@ -30,9 +30,7 @@ export class MeasurementDetailsComponent implements OnInit {
     ngOnInit(): void {
         const id = Number(this.route.snapshot.paramMap.get('id'))
         this.measurement$ = this.dataService.getMeasurement(id)
-        this.samples$ = this.dataService.getSamples().pipe(
-            map(samples => samples.filter((sample: any) => sample.measurementId === id)),
-        )
+        this.samples$ = this.dataService.getSamplesByMeasurementId(id)
     }
 
     expandedSections = {
