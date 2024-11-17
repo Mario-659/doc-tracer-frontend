@@ -66,16 +66,18 @@ export class SpectrumSimilaritiesMainComponent implements OnInit {
                     labels,
                     datasets: [
                         {
-                            label: `Sample 1: ${detailedSample1.name}`,
+                            label: detailedSample1.name,
                             data: this.mapToChartData(labels, labels1, data1),
-                            borderColor: 'rgba(255, 99, 132, 1)',
                             fill: false,
+                            pointRadius: 1,
+                            borderWidth: 1
                         },
                         {
-                            label: `Sample 2: ${detailedSample2.name}`,
+                            label: detailedSample2.name,
                             data: this.mapToChartData(labels, labels2, data2),
-                            borderColor: 'rgba(54, 162, 235, 1)',
                             fill: false,
+                            pointRadius: 1,
+                            borderWidth: 1
                         },
                     ],
                 },
