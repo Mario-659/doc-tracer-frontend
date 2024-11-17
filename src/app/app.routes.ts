@@ -12,6 +12,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { SpectrumDetailsComponent } from './components/spectrum-details/spectrum-details.component'
 import { EditSpectrumComponent } from './components/edit-spectrum/edit-spectrum.component'
 import { AdminControlComponent } from './components/admin-control/admin-control.component'
+import { MeasurementsComponent } from './components/measurements/measurements.component'
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -20,6 +21,11 @@ export const routes: Routes = [
     {
         path: 'dashboard',
         component: DashboardComponent,
+        canActivate: [authGuard],
+    },
+    {
+        path: 'measurements',
+        component: MeasurementsComponent,
         canActivate: [authGuard],
     },
     {

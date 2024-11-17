@@ -10,6 +10,8 @@ import { SpectrumUpdateRequest } from '../models/api/spectrum-update-request'
 import { Sample } from '../models/api/sample'
 import { User } from '../models/User'
 import { UserResponse } from '../models/api/user-response'
+import { Measurement } from '../models/api/measurement'
+import { MeasurementCreateRequest } from '../models/api/measurement-create-request'
 
 @Injectable({
     providedIn: 'root',
@@ -55,5 +57,25 @@ export class DataService {
 
     updateUsers(payload: any[]) {
         return this.http.put(`${environment.apiUrl}/admin/users/bulk-update`, payload)
+    }
+
+    getMeasurements(): Observable<Measurement[]> {
+        return this.http.get<Measurement[]>(`${environment.apiUrl}/measurements`);
+    }
+
+    getMeasurement(id: number): Observable<Measurement> {
+        return this.http.get<Measurement>(`${environment.apiUrl}/measurements/${id}`);
+    }
+
+    createMeasurement(payload: MeasurementCreateRequest): Observable<Measurement> {
+        return this.http.post<Measurement>(`${environment.apiUrl}/measurements`, payload);
+    }
+
+    updateMeasurement(id: number, payload: Partial<MeasurementCreateRequest>): Observable<Measurement> {
+        return this.http.put<Measurement>(`${environment.apiUrl}/measurements/${id}`, payload);
+    }
+
+    deleteMeasurement(id: number): Observable<void> {
+        return this.http.delete<void>(`${environment.apiUrl}/measurements/${id}`);
     }
 }
