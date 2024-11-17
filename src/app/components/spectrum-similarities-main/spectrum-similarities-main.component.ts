@@ -25,7 +25,6 @@ export class SpectrumSimilaritiesMainComponent implements OnInit {
     measurements: Measurement[] = [];
     availableSamples: Sample[] = [];
     selectedSamples: Sample[] = [];
-    loadedSamples: Sample[] = []
     selectedMeasurement: Measurement | null = null;
     chart: Chart | null = null;
 
@@ -47,6 +46,7 @@ export class SpectrumSimilaritiesMainComponent implements OnInit {
             this.dataService.getSamples().subscribe((samples) => {
                 this.availableSamples = samples;
                 this.selectedSamples = [];
+                this.addEmptySample();
                 this.updateChart();
             });
         }
@@ -70,7 +70,6 @@ export class SpectrumSimilaritiesMainComponent implements OnInit {
         forkJoin(
             this.selectedSamples.map(sample => this.dataService.getSample(sample.id))
         ).subscribe(loadedSamples => {
-            console.log(loadedSamples)
             const datasets = loadedSamples
                 .filter((sample) => sample !== null)
                 .map((sample, index) => {
@@ -78,7 +77,7 @@ export class SpectrumSimilaritiesMainComponent implements OnInit {
                     const data = this.extractIntensities(sample);
 
                     return {
-                        label: `Sample ${index + 1}: ${sample.name}`,
+                        label: `${sample.name}`,
                         data: this.mapToChartData(this.getAllLabels(loadedSamples), labels, data),
                         fill: false,
                         pointRadius: 1,
@@ -104,7 +103,6 @@ export class SpectrumSimilaritiesMainComponent implements OnInit {
     }
 
     extractWavelengths(sample: Sample): number[] {
-        console.log(sample)
         return JSON.parse(sample.spectralData).map((dp: any) => dp.wavelength);
     }
 
