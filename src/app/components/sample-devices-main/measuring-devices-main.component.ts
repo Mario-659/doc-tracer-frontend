@@ -29,36 +29,42 @@ export class MeasuringDevicesMainComponent implements OnInit {
             field: 'id',
             filter: 'agNumberColumnFilter',
             // onCellClicked: (event) => this.goDeviceDetails(event.data.id),
-            // cellClass: ['link-primary']
+            // cellClass: ['link-primary'],
+            flex: 1,
         },
         {
             headerName: 'Name',
             field: 'name',
             filter: 'agTextColumnFilter',
+            flex: 2,
         },
         {
             headerName: 'Description',
             field: 'description',
             filter: 'agTextColumnFilter',
+            flex: 3,
         },
         {
             headerName: 'Manufacturer',
             field: 'manufacturer',
             filter: 'agTextColumnFilter',
+            flex: 2,
         },
         {
             headerName: 'Created At',
             field: 'createdAt',
             filter: 'agDateColumnFilter',
             valueFormatter: this.formatDate,
+            flex: 2,
         },
         {
             headerName: 'Updated At',
             field: 'updatedAt',
             filter: 'agDateColumnFilter',
             valueFormatter: this.formatDate,
+            flex: 2,
         },
-    ]
+    ];
 
     // goDeviceDetails(id: number) {
     //     this.router.navigate(["/devices", id])
