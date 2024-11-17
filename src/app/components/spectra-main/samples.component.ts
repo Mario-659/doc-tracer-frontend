@@ -26,7 +26,7 @@ export class SamplesComponent implements OnInit {
     }
 
     goSampleDetails(sample: number) {
-        this.router.navigate([`sample/${sample}`])
+        this.router.navigate([`samples/${sample}`])
     }
 
     colDefs: ColDef[] = [
