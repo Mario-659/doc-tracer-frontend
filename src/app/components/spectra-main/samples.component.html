@@ -1,3 +1,11 @@
-<h1>Spectra</h1>
+<div class="card text-left">
+    <div class="card-body">
+        <h2 class="card-title">Samples</h2>
+<!--        <p class="card-subtitle">samples subtitle text</p>-->
+        <p class="display-6 py-4"></p>
+        <div class="mt-2 mb-2">
+            <app-grid [$rowData]="$spectra" [colDefs]="colDefs" />
+        </div>
+    </div>
+</div>
 
-<app-grid [$rowData]="$spectra" [colDefs]="colDefs" />
