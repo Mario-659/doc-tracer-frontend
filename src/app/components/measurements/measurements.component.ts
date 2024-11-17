@@ -28,7 +28,7 @@ export class MeasurementsComponent implements OnInit {
     }
 
     colDefs: ColDef[] = [
-        { headerName: 'ID', field: 'id', filter: 'agNumberColumnFilter' },
+        { headerName: 'ID', field: 'id', filter: 'agNumberColumnFilter', onCellClicked: (event) => this.goToDetails(event.data.id), cellClass: ['link-primary'] },
         { headerName: 'Covering Material', field: 'coveringMaterial', filter: 'agTextColumnFilter' },
         { headerName: 'Covered Material', field: 'coveredMaterial', filter: 'agTextColumnFilter' },
         { headerName: 'User', field: 'user', filter: 'agTextColumnFilter' },

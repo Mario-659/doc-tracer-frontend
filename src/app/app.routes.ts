@@ -13,6 +13,7 @@ import { SpectrumDetailsComponent } from './components/spectrum-details/spectrum
 import { EditSpectrumComponent } from './components/edit-spectrum/edit-spectrum.component'
 import { AdminControlComponent } from './components/admin-control/admin-control.component'
 import { MeasurementsComponent } from './components/measurements/measurements.component'
+import { MeasurementDetailsComponent } from './components/measurement-details/measurement-details.component'
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -26,6 +27,11 @@ export const routes: Routes = [
     {
         path: 'measurements',
         component: MeasurementsComponent,
+        canActivate: [authGuard],
+    },
+    {
+        path: 'measurements/:id',
+        component: MeasurementDetailsComponent,
         canActivate: [authGuard],
     },
     {
