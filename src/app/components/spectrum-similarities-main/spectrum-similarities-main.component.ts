@@ -11,6 +11,7 @@ import zoomPlugin from 'chartjs-plugin-zoom';
 Chart.register(...registerables, zoomPlugin);
 
 // TODO improve efficiency by storing loaded samples and updating chart instead of creating new one
+// TODO improve first zoom and view dragging
 @Component({
     selector: 'app-spectrum-similarities-main',
     standalone: true,
@@ -107,18 +108,37 @@ export class SpectrumSimilaritiesMainComponent implements OnInit {
                             zoom: {
                                 wheel: {
                                     enabled: true,
-                                    speed: 0.05
+                                    speed: 0.05,
                                 },
                                 pinch: {
-                                    enabled: true
+                                    enabled: true,
                                 },
                                 mode: 'xy',
-                            }
-                        }
-                    }
+                            },
+                            pan: {
+                                enabled: true,
+                                mode: 'xy',
+                                // threshold: 10,
+                            },
+                        },
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Wavelength (nm)',
+                            },
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Intensity',
+                            },
+                        },
+                    },
                 },
             });
-        })
+        });
     }
 
     extractWavelengths(sample: Sample): number[] {
