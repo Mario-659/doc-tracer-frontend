@@ -3,8 +3,8 @@ import { Chart, registerables } from 'chart.js'
 import { Sample } from '../../models/api/sample'
 import { DataService } from '../../services/data.service'
 import { FormsModule } from '@angular/forms'
-import { NgForOf } from '@angular/common'
-import { forkJoin } from 'rxjs'
+import { DatePipe, NgForOf, NgIf } from '@angular/common'
+import { Measurement } from '../../models/api/measurement'
 
 Chart.register(...registerables);
 
@@ -14,77 +14,86 @@ Chart.register(...registerables);
     imports: [
         FormsModule,
         NgForOf,
+        DatePipe,
+        NgIf,
     ],
     templateUrl: './spectrum-similarities-main.component.html',
     styleUrl: './spectrum-similarities-main.component.scss',
 })
 export class SpectrumSimilaritiesMainComponent implements OnInit {
-    samples: Sample[] = [];
-    selectedSample1: Sample | null = null;
-    selectedSample2: Sample | null = null;
+    measurements: Measurement[] = [];
+    availableSamples: Sample[] = [];
+    selectedSamples: Sample[] = [];
+    loadedSamples: Sample[] = []
+    selectedMeasurement: Measurement | null = null;
     chart: Chart | null = null;
 
     constructor(private dataService: DataService) {}
 
     ngOnInit(): void {
-        this.loadSamples();
+        this.loadMeasurements();
     }
 
-    loadSamples(): void {
-        this.dataService.getSamples().subscribe((samples) => {
-            this.samples = samples;
+    loadMeasurements(): void {
+        this.dataService.getMeasurements().subscribe((measurements) => {
+            this.measurements = measurements;
         });
     }
 
+    onMeasurementChange(): void {
+        if (this.selectedMeasurement) {
+            // update to get by measurement id
+            this.dataService.getSamples().subscribe((samples) => {
+                this.availableSamples = samples;
+                this.selectedSamples = [];
+                this.updateChart();
+            });
+        }
+    }
+
+    addEmptySample(): void {
+        // @ts-ignore
+        this.selectedSamples.push(null);
+    }
+
+    removeSample(index: number): void {
+        this.selectedSamples.splice(index, 1);
+        this.updateChart();
+    }
+
     updateChart(): void {
-        if (!this.selectedSample1 || !this.selectedSample2) {
+        if (this.selectedSamples.length === 0) {
             return;
         }
 
-        // Fetch details for selected samples
-        forkJoin([
-            this.dataService.getSample(this.selectedSample1.id),
-            this.dataService.getSample(this.selectedSample2.id),
-        ]).subscribe(([detailedSample1, detailedSample2]) => {
-            const labels1 = this.extractWavelengths(detailedSample1);
-            const data1 = this.extractIntensities(detailedSample1);
+        console.log(this.selectedSamples)
 
-            const labels2 = this.extractWavelengths(detailedSample2);
-            const data2 = this.extractIntensities(detailedSample2);
+        const datasets = this.selectedSamples
+            .filter((sample) => sample !== null)
+            .map((sample, index) => {
+                const labels = this.extractWavelengths(sample);
+                const data = this.extractIntensities(sample);
 
-            const labels = Array.from(new Set([...labels1, ...labels2])).sort((a, b) => a - b);
-
-            if (this.chart) {
-                this.chart.destroy();
-            }
-
-            const ctx = document.getElementById('spectrumComparisonChart') as HTMLCanvasElement;
-
-            this.chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels,
-                    datasets: [
-                        {
-                            label: detailedSample1.name,
-                            data: this.mapToChartData(labels, labels1, data1),
-                            fill: false,
-                            pointRadius: 1,
-                            borderWidth: 1
-                        },
-                        {
-                            label: detailedSample2.name,
-                            data: this.mapToChartData(labels, labels2, data2),
-                            fill: false,
-                            pointRadius: 1,
-                            borderWidth: 1
-                        },
-                    ],
-                },
-                options: {
-                    responsive: true,
-                },
+                return {
+                    label: `Sample ${index + 1}: ${sample.name}`,
+                    data: this.mapToChartData(this.getAllLabels(), labels, data),
+                    fill: false,
+                };
             });
+
+        if (this.chart) {
+            this.chart.destroy();
+        }
+
+        this.chart = new Chart('chartCanvas', {
+            type: 'line',
+            data: {
+                labels: this.getAllLabels(),
+                datasets,
+            },
+            options: {
+                responsive: true,
+            },
         });
     }
 
@@ -103,5 +112,11 @@ export class SpectrumSimilaritiesMainComponent implements OnInit {
 
         return allLabels.map((label) => dataMap.get(label) || null);
     }
-}
 
+    getAllLabels(): number[] {
+        const allLabels = this.selectedSamples
+            .filter((sample) => sample !== null)
+            .flatMap((sample) => this.extractWavelengths(sample));
+        return Array.from(new Set(allLabels)).sort((a, b) => a - b);
+    }
+}
