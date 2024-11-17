@@ -9,6 +9,7 @@ import { forkJoin } from 'rxjs'
 
 Chart.register(...registerables);
 
+// TODO improve efficiency by storing loaded samples and updating chart instead of creating new one
 @Component({
     selector: 'app-spectrum-similarities-main',
     standalone: true,
