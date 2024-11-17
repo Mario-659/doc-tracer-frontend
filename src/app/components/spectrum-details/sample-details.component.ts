@@ -33,31 +33,32 @@ export class SampleDetailsComponent implements OnInit {
         )
     }
 
-    downloadSampleData(sample: Sample, format: 'json' | 'csv' = 'json'): void {
+    downloadSampleData(sample: Sample, format: 'json' | 'csv'): void {
+        let data = '', filename = ''
         if (format === 'json') {
-            const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(sample.spectralData);
-            const downloadAnchorNode = document.createElement('a');
-            downloadAnchorNode.setAttribute('href', dataStr);
-            downloadAnchorNode.setAttribute('download', `sample_${sample.id}_spectral_data.json`);
-            document.body.appendChild(downloadAnchorNode);
-            downloadAnchorNode.click();
-            downloadAnchorNode.remove();
+            data = 'data:text/json;charset=utf-8,' + encodeURIComponent(sample.spectralData);
+            filename = `sample_${sample.id}_spectral_data.json`
         } else if (format === 'csv') {
             const jsonData = JSON.parse(sample.spectralData);
             const csvData = this.convertJsonToCsv(jsonData);
-            const dataStr = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvData);
-            const downloadAnchorNode = document.createElement('a');
-            downloadAnchorNode.setAttribute('href', dataStr);
-            downloadAnchorNode.setAttribute('download', `sample_${sample.id}_spectral_data.csv`);
-            document.body.appendChild(downloadAnchorNode);
-            downloadAnchorNode.click();
-            downloadAnchorNode.remove();
+            data = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvData);
+            filename = `sample_${sample.id}_spectral_data.csv`
         }
+
+        this.downloadFile(data, filename)
+    }
+
+    private downloadFile(data: string, filename: string) {
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute('href', data);
+        downloadAnchorNode.setAttribute('download', filename);
+        document.body.appendChild(downloadAnchorNode);
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
     }
 
     // TODO add option to change delimiter and dot to comma for float numbers
     private convertJsonToCsv(dataPoints: { wavelength: number; intensity: number }[]): string {
-        console.log(dataPoints)
         const csvHeaders = ['Wavelength,Intensity'];
         const csvRows = dataPoints.map(point => `${point.wavelength},${point.intensity}`);
         return [csvHeaders.join('\n'), ...csvRows].join('\n');
