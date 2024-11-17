@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
-import { Observable, switchMap } from 'rxjs'
-import { DataService } from '../../services/data.service'
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, switchMap } from 'rxjs';
+import { DataService } from '../../services/data.service';
+import { tap } from 'rxjs/operators';
+import { Sample } from '../../models/api/sample';
+import { Chart, registerables } from 'chart.js';
 import { AsyncPipe, DatePipe, JsonPipe, NgIf } from '@angular/common'
-import { NotificationService } from '../../services/notification.service'
 import { AppNotification, NotificationType } from '../../models/notification'
-import { Sample } from '../../models/api/sample'
-import { Chart, registerables  } from 'chart.js'
+import { NotificationService } from '../../services/notification.service'
 
 Chart.register(...registerables);
 
@@ -17,11 +18,9 @@ Chart.register(...registerables);
     templateUrl: './sample-details.component.html',
     styleUrl: './sample-details.component.scss',
 })
-export class SampleDetailsComponent implements OnInit {
-    sample$: Observable<Sample | undefined> | undefined
-    showProperties = true;
-    showSpectralData = true;
-    showChart = false;
+export class SampleDetailsComponent implements OnInit, AfterViewChecked {
+    sample$: Observable<Sample | undefined> | undefined;
+    private sampleData: Sample | null = null;
     chart: Chart | undefined;
 
     protected readonly JSON = JSON
@@ -29,14 +28,34 @@ export class SampleDetailsComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private dataService: DataService,
-        private notificationService: NotificationService,
-        private router: Router
+        private router: Router,
+        private notificationService: NotificationService
     ) {}
 
     ngOnInit() {
         this.sample$ = this.route.paramMap.pipe(
-            switchMap((params) => this.dataService.getSample(Number(params.get('id'))))
-        )
+            switchMap((params) =>
+                this.dataService.getSample(Number(params.get('id')))
+            ),
+            tap((sample) => {
+                this.sampleData = sample;
+                this.destroyChart();
+            })
+        );
+    }
+
+    ngAfterViewChecked(): void {
+        const ctx = document.getElementById('spectralDataChart') as HTMLCanvasElement;
+        if (this.sampleData && ctx && !this.chart) {
+            this.renderChart(this.sampleData);
+        }
+    }
+
+    // TODO add option to change delimiter and dot to comma for float numbers
+    private convertJsonToCsv(dataPoints: { wavelength: number; intensity: number }[]): string {
+        const csvHeaders = ['Wavelength,Intensity'];
+        const csvRows = dataPoints.map(point => `${point.wavelength},${point.intensity}`);
+        return [csvHeaders.join('\n'), ...csvRows].join('\n');
     }
 
     downloadSampleData(sample: Sample, format: 'json' | 'csv'): void {
@@ -63,15 +82,6 @@ export class SampleDetailsComponent implements OnInit {
         downloadAnchorNode.remove();
     }
 
-    // TODO add option to change delimiter and dot to comma for float numbers
-    private convertJsonToCsv(dataPoints: { wavelength: number; intensity: number }[]): string {
-        const csvHeaders = ['Wavelength,Intensity'];
-        const csvRows = dataPoints.map(point => `${point.wavelength},${point.intensity}`);
-        return [csvHeaders.join('\n'), ...csvRows].join('\n');
-    }
-
-
-
     editSample(id: number): void {
         this.router.navigate([`/samples/${id}/edit`]);
     }
@@ -88,52 +98,32 @@ export class SampleDetailsComponent implements OnInit {
         });
     }
 
-    toggleProperties() {
-        this.showProperties = !this.showProperties;
-    }
-
-    toggleSpectralData() {
-        this.showSpectralData = !this.showSpectralData;
-    }
-
-    toggleChart(sample: Sample): void {
-        this.showChart = !this.showChart;
-
-        if (this.showChart) {
-            this.renderChart([sample])
-        } else {
-            this.destroyChart();
-        }
-    }
-
-    private renderChart(samples: Sample[]): void {
-        const spectralData = JSON.parse(samples[0].spectralData)
+    private renderChart(sample: Sample): void {
+        const spectralData = JSON.parse(sample.spectralData);
         const labels = spectralData.map((point: { wavelength: number }) => point.wavelength);
         const data = spectralData.map((point: { intensity: number }) => point.intensity);
 
-        const datasets = samples.map(sample => {
-            return {
-                label: 'Spectral Intensity',
-                data: JSON.parse(sample.spectralData).map((point: { intensity: number }) => point.intensity),
-                tension: 0.3,
-                pointRadius: 1,
-                borderWidth: 1
-            }
-
-        })
         const ctx = document.getElementById('spectralDataChart') as HTMLCanvasElement;
 
-        console.log(ctx)
-
-        if (this.chart) {
-            this.chart.destroy();
+        if (!ctx) {
+            console.error('Canvas element not found.');
+            return;
         }
 
         this.chart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels,
-                datasets
+                datasets: [
+                    {
+                        label: 'Spectral Intensity',
+                        data,
+                        tension: 0.3,
+                        pointRadius: 1,
+                        borderWidth: 1,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                    },
+                ],
             },
             options: {
                 responsive: true,
@@ -163,6 +153,8 @@ export class SampleDetailsComponent implements OnInit {
     private destroyChart(): void {
         if (this.chart) {
             this.chart.destroy();
+            this.chart = undefined;
         }
     }
+
 }

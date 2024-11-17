@@ -18,11 +18,17 @@
             <div class="mb-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <h5 class="card-subtitle py-2">Properties</h5>
-                    <button class="btn btn-sm btn-link" (click)="toggleProperties()">
-                        {{ showProperties ? 'Hide' : 'Expand' }}
+                    <button
+                        class="btn btn-sm btn-link"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#propertiesCollapse"
+                        aria-expanded="true"
+                        aria-controls="propertiesCollapse"
+                    >
+                        Toggle
                     </button>
                 </div>
-                <div *ngIf="showProperties">
+                <div id="propertiesCollapse" class="collapse show">
                     <table class="table table-striped table-bordered">
                         <tbody>
                         <tr>
@@ -63,17 +69,22 @@
             <div class="mb-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <h5 class="card-subtitle py-2">Spectral Data</h5>
-                    <button class="btn btn-sm btn-link" (click)="toggleSpectralData()">
-                        {{ showSpectralData ? 'Hide' : 'Expand' }}
+                    <button
+                        class="btn btn-sm btn-link"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#spectralDataCollapse"
+                        aria-expanded="true"
+                        aria-controls="spectralDataCollapse"
+                    >
+                        Toggle
                     </button>
                 </div>
-                <div *ngIf="showSpectralData">
+                <div id="spectralDataCollapse" class="collapse show">
                     <div class="bg-light p-3 border rounded">
                         <pre style="max-height: 300px; overflow-y: auto;">
                             {{ JSON.parse(sample.spectralData) | json }}
                         </pre>
                     </div>
-
                     <div class="d-flex justify-content-between py-2">
                         <button class="btn btn-secondary" (click)="downloadSampleData(sample, 'json')">
                             <i class="bi bi-download"></i> Download JSON
@@ -85,17 +96,22 @@
                 </div>
             </div>
 
-
             <hr />
 
             <div class="mb-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <h5 class="card-subtitle py-2">Spectral Data Chart</h5>
-                    <button class="btn btn-sm btn-link" (click)="toggleChart(sample)">
-                        {{ showChart ? 'Hide' : 'Expand' }}
+                    <button
+                        class="btn btn-sm btn-link"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#chartCollapse"
+                        aria-expanded="true"
+                        aria-controls="chartCollapse"
+                    >
+                        Toggle
                     </button>
                 </div>
-                <div>
+                <div id="chartCollapse" class="collapse show">
                     <canvas id="spectralDataChart"></canvas>
                 </div>
             </div>
