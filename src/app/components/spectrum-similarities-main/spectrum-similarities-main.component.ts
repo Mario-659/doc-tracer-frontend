@@ -68,7 +68,9 @@ export class SpectrumSimilaritiesMainComponent implements OnInit {
         }
 
         forkJoin(
-            this.selectedSamples.map(sample => this.dataService.getSample(sample.id))
+            this.selectedSamples
+                .filter(sample => sample)
+                .map(sample => this.dataService.getSample(sample.id))
         ).subscribe(loadedSamples => {
             const datasets = loadedSamples
                 .filter((sample) => sample !== null)
@@ -89,7 +91,8 @@ export class SpectrumSimilaritiesMainComponent implements OnInit {
                 this.chart.destroy();
             }
 
-            this.chart = new Chart('chartCanvas', {
+            const ctx = document.getElementById('sampleComparisonChartCanvas') as HTMLCanvasElement;
+            this.chart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: this.getAllLabels(loadedSamples),
