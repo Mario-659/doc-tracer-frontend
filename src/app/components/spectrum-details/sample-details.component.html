@@ -72,8 +72,12 @@
 
 
                     <div class="d-flex justify-content-between py-2">
-                        <button class="btn btn-primary" (click)="downloadSampleData(sample)">
-                            <i class="bi bi-download"></i> Download Spectral Data
+                        <button class="btn btn-secondary" (click)="downloadSampleData(sample, 'json')">
+                            <i class="bi bi-download"></i> Download JSON
+                        </button>
+
+                        <button class="btn btn-secondary" (click)="downloadSampleData(sample, 'csv')">
+                            <i class="bi bi-download"></i> Download CSV
                         </button>
                     </div>
                 </div>
