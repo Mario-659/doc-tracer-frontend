@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SpectraMainComponent } from './spectra-main.component'
+import { SamplesComponent } from './samples.component'
 
 describe('SpectraMainComponent', () => {
-    let component: SpectraMainComponent
-    let fixture: ComponentFixture<SpectraMainComponent>
+    let component: SamplesComponent
+    let fixture: ComponentFixture<SamplesComponent>
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [SpectraMainComponent],
+            imports: [SamplesComponent],
         }).compileComponents()
 
-        fixture = TestBed.createComponent(SpectraMainComponent)
+        fixture = TestBed.createComponent(SamplesComponent)
         component = fixture.componentInstance
         fixture.detectChanges()
     })

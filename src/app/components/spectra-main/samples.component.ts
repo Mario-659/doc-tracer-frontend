@@ -2,19 +2,19 @@ import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { AppGridComponent } from '../app-grid/app-grid.component'
 import { Observable } from 'rxjs'
-import { SpectrumGridRow } from '../../models/api/spectrum-grid-row'
 import { DataService } from '../../services/data.service'
 import { ColDef } from 'ag-grid-community'
+import { Sample } from '../../models/api/sample'
 
 @Component({
-    selector: 'app-spectra-main',
+    selector: 'app-samples',
     standalone: true,
     imports: [AppGridComponent],
-    templateUrl: './spectra-main.component.html',
-    styleUrl: './spectra-main.component.scss',
+    templateUrl: './samples.component.html',
+    styleUrl: './samples.component.scss',
 })
-export class SpectraMainComponent implements OnInit {
-    $spectra: Observable<SpectrumGridRow[]> | undefined
+export class SamplesComponent implements OnInit {
+    $spectra: Observable<Sample[]> | undefined
 
     constructor(
         private router: Router,
@@ -22,11 +22,11 @@ export class SpectraMainComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.$spectra = this.dataService.getSpectra()
+        this.$spectra = this.dataService.getSamples()
     }
 
-    goSpectrumDetails(spectrumId: number) {
-        this.router.navigate([`spectra/${spectrumId}`])
+    goSampleDetails(sample: number) {
+        this.router.navigate([`sample/${sample}`])
     }
 
     colDefs: ColDef[] = [
@@ -34,37 +34,44 @@ export class SpectraMainComponent implements OnInit {
             headerName: 'Id',
             field: 'id',
             filter: 'agNumberColumnFilter',
-            onCellClicked: (event) => this.goSpectrumDetails(event.data.id),
+            onCellClicked: (event) => this.goSampleDetails(event.data.id),
             cellClass: ['link-primary'],
+            flex: 1,
         },
-        {
-            headerName: 'Measurement Date',
-            field: 'measurementDate',
-            filter: 'agDateColumnFilter',
-            valueFormatter: this.formatDate,
-        },
+        // {
+        //     headerName: 'Measurement Date',
+        //     field: 'measurementDate',
+        //     filter: 'agDateColumnFilter',
+        //     valueFormatter: this.formatDate,
+        //     flex: 2,
+        // },
         {
             headerName: 'Spectrum Type',
-            field: 'spectrumType',
+            field: 'type',
             filter: 'agTextColumnFilter',
+            flex: 1,
         },
         {
-            headerName: 'Sample Id',
-            field: 'sampleId',
-            filter: 'agNumberColumnFilter',
-        },
-        {
-            headerName: 'Created By',
-            field: 'createdBy',
+            headerName: 'Sample Name',
+            field: 'name',
             filter: 'agTextColumnFilter',
+            flex: 2,
         },
         {
             headerName: 'Created At',
             field: 'createdAt',
             filter: 'agDateColumnFilter',
             valueFormatter: this.formatDate,
+            flex: 2,
         },
-    ]
+        {
+            headerName: 'Updated At',
+            field: 'updatedAt',
+            filter: 'agDateColumnFilter',
+            valueFormatter: this.formatDate,
+            flex: 2,
+        },
+    ];
 
     formatDate(params: any): string {
         const date = new Date(params.value)
