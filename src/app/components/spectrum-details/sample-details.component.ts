@@ -108,12 +108,8 @@ export class SampleDetailsComponent implements OnInit {
 
     private renderChart(spectralData: any): void {
         spectralData = JSON.parse(spectralData)
-
-        // const labels = spectralData.map((point: { wavelength: number }) => point.wavelength);
-        // const data = spectralData.map((point: { intensity: number }) => point.intensity);
-
-        // console.log(labels)
-        // console.log(data)
+        const labels = spectralData.map((point: { wavelength: number }) => point.wavelength);
+        const data = spectralData.map((point: { intensity: number }) => point.intensity);
 
         const ctx = document.getElementById('spectralDataChart') as HTMLCanvasElement;
 
@@ -126,14 +122,14 @@ export class SampleDetailsComponent implements OnInit {
         this.chart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: spectralData.map((row: any) => row.wavelenght),
+                labels,
                 datasets: [
                     {
                         label: 'Spectral Intensity',
-                        data: spectralData.map((row: any) => row.intensity),
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        data,
                         tension: 0.3,
+                        pointRadius: 1,
+                        borderWidth: 1
                     },
                 ],
             },
