@@ -4,47 +4,79 @@
             <h2 class="card-title">Measurement Details</h2>
             <p class="card-subtitle py-2">Detailed information about the selected measurement</p>
 
-            <h5 class="py-1">Properties</h5>
-            <div class="row">
-                <div class="col-md-6">
-                    <p><strong>Covering Material:</strong> {{ measurement.coveringMaterial }}</p>
-                    <p><strong>Covered Material:</strong> {{ measurement.coveredMaterial }}</p>
-                    <p><strong>Device:</strong> {{ measurement.device }}</p>
-                </div>
-                <div class="col-md-6">
-                    <p><strong>User:</strong> {{ measurement.user }}</p>
-                    <p><strong>Comments:</strong> {{ measurement.comments }}</p>
-                    <p><strong>Measurement Date:</strong> {{ measurement.measurementDate | date: 'medium' }}</p>
-                </div>
-            </div>
-
-            <h5 class="py-1">Conditions</h5>
-            <div class="row">
-                <div class="col-md-6">
-                    <p><strong>Description:</strong> {{ measurement.conditions.description }}</p>
-                    <p><strong>Light Source:</strong> {{ measurement.conditions.lightSource }}</p>
-                    <p><strong>Exposure:</strong> {{ measurement.conditions.exposure || 'N/A' }}</p>
-                </div>
-                <div class="col-md-6">
-                    <p><strong>Gain:</strong> {{ measurement.conditions.gain || 'N/A' }}</p>
-                    <p><strong>Brightness:</strong> {{ measurement.conditions.brightness || 'N/A' }}</p>
-                </div>
-            </div>
-
-            <h5 class="py-1">Samples</h5>
-            <div class="mt-2 mb-2">
-                <div *ngIf="samples$ | async as rowData; else spinner">
-                    <ag-grid-angular class="ag-theme-quartz" style="height: 500px" [rowData]="rowData" [columnDefs]="sampleColumnDefs"/>
-                </div>
-                <ng-template #spinner>
-                    <div class="d-flex justify-content-center">
-                        <div class="spinner-border" role="status">
-                            <span class="visually-hidden">Loading...</span>
+            <hr />
+            <div>
+                <h5 class="d-flex justify-content-between align-items-center">
+                    Properties
+                    <button class="btn btn-link" (click)="toggleSection('properties')">
+                        {{ expandedSections.properties ? 'Hide' : 'Show' }}
+                    </button>
+                </h5>
+                <div *ngIf="expandedSections.properties">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Covering Material:</strong> {{ measurement.coveringMaterial }}</p>
+                            <p><strong>Covered Material:</strong> {{ measurement.coveredMaterial }}</p>
+                            <p><strong>Device:</strong> {{ measurement.device }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>User:</strong> {{ measurement.user }}</p>
+                            <p><strong>Comments:</strong> {{ measurement.comments }}</p>
+                            <p><strong>Measurement Date:</strong> {{ measurement.measurementDate | date: 'medium' }}</p>
                         </div>
                     </div>
-                </ng-template>
+                </div>
+            </div>
+
+            <hr />
+            <div>
+                <h5 class="d-flex justify-content-between align-items-center">
+                    Conditions
+                    <button class="btn btn-link" (click)="toggleSection('conditions')">
+                        {{ expandedSections.conditions ? 'Hide' : 'Show' }}
+                    </button>
+                </h5>
+                <div *ngIf="expandedSections.conditions">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Description:</strong> {{ measurement.conditions.description }}</p>
+                            <p><strong>Light Source:</strong> {{ measurement.conditions.lightSource }}</p>
+                            <p><strong>Exposure:</strong> {{ measurement.conditions.exposure || 'N/A' }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Gain:</strong> {{ measurement.conditions.gain || 'N/A' }}</p>
+                            <p><strong>Brightness:</strong> {{ measurement.conditions.brightness || 'N/A' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+            <div>
+                <h5 class="d-flex justify-content-between align-items-center">
+                    Samples
+                    <button class="btn btn-link" (click)="toggleSection('samples')">
+                        {{ expandedSections.samples ? 'Hide' : 'Show' }}
+                    </button>
+                </h5>
+                <div *ngIf="expandedSections.samples" class="mt-2 mb-2">
+                    <div *ngIf="samples$ | async as rowData; else spinner">
+                        <ag-grid-angular
+                            class="ag-theme-quartz"
+                            style="height: 500px"
+                            [rowData]="rowData"
+                            [columnDefs]="sampleColumnDefs"
+                        ></ag-grid-angular>
+                    </div>
+                    <ng-template #spinner>
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
             </div>
         </div>
     </div>
 </div>
->

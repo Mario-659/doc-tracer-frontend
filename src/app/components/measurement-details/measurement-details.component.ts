@@ -35,6 +35,12 @@ export class MeasurementDetailsComponent implements OnInit {
         )
     }
 
+    expandedSections = {
+        properties: true,
+        conditions: true,
+        samples: true
+    };
+
     sampleColumnDefs: ColDef[] = [
         { headerName: 'ID', field: 'id', sortable: true, filter: 'agNumberColumnFilter' },
         { headerName: 'Name', field: 'name', sortable: true, filter: 'agTextColumnFilter' },
@@ -42,4 +48,8 @@ export class MeasurementDetailsComponent implements OnInit {
         { headerName: 'Created At', field: 'createdAt', sortable: true, filter: 'agDateColumnFilter' },
         { headerName: 'Updated At', field: 'updatedAt', sortable: true, filter: 'agDateColumnFilter' },
     ];
+
+    toggleSection(section: keyof typeof this.expandedSections): void {
+        this.expandedSections[section] = !this.expandedSections[section];
+    }
 }
