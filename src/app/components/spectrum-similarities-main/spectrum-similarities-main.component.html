@@ -1,52 +1,63 @@
-<div class="container mt-4">
-    <div class="mb-4">
-        <label for="measurementSelect" class="form-label"><strong>Select Measurement</strong></label>
-        <select
-            id="measurementSelect"
-            class="form-select"
-            [(ngModel)]="selectedMeasurement"
-            (change)="onMeasurementChange()"
-        >
-            <option *ngFor="let measurement of measurements" [ngValue]="measurement">
-                {{ measurement.device }} - {{ measurement.measurementDate | date: 'medium' }} - {{ measurement.user }}
-            </option>
-        </select>
-    </div>
-
-    <div>
-        <h4 class="py-3">Sample Comparison</h4>
-
-        <div *ngFor="let sample of selectedSamples; let i = index" class="mb-2 d-flex align-items-center">
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="mb-4">
+            <label for="measurementSelect" class="form-label"><strong>Select Measurement</strong></label>
             <select
-                class="form-select me-2"
-                [(ngModel)]="selectedSamples[i]"
-                [disabled]="!availableSamples.length"
-                (change)="updateChart()"
+                id="measurementSelect"
+                class="form-select"
+                [(ngModel)]="selectedMeasurement"
+                (change)="onMeasurementChange()"
             >
-                <option *ngFor="let availableSample of availableSamples" [ngValue]="availableSample">
-                    {{ availableSample.name }}
+                <option *ngFor="let measurement of measurements" [ngValue]="measurement">
+                    {{ measurement.device }} - {{ measurement.measurementDate | date: 'medium' }} - {{ measurement.user }}
                 </option>
             </select>
-            <button
-                *ngIf="selectedSamples.length > 1"
-                class="btn btn-danger btn-sm"
-                (click)="removeSample(i)"
-            >
-                <i class="bi bi-dash"></i>
-            </button>
         </div>
 
-        <button
-            class="btn btn-primary mt-2"
-            (click)="addEmptySample()"
-            [disabled]="!availableSamples.length"
-        >
-            <i class="bi bi-plus"></i> Add Another Sample
-        </button>
-    </div>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Sample Comparison</h5>
+            </div>
+            <div class="card-body">
+                <div *ngFor="let sample of selectedSamples; let i = index" class="mb-2 d-flex align-items-center">
+                    <select
+                        class="form-select me-2"
+                        [(ngModel)]="selectedSamples[i]"
+                        [disabled]="!availableSamples.length"
+                        (change)="updateChart()"
+                    >
+                        <option *ngFor="let availableSample of availableSamples" [ngValue]="availableSample">
+                            {{ availableSample.name }}
+                        </option>
+                    </select>
+                    <button
+                        *ngIf="selectedSamples.length > 1"
+                        class="btn btn-danger btn-sm"
+                        (click)="removeSample(i)"
+                    >
+                        <i class="bi bi-dash"></i>
+                    </button>
+                </div>
 
-    <div class="mt-5">
-        <canvas id="sampleComparisonChartCanvas"></canvas>
+                <button
+                    class="btn btn-primary mt-2"
+                    (click)="addEmptySample()"
+                    [disabled]="!availableSamples.length"
+                >
+                    <i class="bi bi-plus"></i> Add Another Sample
+                </button>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Sample Comparison Chart</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="sampleComparisonChartCanvas"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
