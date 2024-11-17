@@ -9,7 +9,7 @@ import { SpectrumSimilaritiesMainComponent } from './components/spectrum-similar
 import { SamplesMainComponent } from './components/samples-main/samples-main.component'
 import { MeasuringDevicesMainComponent } from './components/sample-devices-main/measuring-devices-main.component'
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component'
-import { SpectrumDetailsComponent } from './components/spectrum-details/spectrum-details.component'
+import { SampleDetailsComponent } from './components/spectrum-details/sample-details.component'
 import { EditSpectrumComponent } from './components/edit-spectrum/edit-spectrum.component'
 import { AdminControlComponent } from './components/admin-control/admin-control.component'
 import { MeasurementsComponent } from './components/measurements/measurements.component'
@@ -35,13 +35,13 @@ export const routes: Routes = [
         canActivate: [authGuard],
     },
     {
-        path: 'spectra',
+        path: 'samples',
         component: SpectraMainComponent,
         canActivate: [authGuard],
     },
     {
-        path: 'spectra/:id',
-        component: SpectrumDetailsComponent,
+        path: 'samples/:id',
+        component: SampleDetailsComponent,
         canActivate: [authGuard],
     },
     {
@@ -52,11 +52,6 @@ export const routes: Routes = [
     {
         path: 'spectrum-similarities',
         component: SpectrumSimilaritiesMainComponent,
-        canActivate: [authGuard],
-    },
-    {
-        path: 'samples',
-        component: SamplesMainComponent,
         canActivate: [authGuard],
     },
     {

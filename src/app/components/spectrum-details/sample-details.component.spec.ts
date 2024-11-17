@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SpectrumDetailsComponent } from './spectrum-details.component'
+import { SampleDetailsComponent } from './sample-details.component'
 
 describe('SpectrumDetailsComponent', () => {
-    let component: SpectrumDetailsComponent
-    let fixture: ComponentFixture<SpectrumDetailsComponent>
+    let component: SampleDetailsComponent
+    let fixture: ComponentFixture<SampleDetailsComponent>
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [SpectrumDetailsComponent],
+            imports: [SampleDetailsComponent],
         }).compileComponents()
 
-        fixture = TestBed.createComponent(SpectrumDetailsComponent)
+        fixture = TestBed.createComponent(SampleDetailsComponent)
         component = fixture.componentInstance
         fixture.detectChanges()
     })

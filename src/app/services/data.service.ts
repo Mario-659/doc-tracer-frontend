@@ -51,6 +51,10 @@ export class DataService {
         return this.http.get<Sample>(`${environment.apiUrl}/samples/${id}`)
     }
 
+    deleteSample(id: number): Observable<void> {
+        return this.http.delete<void>(`${environment.apiUrl}/samples/${id}`)
+    }
+
     getUsers(): Observable<UserResponse[]> {
         return this.http.get<UserResponse[]>(`${environment.apiUrl}/admin/users`)
     }
