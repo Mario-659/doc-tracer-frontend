@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label><strong>Samples</strong></label>
+                    <label class="py-2"><strong>Samples</strong></label>
                     <div *ngFor="let sample of selectedSamples; let i = index" class="mb-2 d-flex align-items-center">
                         <select
                             class="form-select me-2"
@@ -41,12 +41,14 @@
                     </div>
 
                     <button
-                        class="btn btn-primary mt-2"
+                        class="btn shadow-none d-flex align-items-center"
                         (click)="addEmptySample()"
                         [disabled]="!availableSamples.length"
                     >
-                        <i class="bi bi-plus"></i> Add Another Sample
+                        <span class="material-symbols-outlined">add</span>
+                        <span class="me-2">Add Sample</span>
                     </button>
+
                 </div>
             </div>
 
