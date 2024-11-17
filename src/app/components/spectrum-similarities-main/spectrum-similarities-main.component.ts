@@ -6,8 +6,9 @@ import { FormsModule } from '@angular/forms'
 import { DatePipe, NgForOf, NgIf } from '@angular/common'
 import { Measurement } from '../../models/api/measurement'
 import { forkJoin } from 'rxjs'
+import zoomPlugin from 'chartjs-plugin-zoom';
 
-Chart.register(...registerables);
+Chart.register(...registerables, zoomPlugin);
 
 // TODO improve efficiency by storing loaded samples and updating chart instead of creating new one
 @Component({
@@ -101,6 +102,20 @@ export class SpectrumSimilaritiesMainComponent implements OnInit {
                 },
                 options: {
                     responsive: true,
+                    plugins: {
+                        zoom: {
+                            zoom: {
+                                wheel: {
+                                    enabled: true,
+                                    speed: 0.05
+                                },
+                                pinch: {
+                                    enabled: true
+                                },
+                                mode: 'xy',
+                            }
+                        }
+                    }
                 },
             });
         })
@@ -126,5 +141,9 @@ export class SpectrumSimilaritiesMainComponent implements OnInit {
             .filter((sample) => sample !== null)
             .flatMap((sample) => this.extractWavelengths(sample));
         return Array.from(new Set(allLabels)).sort((a, b) => a - b);
+    }
+
+    resetChartZoom() {
+        this.chart?.resetZoom()
     }
 }
