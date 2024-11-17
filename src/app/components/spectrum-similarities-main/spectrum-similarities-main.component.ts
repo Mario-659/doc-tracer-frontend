@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Chart } from 'chart.js';
+import { Chart, registerables } from 'chart.js'
 import { Sample } from '../../models/api/sample'
 import { DataService } from '../../services/data.service'
 import { FormsModule } from '@angular/forms'
 import { NgForOf } from '@angular/common'
+import { forkJoin } from 'rxjs'
+
+Chart.register(...registerables);
 
 @Component({
     selector: 'app-spectrum-similarities-main',
@@ -34,71 +37,52 @@ export class SpectrumSimilaritiesMainComponent implements OnInit {
     }
 
     updateChart(): void {
-        console.log('update chart called')
         if (!this.selectedSample1 || !this.selectedSample2) {
             return;
         }
 
-        console.log('Sample 1:', JSON.stringify(this.selectedSample1, null, 2));
-        console.log('Sample 2:', JSON.stringify(this.selectedSample2, null, 2));
+        // Fetch details for selected samples
+        forkJoin([
+            this.dataService.getSample(this.selectedSample1.id),
+            this.dataService.getSample(this.selectedSample2.id),
+        ]).subscribe(([detailedSample1, detailedSample2]) => {
+            const labels1 = this.extractWavelengths(detailedSample1);
+            const data1 = this.extractIntensities(detailedSample1);
 
-        const labels1 = this.extractWavelengths(this.selectedSample1);
-        const data1 = this.extractIntensities(this.selectedSample1);
+            const labels2 = this.extractWavelengths(detailedSample2);
+            const data2 = this.extractIntensities(detailedSample2);
 
-        const labels2 = this.extractWavelengths(this.selectedSample2);
-        const data2 = this.extractIntensities(this.selectedSample2);
+            const labels = Array.from(new Set([...labels1, ...labels2])).sort((a, b) => a - b);
 
-        const labels = Array.from(new Set([...labels1, ...labels2])).sort((a, b) => a - b);
+            if (this.chart) {
+                this.chart.destroy();
+            }
 
-        if (this.chart) {
-            this.chart.destroy();
-        }
+            const ctx = document.getElementById('spectrumComparisonChart') as HTMLCanvasElement;
 
-        this.chart = new Chart('spectrumComparisonChart', {
-            type: 'line',
-            data: {
-                labels,
-                datasets: [
-                    {
-                        label: this.selectedSample1.name,
-                        data: this.mapDataToLabels(labels, labels1, data1),
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        tension: 0.3,
-                        pointRadius: 2,
-                    },
-                    {
-                        label: this.selectedSample2.name,
-                        data: this.mapDataToLabels(labels, labels2, data2),
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        tension: 0.3,
-                        pointRadius: 2,
-                    },
-                ],
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                },
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Wavelength (nm)',
+            this.chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: `Sample 1: ${detailedSample1.name}`,
+                            data: this.mapToChartData(labels, labels1, data1),
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            fill: false,
                         },
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Intensity',
+                        {
+                            label: `Sample 2: ${detailedSample2.name}`,
+                            data: this.mapToChartData(labels, labels2, data2),
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            fill: false,
                         },
-                    },
+                    ],
                 },
-            },
+                options: {
+                    responsive: true,
+                },
+            });
         });
     }
 
@@ -111,13 +95,11 @@ export class SpectrumSimilaritiesMainComponent implements OnInit {
         return JSON.parse(sample.spectralData).map((dp: any) => dp.intensity);
     }
 
-    mapDataToLabels(labels: number[], sampleLabels: number[], sampleData: number[]): number[] {
-        const dataMap = sampleLabels.reduce((acc, wavelength, index) => {
-            acc[wavelength] = sampleData[index];
-            return acc;
-        }, {} as Record<number, number>);
+    mapToChartData(allLabels: number[], sampleLabels: number[], sampleData: number[]): any {
+        const dataMap = new Map<number, number>();
+        sampleLabels.forEach((label, index) => dataMap.set(label, sampleData[index]));
 
-        return labels.map((label) => dataMap[label] || 0);
+        return allLabels.map((label) => dataMap.get(label) || null);
     }
 }
 
