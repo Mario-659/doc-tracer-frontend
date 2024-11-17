@@ -3,7 +3,7 @@ export interface Sample {
     name: string;
     type: string; // Enum: Reflectance, Absorption, etc.
     measurementId: number;
-    spectralData: any;
+    spectralData: string;
     createdBy: string;
     createdAt: string; // ISO 8601 date string
     updatedAt: string; // ISO 8601 date string

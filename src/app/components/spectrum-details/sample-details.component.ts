@@ -100,17 +100,27 @@ export class SampleDetailsComponent implements OnInit {
         this.showChart = !this.showChart;
 
         if (this.showChart) {
-            this.renderChart(sample.spectralData)
+            this.renderChart([sample])
         } else {
             this.destroyChart();
         }
     }
 
-    private renderChart(spectralData: any): void {
-        spectralData = JSON.parse(spectralData)
+    private renderChart(samples: Sample[]): void {
+        const spectralData = JSON.parse(samples[0].spectralData)
         const labels = spectralData.map((point: { wavelength: number }) => point.wavelength);
         const data = spectralData.map((point: { intensity: number }) => point.intensity);
 
+        const datasets = samples.map(sample => {
+            return {
+                label: 'Spectral Intensity',
+                data: JSON.parse(sample.spectralData).map((point: { intensity: number }) => point.intensity),
+                tension: 0.3,
+                pointRadius: 1,
+                borderWidth: 1
+            }
+
+        })
         const ctx = document.getElementById('spectralDataChart') as HTMLCanvasElement;
 
         console.log(ctx)
@@ -123,15 +133,7 @@ export class SampleDetailsComponent implements OnInit {
             type: 'line',
             data: {
                 labels,
-                datasets: [
-                    {
-                        label: 'Spectral Intensity',
-                        data,
-                        tension: 0.3,
-                        pointRadius: 1,
-                        borderWidth: 1
-                    },
-                ],
+                datasets
             },
             options: {
                 responsive: true,
