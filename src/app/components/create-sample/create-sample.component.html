@@ -60,6 +60,10 @@
             >
                 Spectral Data is required.
             </div>
+            <div class="mb-3">
+                <label for="csvUpload" class="form-label">Import Spectral Data from CSV</label>
+                <input type="file" id="csvUpload" class="form-control" (change)="onCsvUpload($event)" accept=".csv" />
+            </div>
         </div>
 
         <div class="mt-4">

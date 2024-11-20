@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { AppNotification, NotificationType } from '../../models/notification'
 import { DatePipe, NgForOf, NgIf } from '@angular/common'
 import { Measurement } from '../../models/api/measurement'
+import * as Papa from 'papaparse';
 
 @Component({
     selector: 'app-create-sample',
@@ -123,5 +124,50 @@ export class CreateSampleComponent implements OnInit {
         return true;
     }
 
+    onCsvUpload(event: Event): void {
+        const file = (event.target as HTMLInputElement).files?.[0];
+        if (!file) {
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+            const csvData = e.target.result;
+            Papa.parse(csvData, {
+                header: true,
+                skipEmptyLines: true,
+                transform(value: string, field: string | number): any {
+                    if (field === 'wavelenght') {
+                        return parseInt(value)
+                    } else {
+                        return parseFloat(value)
+                    }
+                },
+                transformHeader(header: string, index: number): string {
+                    return header.toLowerCase()
+                },
+                complete: (result: any) => {
+                    const data = result.data as { wavelength: number; intensity: number }[];
+                    if (true) {
+                        this.sampleForm.patchValue({ spectralData: data });
+                        this.notificationService.showNotification(
+                            new AppNotification('CSV file imported successfully!', NotificationType.success)
+                        );
+                    } else {
+                        this.notificationService.showNotification(
+                            new AppNotification('Invalid CSV format.', NotificationType.error)
+                        );
+                    }
+                },
+                error: () => {
+                    this.notificationService.showNotification(
+                        new AppNotification('Error parsing CSV file.', NotificationType.error)
+                    );
+                }
+            });
+        };
+
+        reader.readAsText(file);
+    }
 }
 
