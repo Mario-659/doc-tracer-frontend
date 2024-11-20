@@ -15,6 +15,7 @@ import { AdminControlComponent } from './components/admin-control/admin-control.
 import { MeasurementsComponent } from './components/measurements/measurements.component'
 import { MeasurementDetailsComponent } from './components/measurement-details/measurement-details.component'
 import { CreateSampleComponent } from './components/create-sample/create-sample.component'
+import { EditMeasurementComponent } from './components/edit-measurement/edit-measurement.component'
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -33,6 +34,11 @@ export const routes: Routes = [
     {
         path: 'measurements/:id',
         component: MeasurementDetailsComponent,
+        canActivate: [authGuard],
+    },
+    {
+        path: 'measurements/:id/edit',
+        component: EditMeasurementComponent,
         canActivate: [authGuard],
     },
     {
