@@ -6,12 +6,17 @@
 </div>
 
 <ng-template #mainApp>
-    <div class="container-fluid">
-        <div class="row">
-            <app-sidebar class="col-auto sticky-top p-0" style="position: fixed"/>
-            <div class="col-sm p-3 min-vh-100 bg-light overflow-y-auto">
-                <router-outlet/>
-            </div>
+    <div class="container-fluid vh-100 d-flex flex-row p-0">
+        <app-sidebar
+            class="col-auto p-0 sticky-top"
+            style="position: sticky; top: 0; height: 100vh; overflow-y: auto;">
+        </app-sidebar>
+
+        <div
+            class="col p-3 bg-light overflow-auto"
+            style="min-height: 100vh;">
+            <router-outlet></router-outlet>
         </div>
     </div>
 </ng-template>
+

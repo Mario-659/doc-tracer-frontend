@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DataService } from '../../services/data.service';
-import { NgForOf, NgIf } from '@angular/common';
-import { NotificationService } from '../../services/notification.service';
-import { AppNotification, NotificationType } from '../../models/notification';
-import { JsonEditorComponent, JsonEditorOptions, NgJsonEditorModule } from 'ang-jsoneditor';
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
+import { DataService } from '../../services/data.service'
+import { NgForOf, NgIf } from '@angular/common'
+import { NotificationService } from '../../services/notification.service'
+import { AppNotification, NotificationType } from '../../models/notification'
+import { JsonEditorComponent, JsonEditorOptions, NgJsonEditorModule } from 'ang-jsoneditor'
 import { SampleUpdateRequest } from '../../models/api/sample-update-request'
 
 @Component({
