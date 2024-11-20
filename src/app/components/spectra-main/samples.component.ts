@@ -29,6 +29,10 @@ export class SamplesComponent implements OnInit {
         this.router.navigate([`samples/${sample}`])
     }
 
+    goToCreateSample() {
+        this.router.navigate(['/create-sample'])
+    }
+
     colDefs: ColDef[] = [
         {
             headerName: 'Id',
