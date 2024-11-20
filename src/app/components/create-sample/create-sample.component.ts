@@ -39,11 +39,21 @@ export class CreateSampleComponent implements OnInit {
         this.editorOptions.modes = ['code', 'text', 'tree', 'view']
         this.editorOptions.mode = 'code'
 
+        const jsonEditorInitValue = [
+            {
+                "wavelenght": 400,
+                "intensity": 24.3
+            },
+            {
+                "more-data-points": NaN
+            }
+        ]
+
         this.sampleForm = this.fb.group({
             name: ['', Validators.required],
             type: ['', Validators.required],
             measurementId: ['', Validators.required],
-            spectralData: ['', Validators.required],
+            spectralData: [jsonEditorInitValue],
         })
     }
 
@@ -67,6 +77,11 @@ export class CreateSampleComponent implements OnInit {
 
         const formValues = this.sampleForm.value
 
+        const parsedJson = formValues.spectralData;
+        if (!this.validateSpectralData(parsedJson)) {
+            return;
+        }
+
         this.dataService.createSample(formValues).subscribe(
             () => {
                 this.notificationService.showNotification(
@@ -80,5 +95,33 @@ export class CreateSampleComponent implements OnInit {
     goToSamples(): void {
         this.router.navigate(['/samples'])
     }
+
+    validateSpectralData(data: any): boolean {
+        if (!Array.isArray(data)) {
+            this.notificationService.showNotification(
+                new AppNotification(`Spectral data is not an array`, NotificationType.error),
+            )
+            return false;
+        }
+
+
+        if (data.length === 0) {
+            this.notificationService.showNotification(
+                new AppNotification(`Spectral data array cannot be empty`, NotificationType.error),
+            )
+            return false;
+        }
+
+
+        if (data.length === 1) {
+            this.notificationService.showNotification(
+                new AppNotification(`Spectral data array must have size greater than 1`, NotificationType.error),
+            )
+            return false;
+        }
+
+        return true;
+    }
+
 }
 
