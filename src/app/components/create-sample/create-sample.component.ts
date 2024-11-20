@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { JsonEditorComponent, JsonEditorOptions, NgJsonEditorModule } from 'ang-jsoneditor'
 import { DataService } from '../../services/data.service'
@@ -27,6 +27,7 @@ export class CreateSampleComponent implements OnInit {
     spectrumTypes = ['REFLECTANCE', 'ABSORPTION', 'FLUORESCENCE', 'TRANSMITTANCE']
     measurements: Measurement[] = []
     @ViewChild(JsonEditorComponent, { static: false }) editor: JsonEditorComponent | undefined
+    @ViewChild('csvUpload', { static: false }) csvUpload!: ElementRef<HTMLInputElement>;
     public editorOptions: JsonEditorOptions
 
     constructor(
@@ -162,6 +163,10 @@ export class CreateSampleComponent implements OnInit {
         };
 
         reader.readAsText(file);
+    }
+
+    triggerCsvUpload(): void {
+        this.csvUpload.nativeElement.click();
     }
 }
 

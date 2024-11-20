@@ -52,19 +52,23 @@
         </div>
 
         <div class="mb-3">
-            <label for="spectralData" class="form-label">Spectral Data (JSON)</label>
+            <div class="d-flex justify-content-between align-items-center">
+                <label for="spectralData" class="form-label">Spectral Data (JSON)</label>
+                <button type="button" class="btn btn-secondary btn-sm" (click)="triggerCsvUpload()">
+                    <i class="bi bi-upload"></i> Import CSV
+                </button>
+            </div>
             <json-editor [options]="editorOptions" formControlName="spectralData" id="spectralData"></json-editor>
-            <div
-                *ngIf="sampleForm.get('spectralData')?.invalid && sampleForm.get('spectralData')?.touched"
-                class="invalid-feedback"
-            >
-                Spectral Data is required.
-            </div>
-            <div class="mb-3">
-                <label for="csvUpload" class="form-label">Import Spectral Data from CSV</label>
-                <input type="file" id="csvUpload" class="form-control" (change)="onCsvUpload($event)" accept=".csv" />
-            </div>
         </div>
+
+        <input
+            type="file"
+            #csvUpload
+            style="display: none"
+            (change)="onCsvUpload($event)"
+            accept=".csv"
+        />
+
 
         <div class="mt-4">
             <button type="submit" class="btn btn-success" [disabled]="sampleForm.invalid">Save</button>
