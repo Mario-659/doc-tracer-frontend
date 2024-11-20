@@ -2,23 +2,25 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { DataService } from '../../services/data.service'
-import { NgForOf, NgIf } from '@angular/common'
+import { DatePipe, NgForOf, NgIf } from '@angular/common'
 import { NotificationService } from '../../services/notification.service'
 import { AppNotification, NotificationType } from '../../models/notification'
 import { JsonEditorComponent, JsonEditorOptions, NgJsonEditorModule } from 'ang-jsoneditor'
 import { SampleUpdateRequest } from '../../models/api/sample-update-request'
+import { Measurement } from '../../models/api/measurement'
+import { forkJoin, sample } from 'rxjs'
 
 @Component({
     selector: 'app-edit-sample',
     templateUrl: './edit-sample.component.html',
     standalone: true,
     styleUrls: ['./edit-sample.component.scss'],
-    imports: [ReactiveFormsModule, NgIf, NgForOf, NgJsonEditorModule],
+    imports: [ReactiveFormsModule, NgIf, NgForOf, NgJsonEditorModule, DatePipe],
 })
 export class EditSampleComponent implements OnInit {
     sampleForm: FormGroup;
-    spectrumTypes = ['REFLECTANCE', 'ABSORPTION', 'FLUORESCENCE', 'TRANSMITTANCE']; // Example values
-    measurementId: number = -1;
+    spectrumTypes = ['REFLECTANCE', 'ABSORPTION', 'FLUORESCENCE', 'TRANSMITTANCE'];
+    measurements: Measurement[] = [];
     originalSample: any;
 
     @ViewChild(JsonEditorComponent, { static: false }) editor: JsonEditorComponent | undefined;
@@ -44,6 +46,7 @@ export class EditSampleComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.loadMeasurements();
         this.route.paramMap.subscribe((params) => {
             const id = Number(params.get('id'));
             this.loadSampleDetails(id);
@@ -57,6 +60,12 @@ export class EditSampleComponent implements OnInit {
                 ...sample,
                 spectralData: JSON.parse(sample.spectralData),
             });
+        });
+    }
+
+    loadMeasurements(): void {
+        this.dataService.getMeasurements().subscribe((measurements) => {
+            this.measurements = measurements;
         });
     }
 
@@ -105,4 +114,5 @@ export class EditSampleComponent implements OnInit {
     goSampleDetails(): void {
         this.router.navigate([`/samples/${this.originalSample.id}`]);
     }
+
 }
