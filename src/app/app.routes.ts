@@ -10,7 +10,7 @@ import { SamplesMainComponent } from './components/samples-main/samples-main.com
 import { MeasuringDevicesMainComponent } from './components/sample-devices-main/measuring-devices-main.component'
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component'
 import { SampleDetailsComponent } from './components/spectrum-details/sample-details.component'
-import { EditSpectrumComponent } from './components/edit-spectrum/edit-spectrum.component'
+import { EditSampleComponent } from './components/edit-spectrum/edit-sample.component'
 import { AdminControlComponent } from './components/admin-control/admin-control.component'
 import { MeasurementsComponent } from './components/measurements/measurements.component'
 import { MeasurementDetailsComponent } from './components/measurement-details/measurement-details.component'
@@ -45,8 +45,8 @@ export const routes: Routes = [
         canActivate: [authGuard],
     },
     {
-        path: 'spectra/:id/edit',
-        component: EditSpectrumComponent,
+        path: 'samples/:id/edit',
+        component: EditSampleComponent,
         canActivate: [authGuard],
     },
     {

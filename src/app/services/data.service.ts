@@ -12,6 +12,7 @@ import { User } from '../models/User'
 import { UserResponse } from '../models/api/user-response'
 import { Measurement } from '../models/api/measurement'
 import { MeasurementCreateRequest } from '../models/api/measurement-create-request'
+import { SampleUpdateRequest } from '../models/api/sample-update-request'
 
 @Injectable({
     providedIn: 'root',
@@ -55,6 +56,10 @@ export class DataService {
         return this.http.get<Sample>(`${environment.apiUrl}/samples/${id}`)
     }
 
+    updateSample(id: number, updateRequest: SampleUpdateRequest) {
+        return this.http.put<void>(`${environment.apiUrl}/samples/${id}`, updateRequest)
+    }
+
     deleteSample(id: number): Observable<void> {
         return this.http.delete<void>(`${environment.apiUrl}/samples/${id}`)
     }
@@ -86,4 +91,5 @@ export class DataService {
     deleteMeasurement(id: number): Observable<void> {
         return this.http.delete<void>(`${environment.apiUrl}/measurements/${id}`);
     }
+
 }
