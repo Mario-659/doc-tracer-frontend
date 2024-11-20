@@ -148,16 +148,10 @@ export class CreateSampleComponent implements OnInit {
                 },
                 complete: (result: any) => {
                     const data = result.data as { wavelength: number; intensity: number }[];
-                    if (true) {
-                        this.sampleForm.patchValue({ spectralData: data });
-                        this.notificationService.showNotification(
-                            new AppNotification('CSV file imported successfully!', NotificationType.success)
-                        );
-                    } else {
-                        this.notificationService.showNotification(
-                            new AppNotification('Invalid CSV format.', NotificationType.error)
-                        );
-                    }
+                    this.sampleForm.patchValue({ spectralData: data });
+                    this.notificationService.showNotification(
+                        new AppNotification('CSV file imported successfully!', NotificationType.success)
+                    );
                 },
                 error: () => {
                     this.notificationService.showNotification(
