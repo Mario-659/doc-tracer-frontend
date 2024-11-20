@@ -8,7 +8,6 @@ import { AppNotification, NotificationType } from '../../models/notification'
 import { JsonEditorComponent, JsonEditorOptions, NgJsonEditorModule } from 'ang-jsoneditor'
 import { SampleUpdateRequest } from '../../models/api/sample-update-request'
 import { Measurement } from '../../models/api/measurement'
-import { forkJoin, sample } from 'rxjs'
 
 @Component({
     selector: 'app-edit-sample',
@@ -66,6 +65,7 @@ export class EditSampleComponent implements OnInit {
     loadMeasurements(): void {
         this.dataService.getMeasurements().subscribe((measurements) => {
             this.measurements = measurements;
+            this.sampleForm.patchValue({})
         });
     }
 

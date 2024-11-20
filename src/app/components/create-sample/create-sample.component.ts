@@ -5,7 +5,7 @@ import { DataService } from '../../services/data.service'
 import { NotificationService } from '../../services/notification.service'
 import { ActivatedRoute, Router } from '@angular/router'
 import { AppNotification, NotificationType } from '../../models/notification'
-import { NgForOf, NgIf } from '@angular/common'
+import { DatePipe, NgForOf, NgIf } from '@angular/common'
 import { Measurement } from '../../models/api/measurement'
 
 @Component({
@@ -16,6 +16,7 @@ import { Measurement } from '../../models/api/measurement'
         NgIf,
         NgJsonEditorModule,
         NgForOf,
+        DatePipe,
     ],
     templateUrl: './create-sample.component.html',
     styleUrl: './create-sample.component.scss',

@@ -40,7 +40,7 @@
                 [class.is-invalid]="sampleForm.get('measurementId')?.invalid && sampleForm.get('measurementId')?.touched"
             >
                 <option *ngFor="let measurement of measurements" [value]="measurement.id">
-                    {{ measurement.id }} - {{ measurement.comments }}
+                    Id: {{measurement.id}}, {{ measurement.device }} - {{ measurement.measurementDate | date: 'medium' }}
                 </option>
             </select>
             <div
