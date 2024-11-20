@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from '../../environments/environment'
 import { SpectrumGridRow } from '../models/api/spectrum-grid-row'
 import { Device } from '../models/api/device'
-import { SpectrumType } from '../models/api/spectrum-type'
 import { SpectrumUpdateRequest } from '../models/api/spectrum-update-request'
 import { Sample } from '../models/api/sample'
 import { User } from '../models/User'
@@ -13,6 +12,8 @@ import { UserResponse } from '../models/api/user-response'
 import { Measurement } from '../models/api/measurement'
 import { MeasurementCreateRequest } from '../models/api/measurement-create-request'
 import { SampleUpdateRequest } from '../models/api/sample-update-request'
+import { CreateSampleComponent } from '../components/create-sample/create-sample.component'
+import { CreateSampleRequest } from '../models/api/create-sample-request'
 
 @Injectable({
     providedIn: 'root',
@@ -34,10 +35,6 @@ export class DataService {
 
     getDevices() {
         return this.http.get<Device[]>(`${environment.apiUrl}/devices`)
-    }
-
-    getSpectrumTypes() {
-        return this.http.get<SpectrumType[]>(`${environment.apiUrl}/spectra-types`)
     }
 
     updateSpectrum(spectrumId: number, updateRequest: SpectrumUpdateRequest) {
@@ -92,4 +89,7 @@ export class DataService {
         return this.http.delete<void>(`${environment.apiUrl}/measurements/${id}`);
     }
 
+    createSample(createRequest: CreateSampleRequest) {
+        return this.http.post<void>(`${environment.apiUrl}/samples`, createRequest)
+    }
 }

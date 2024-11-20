@@ -1,0 +1,70 @@
+<div class="container mt-4">
+    <h2 class="mb-4">Create Sample</h2>
+
+    <form [formGroup]="sampleForm" (ngSubmit)="save()">
+        <div class="mb-3">
+            <label for="name" class="form-label">Sample Name</label>
+            <input
+                type="text"
+                id="name"
+                class="form-control"
+                formControlName="name"
+                [class.is-invalid]="sampleForm.get('name')?.invalid && sampleForm.get('name')?.touched"
+            />
+            <div *ngIf="sampleForm.get('name')?.invalid && sampleForm.get('name')?.touched" class="invalid-feedback">
+                Sample Name is required.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="type" class="form-label">Sample Type</label>
+            <select
+                id="type"
+                class="form-select"
+                formControlName="type"
+                [class.is-invalid]="sampleForm.get('type')?.invalid && sampleForm.get('type')?.touched"
+            >
+                <option *ngFor="let type of spectrumTypes" [value]="type">{{ type }}</option>
+            </select>
+            <div *ngIf="sampleForm.get('type')?.invalid && sampleForm.get('type')?.touched" class="invalid-feedback">
+                Sample Type is required.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="measurementId" class="form-label">Measurement</label>
+            <select
+                id="measurementId"
+                class="form-select"
+                formControlName="measurementId"
+                [class.is-invalid]="sampleForm.get('measurementId')?.invalid && sampleForm.get('measurementId')?.touched"
+            >
+                <option *ngFor="let measurement of measurements" [value]="measurement.id">
+                    {{ measurement.id }} - {{ measurement.comments }}
+                </option>
+            </select>
+            <div
+                *ngIf="sampleForm.get('measurementId')?.invalid && sampleForm.get('measurementId')?.touched"
+                class="invalid-feedback"
+            >
+                Measurement is required.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="spectralData" class="form-label">Spectral Data (JSON)</label>
+            <json-editor [options]="editorOptions" formControlName="spectralData" id="spectralData"></json-editor>
+            <div
+                *ngIf="sampleForm.get('spectralData')?.invalid && sampleForm.get('spectralData')?.touched"
+                class="invalid-feedback"
+            >
+                Spectral Data is required.
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success" [disabled]="sampleForm.invalid">Save</button>
+            <button type="button" class="btn btn-secondary ms-2" (click)="goToSamples()">Cancel</button>
+        </div>
+    </form>
+</div>
