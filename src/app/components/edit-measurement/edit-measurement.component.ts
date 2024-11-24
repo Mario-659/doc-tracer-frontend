@@ -78,7 +78,7 @@ export class EditMeasurementComponent implements OnInit {
                     brightness: measurement.conditions.brightness ?? ''
                 },
                 comments: measurement.comments,
-                measurementDate: measurement.measurementDate.slice(0, -1)
+                measurementDate: measurement.measurementDate.slice(0, -8)
             });
         });
     }

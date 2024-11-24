@@ -16,6 +16,13 @@
             </select>
         </div>
 
+        <div class="mb-3">
+            <label for="deviceId" class="form-label">Device</label>
+            <select id="deviceId" class="form-select" formControlName="deviceId">
+                <option *ngFor="let device of devices" [value]="device.id">{{ device.name }}</option>
+            </select>
+        </div>
+
         <hr />
 
         <h4 class="mb-3">Conditions</h4>
@@ -92,14 +99,6 @@
                 formControlName="measurementDate"
             />
         </div>
-
-        <div class="mb-3">
-            <label for="deviceId" class="form-label">Device</label>
-            <select id="deviceId" class="form-select" formControlName="deviceId">
-                <option *ngFor="let device of devices" [value]="device.id">{{ device.name }}</option>
-            </select>
-        </div>
-
 
 
         <button type="submit" class="btn btn-success" [disabled]="measurementForm.invalid">
