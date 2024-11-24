@@ -1,0 +1,100 @@
+<div class="container mt-4">
+    <h2 class="mb-4">Edit Measurement</h2>
+
+    <form [formGroup]="measurementForm" (ngSubmit)="save()">
+        <div class="mb-3">
+            <label for="coveringMaterialId" class="form-label">Covering Material</label>
+            <input type="number" id="coveringMaterialId" class="form-control" formControlName="coveringMaterialId" />
+        </div>
+
+        <div class="mb-3">
+            <label for="coveredMaterialId" class="form-label">Covered Material</label>
+            <input type="number" id="coveredMaterialId" class="form-control" formControlName="coveredMaterialId" />
+        </div>
+
+        <hr />
+
+        <h4 class="mb-3">Conditions</h4>
+        <div formGroupName="conditions">
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input
+                    type="text"
+                    id="description"
+                    class="form-control"
+                    formControlName="description"
+                />
+            </div>
+
+            <div class="mb-3">
+                <label for="lightSource" class="form-label">Light Source</label>
+                <input
+                    type="text"
+                    id="lightSource"
+                    class="form-control"
+                    formControlName="lightSource"
+                />
+            </div>
+
+            <div class="mb-3">
+                <label for="exposure" class="form-label">Exposure</label>
+                <input
+                    type="number"
+                    id="exposure"
+                    class="form-control"
+                    formControlName="exposure"
+                />
+            </div>
+
+            <div class="mb-3">
+                <label for="gain" class="form-label">Gain</label>
+                <input
+                    type="number"
+                    id="gain"
+                    class="form-control"
+                    formControlName="gain"
+                />
+            </div>
+
+            <div class="mb-3">
+                <label for="brightness" class="form-label">Brightness</label>
+                <input
+                    type="number"
+                    id="brightness"
+                    class="form-control"
+                    formControlName="brightness"
+                />
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="mb-3">
+            <label for="comments" class="form-label">Comments</label>
+            <textarea
+                id="comments"
+                rows="3"
+                class="form-control"
+                formControlName="comments"
+            ></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="measurementDate" class="form-label">Measurement Date</label>
+            <input
+                type="datetime-local"
+                id="measurementDate"
+                class="form-control"
+                formControlName="measurementDate"
+            />
+        </div>
+
+        <button type="submit" class="btn btn-success" [disabled]="measurementForm.invalid">
+            Save
+        </button>
+        <button type="button" class="btn btn-secondary ms-2" (click)="cancel()">
+            Cancel
+        </button>
+    </form>
+</div>
+
