@@ -3,13 +3,17 @@
 
     <form [formGroup]="measurementForm" (ngSubmit)="save()">
         <div class="mb-3">
-            <label for="coveringMaterialId" class="form-label">Covering Material</label>
-            <input type="number" id="coveringMaterialId" class="form-control" formControlName="coveringMaterialId" />
+            <label for="coveredMaterialId" class="form-label">Covered Material</label>
+            <select id="coveredMaterialId" class="form-select" formControlName="coveredMaterialId">
+                <option *ngFor="let material of coveredMaterials" [value]="material.id">{{ material.name }}</option>
+            </select>
         </div>
 
         <div class="mb-3">
-            <label for="coveredMaterialId" class="form-label">Covered Material</label>
-            <input type="number" id="coveredMaterialId" class="form-control" formControlName="coveredMaterialId" />
+            <label for="coveringMaterialId" class="form-label">Covering Material</label>
+            <select id="coveringMaterialId" class="form-select" formControlName="coveringMaterialId">
+                <option *ngFor="let material of coveringMaterials" [value]="material.id">{{ material.name }}</option>
+            </select>
         </div>
 
         <hr />
@@ -88,6 +92,15 @@
                 formControlName="measurementDate"
             />
         </div>
+
+        <div class="mb-3">
+            <label for="deviceId" class="form-label">Device</label>
+            <select id="deviceId" class="form-select" formControlName="deviceId">
+                <option *ngFor="let device of devices" [value]="device.id">{{ device.name }}</option>
+            </select>
+        </div>
+
+
 
         <button type="submit" class="btn btn-success" [disabled]="measurementForm.invalid">
             Save

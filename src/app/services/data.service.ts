@@ -14,6 +14,8 @@ import { MeasurementCreateRequest } from '../models/api/measurement-create-reque
 import { SampleUpdateRequest } from '../models/api/sample-update-request'
 import { CreateSampleComponent } from '../components/create-sample/create-sample.component'
 import { CreateSampleRequest } from '../models/api/create-sample-request'
+import { CoveredMaterial } from '../models/api/covered-materials'
+import { CoveringMaterial } from '../models/api/covering-material'
 
 @Injectable({
     providedIn: 'root',
@@ -91,5 +93,13 @@ export class DataService {
 
     createSample(createRequest: CreateSampleRequest) {
         return this.http.post<void>(`${environment.apiUrl}/samples`, createRequest)
+    }
+
+    getCoveredMaterials(): Observable<CoveredMaterial[]> {
+        return this.http.get<CoveredMaterial[]>(`${environment.apiUrl}/covered-materials`)
+    }
+
+    getCoveringMaterials(): Observable<CoveringMaterial[]> {
+        return this.http.get<CoveringMaterial[]>(`${environment.apiUrl}/covering-materials`)
     }
 }

@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { NotificationService } from '../../services/notification.service'
 import { AppNotification, NotificationType } from '../../models/notification'
 import { NgForOf } from '@angular/common'
+import { CoveredMaterial } from '../../models/api/covered-materials'
+import { CoveringMaterial } from '../../models/api/covering-material'
 
 @Component({
   selector: 'app-edit-measurement',
@@ -21,6 +23,8 @@ import { NgForOf } from '@angular/common'
 export class EditMeasurementComponent implements OnInit {
     measurementForm: FormGroup;
     devices: Device[] = [];
+    coveredMaterials: CoveredMaterial[] = [];
+    coveringMaterials: CoveringMaterial[] = [];
     conditions: MeasurementCondition[] = [];
     measurementId: number = -1;
     originalMeasurement: any;
@@ -35,6 +39,7 @@ export class EditMeasurementComponent implements OnInit {
         this.measurementForm = this.fb.group({
             coveringMaterialId: [''],
             coveredMaterialId: [''],
+            deviceId: [''],
             conditions: this.fb.group({
                 description: [''],
                 lightSource: [''],
@@ -54,7 +59,8 @@ export class EditMeasurementComponent implements OnInit {
         });
 
         this.loadDevices();
-        // this.loadConditions();
+        this.loadCoveredMaterials();
+        this.loadCoveringMaterials();
     }
 
     loadMeasurementDetails(id: number): void {
@@ -84,14 +90,14 @@ export class EditMeasurementComponent implements OnInit {
     }
 
     loadCoveredMaterials(): void {
-        this.dataService.getDevices().subscribe((devices) => {
-            this.devices = devices;
+        this.dataService.getCoveredMaterials().subscribe((materials) => {
+            this.coveredMaterials = materials
         });
     }
 
     loadCoveringMaterials(): void {
-        this.dataService.getDevices().subscribe((devices) => {
-            this.devices = devices;
+        this.dataService.getCoveringMaterials().subscribe((materials) => {
+            this.coveringMaterials = materials
         });
     }
 
