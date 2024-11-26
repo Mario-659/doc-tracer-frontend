@@ -43,7 +43,7 @@ export class CreateSampleComponent implements OnInit {
 
         const jsonEditorInitValue = [
             {
-                "wavelenght": 400,
+                "wavelength": 400,
                 "intensity": 24.3
             },
             {
