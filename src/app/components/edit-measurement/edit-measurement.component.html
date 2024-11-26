@@ -1,115 +1,123 @@
 <div class="container card mt-4">
-
     <div class="card-body">
         <h2 class="mb-4 card-title">Edit Measurement</h2>
 
         <form [formGroup]="measurementForm" (ngSubmit)="save()">
-            <div class="mb-3">
-                <label for="coveredMaterialId" class="form-label">Covered Material</label>
-                <select id="coveredMaterialId" class="form-select" formControlName="coveredMaterialId">
-                    <option *ngFor="let material of coveredMaterials" [value]="material.id">{{ material.name }}</option>
-                </select>
-            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="mb-3">Properties</h4>
+                    <div class="mb-3">
+                        <label for="coveredMaterialId" class="form-label">Covered Material</label>
+                        <select id="coveredMaterialId" class="form-select" formControlName="coveredMaterialId">
+                            <option *ngFor="let material of coveredMaterials" [value]="material.id">
+                                {{ material.name }}
+                            </option>
+                        </select>
+                    </div>
 
-            <div class="mb-3">
-                <label for="coveringMaterialId" class="form-label">Covering Material</label>
-                <select id="coveringMaterialId" class="form-select" formControlName="coveringMaterialId">
-                    <option *ngFor="let material of coveringMaterials" [value]="material.id">{{ material.name }}</option>
-                </select>
-            </div>
+                    <div class="mb-3">
+                        <label for="coveringMaterialId" class="form-label">Covering Material</label>
+                        <select id="coveringMaterialId" class="form-select" formControlName="coveringMaterialId">
+                            <option *ngFor="let material of coveringMaterials" [value]="material.id">
+                                {{ material.name }}
+                            </option>
+                        </select>
+                    </div>
 
-            <div class="mb-3">
-                <label for="deviceId" class="form-label">Device</label>
-                <select id="deviceId" class="form-select" formControlName="deviceId">
-                    <option *ngFor="let device of devices" [value]="device.id">{{ device.name }}</option>
-                </select>
-            </div>
+                    <div class="mb-3">
+                        <label for="deviceId" class="form-label">Device</label>
+                        <select id="deviceId" class="form-select" formControlName="deviceId">
+                            <option *ngFor="let device of devices" [value]="device.id">
+                                {{ device.name }}
+                            </option>
+                        </select>
+                    </div>
 
-            <hr />
-
-            <h4 class="mb-3">Conditions</h4>
-            <div formGroupName="conditions">
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <input
-                        type="text"
-                        id="description"
-                        class="form-control"
-                        formControlName="description"
-                    />
+                    <div class="mb-3">
+                        <label for="comments" class="form-label">Comments</label>
+                        <textarea
+                            id="comments"
+                            rows="3"
+                            class="form-control"
+                            formControlName="comments"
+                        ></textarea>
+                    </div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="lightSource" class="form-label">Light Source</label>
-                    <input
-                        type="text"
-                        id="lightSource"
-                        class="form-control"
-                        formControlName="lightSource"
-                    />
-                </div>
+                <div class="col-md-6">
+                    <h4 class="mb-3">Conditions</h4>
+                    <div formGroupName="conditions">
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <input
+                                type="text"
+                                id="description"
+                                class="form-control"
+                                formControlName="description"
+                            />
+                        </div>
 
-                <div class="mb-3">
-                    <label for="exposure" class="form-label">Exposure</label>
-                    <input
-                        type="number"
-                        id="exposure"
-                        class="form-control"
-                        formControlName="exposure"
-                    />
-                </div>
+                        <div class="mb-3">
+                            <label for="lightSource" class="form-label">Light Source</label>
+                            <input
+                                type="text"
+                                id="lightSource"
+                                class="form-control"
+                                formControlName="lightSource"
+                            />
+                        </div>
 
-                <div class="mb-3">
-                    <label for="gain" class="form-label">Gain</label>
-                    <input
-                        type="number"
-                        id="gain"
-                        class="form-control"
-                        formControlName="gain"
-                    />
-                </div>
+                        <div class="mb-3">
+                            <label for="exposure" class="form-label">Exposure</label>
+                            <input
+                                type="number"
+                                id="exposure"
+                                class="form-control"
+                                formControlName="exposure"
+                            />
+                        </div>
 
-                <div class="mb-3">
-                    <label for="brightness" class="form-label">Brightness</label>
-                    <input
-                        type="number"
-                        id="brightness"
-                        class="form-control"
-                        formControlName="brightness"
-                    />
+                        <div class="mb-3">
+                            <label for="gain" class="form-label">Gain</label>
+                            <input
+                                type="number"
+                                id="gain"
+                                class="form-control"
+                                formControlName="gain"
+                            />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="brightness" class="form-label">Brightness</label>
+                            <input
+                                type="number"
+                                id="brightness"
+                                class="form-control"
+                                formControlName="brightness"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="measurementDate" class="form-label">Measurement Date</label>
+                        <input
+                            type="datetime-local"
+                            id="measurementDate"
+                            class="form-control"
+                            formControlName="measurementDate"
+                        />
+                    </div>
                 </div>
             </div>
 
-            <hr />
-
-            <div class="mb-3">
-                <label for="comments" class="form-label">Comments</label>
-                <textarea
-                    id="comments"
-                    rows="3"
-                    class="form-control"
-                    formControlName="comments"
-                ></textarea>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-success" [disabled]="measurementForm.invalid">
+                    Save
+                </button>
+                <button type="button" class="btn btn-secondary ms-2" (click)="cancel()">
+                    Cancel
+                </button>
             </div>
-
-            <div class="mb-3">
-                <label for="measurementDate" class="form-label">Measurement Date</label>
-                <input
-                    type="datetime-local"
-                    id="measurementDate"
-                    class="form-control"
-                    formControlName="measurementDate"
-                />
-            </div>
-
-
-            <button type="submit" class="btn btn-success" [disabled]="measurementForm.invalid">
-                Save
-            </button>
-            <button type="button" class="btn btn-secondary ms-2" (click)="cancel()">
-                Cancel
-            </button>
         </form>
     </div>
 </div>
-
