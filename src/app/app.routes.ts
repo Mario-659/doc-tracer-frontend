@@ -16,6 +16,7 @@ import { MeasurementsComponent } from './components/measurements/measurements.co
 import { MeasurementDetailsComponent } from './components/measurement-details/measurement-details.component'
 import { CreateSampleComponent } from './components/create-sample/create-sample.component'
 import { EditMeasurementComponent } from './components/edit-measurement/edit-measurement.component'
+import { NewMeasurementComponent } from './components/new-measurement/new-measurement.component'
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -39,6 +40,11 @@ export const routes: Routes = [
     {
         path: 'measurements/:id/edit',
         component: EditMeasurementComponent,
+        canActivate: [authGuard],
+    },
+    {
+        path: 'create-measurement',
+        component: NewMeasurementComponent,
         canActivate: [authGuard],
     },
     {
