@@ -95,4 +95,8 @@ export class MeasurementDetailsComponent implements OnInit {
     private goToSampleDetails(id: number) {
        this.router.navigate(['/samples', id])
     }
+
+    goToEditMeasurement(id: number) {
+        this.router.navigate(['/measurements', id, 'edit'])
+    }
 }

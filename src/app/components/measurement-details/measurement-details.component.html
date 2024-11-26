@@ -1,7 +1,12 @@
 <div *ngIf="measurement$ | async as measurement">
     <div class="card text-left">
         <div class="card-body">
-            <h2 class="card-title">Measurement Details</h2>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="card-title">Measurement Details</h2>
+                <button class="btn btn-primary" (click)="goToEditMeasurement(measurement.id)">
+                    <i class="bi bi-pencil-square"></i> Edit Measurement
+                </button>
+            </div>
             <p class="card-subtitle py-2">Detailed information about the selected measurement</p>
 
             <hr />
