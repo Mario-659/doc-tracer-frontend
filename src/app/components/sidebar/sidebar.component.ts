@@ -27,7 +27,7 @@ export class SidebarComponent {
     isSidebarExpanded = false;
     protected loggedInUser$: Observable<User | null>
     navItems = [
-        { label: 'Dashboard', icon: 'dashboard', link: '/dashboard' },
+        // { label: 'Dashboard', icon: 'dashboard', link: '/dashboard' },
         { label: 'Measurements', icon: 'query_stats', link: '/measurements' },
         { label: 'Spectra Similarities', icon: 'text_compare', link: '/spectrum-similarities' },
         { label: 'Samples', icon: 'labs', link: '/samples' },
