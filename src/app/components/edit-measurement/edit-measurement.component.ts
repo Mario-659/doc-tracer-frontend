@@ -37,18 +37,18 @@ export class EditMeasurementComponent implements OnInit {
         private notificationService: NotificationService
     ) {
         this.measurementForm = this.fb.group({
-            coveringMaterialId: [''],
-            coveredMaterialId: [''],
-            deviceId: [''],
+            coveringMaterialId: ['', Validators.required],
+            coveredMaterialId: ['', Validators.required],
+            deviceId: ['', Validators.required],
             conditions: this.fb.group({
-                description: [''],
-                lightSource: [''],
-                exposure: [''],
-                gain: [''],
-                brightness: [''],
+                description: ['', [Validators.required, Validators.maxLength(255)]],
+                lightSource: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
+                exposure: ['', [Validators.min(0), Validators.max(100)]],
+                gain: ['', [Validators.min(0), Validators.max(100)]],
+                brightness: ['', [Validators.min(0), Validators.max(100)]],
             }),
-            comments: [''],
-            measurementDate: [''],
+            comments: ['', Validators.maxLength(500)],
+            measurementDate: ['', Validators.required],
         });
     }
 
@@ -78,7 +78,7 @@ export class EditMeasurementComponent implements OnInit {
                     brightness: measurement.conditions.brightness ?? ''
                 },
                 comments: measurement.comments,
-                measurementDate: measurement.measurementDate.slice(0, -8)
+                measurementDate: measurement.measurementDate.slice(0, -1)
             });
         });
     }
