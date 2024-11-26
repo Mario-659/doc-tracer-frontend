@@ -35,6 +35,7 @@ import { AppNotification, NotificationType } from '../../models/notification'
 export class AdminControlComponent implements OnInit {
     $users: Observable<UserResponse[]> | undefined
     private gridApi: GridApi<any> | undefined
+    private confirmationModal: any;
 
     protected modified: boolean = false
     protected pendingChanges: any[] = [];
@@ -106,8 +107,8 @@ export class AdminControlComponent implements OnInit {
     saveModifiedRows() {
         const confirmationModalElement = document.getElementById('confirmationModal');
         if (confirmationModalElement) {
-            const confirmationModal = new Modal(confirmationModalElement);
-            confirmationModal.show();
+            this.confirmationModal = new Modal(confirmationModalElement);
+            this.confirmationModal.show();
         }
     }
 
@@ -121,12 +122,11 @@ export class AdminControlComponent implements OnInit {
             }
         });
 
-        const confirmationModalElement = document.getElementById('confirmationModal');
-        if (confirmationModalElement) {
-            const confirmationModal = new Modal(confirmationModalElement);
-            confirmationModal.hide();
-        }
+        this.closeModal();
+    }
 
+    closeModal() {
+        this.confirmationModal.hide();
     }
 
     roleColumns: ColDef[] = Object.keys(Role).map(role => ({
@@ -196,4 +196,5 @@ export class AdminControlComponent implements OnInit {
         const date = new Date(params.value)
         return date.toLocaleString()
     }
+
 }
