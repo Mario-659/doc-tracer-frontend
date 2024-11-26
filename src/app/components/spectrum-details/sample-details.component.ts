@@ -5,16 +5,17 @@ import { DataService } from '../../services/data.service';
 import { tap } from 'rxjs/operators';
 import { Sample } from '../../models/api/sample';
 import { Chart, registerables } from 'chart.js';
-import { AsyncPipe, DatePipe, JsonPipe, NgIf } from '@angular/common'
+import { AsyncPipe, DatePipe, JsonPipe, NgForOf, NgIf } from '@angular/common'
 import { AppNotification, NotificationType } from '../../models/notification'
 import { NotificationService } from '../../services/notification.service'
+import { Modal } from 'bootstrap'
 
 Chart.register(...registerables);
 
 @Component({
     selector: 'app-sample-details',
     standalone: true,
-    imports: [NgIf, AsyncPipe, JsonPipe, DatePipe],
+    imports: [NgIf, AsyncPipe, JsonPipe, DatePipe, NgForOf],
     templateUrl: './sample-details.component.html',
     styleUrl: './sample-details.component.scss',
 })
@@ -22,6 +23,7 @@ export class SampleDetailsComponent implements OnInit, AfterViewChecked {
     sample$: Observable<Sample | undefined> | undefined;
     private sampleData: Sample | null = null;
     chart: Chart | undefined;
+    confirmationModal: any;
 
     protected readonly JSON = JSON
 
@@ -88,11 +90,20 @@ export class SampleDetailsComponent implements OnInit, AfterViewChecked {
 
 
     deleteSample(id: number): void {
+        const confirmationModalElement = document.getElementById('confirmationModal');
+        if (confirmationModalElement) {
+            this.confirmationModal = new Modal(confirmationModalElement);
+            this.confirmationModal.show();
+        }
+    }
+
+    confirmDelete(id: number): void {
         this.dataService.deleteSample(id).subscribe({
             next: () => {
                 this.notificationService.showNotification(
                     new AppNotification(`Sample with ID ${id} deleted successfully`, NotificationType.success)
                 );
+                this.confirmationModal.hide();
                 this.router.navigate(['/samples']);
             },
         });
@@ -157,4 +168,7 @@ export class SampleDetailsComponent implements OnInit, AfterViewChecked {
         }
     }
 
+    closeModal() {
+        this.confirmationModal.hide();
+    }
 }
