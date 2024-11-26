@@ -17,6 +17,8 @@ import { MeasurementDetailsComponent } from './components/measurement-details/me
 import { CreateSampleComponent } from './components/create-sample/create-sample.component'
 import { EditMeasurementComponent } from './components/edit-measurement/edit-measurement.component'
 import { NewMeasurementComponent } from './components/new-measurement/new-measurement.component'
+import { roleGuard } from './guards/role.guard'
+import { Role } from './models/User'
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -30,57 +32,68 @@ export const routes: Routes = [
     {
         path: 'measurements',
         component: MeasurementsComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
+        data: {role: Role.VIEWER}
     },
     {
         path: 'measurements/:id',
         component: MeasurementDetailsComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
+        data: {role: Role.VIEWER}
     },
     {
         path: 'measurements/:id/edit',
         component: EditMeasurementComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
+        data: {role: Role.EDITOR}
     },
     {
         path: 'create-measurement',
         component: NewMeasurementComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
+        data: {role: Role.EDITOR}
     },
     {
         path: 'samples',
         component: SamplesComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
+        data: {role: Role.VIEWER}
     },
     {
         path: 'samples/:id',
         component: SampleDetailsComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
+        data: {role: Role.VIEWER}
     },
     {
         path: 'create-sample',
         component: CreateSampleComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
+        data: {role: Role.EDITOR}
     },
     {
         path: 'samples/:id/edit',
         component: EditSampleComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
+        data: {role: Role.EDITOR}
     },
     {
         path: 'spectrum-similarities',
         component: SpectrumSimilaritiesMainComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
+        data: {role: Role.VIEWER}
     },
     {
         path: 'measuring-devices',
         component: MeasuringDevicesMainComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuard, roleGuard],
+        data: {role: Role.VIEWER}
     },
     {
         path: 'admin-control',
         component: AdminControlComponent,
-        canActivate: [authGuard], // TODO add entitlements guard
+        canActivate: [authGuard, roleGuard],
+        data: {role: Role.ADMIN}
     },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: '**', component: PageNotFoundComponent },
