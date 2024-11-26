@@ -1,2 +1,11 @@
-<h1>Measurements</h1>
-<app-grid [$rowData]="measurements$" [colDefs]="colDefs"></app-grid>
+<div class="card text-left">
+    <div class="card-body">
+        <h2 class="card-title">Measurements</h2>
+        <!--        <p class="card-subtitle">subtitle text</p>-->
+        <p class="display-6 py-4"></p>
+        <button class="btn btn-secondary" (click)="goToCreateMeasurement()">Create new measurement</button>
+        <div class="mt-2 mb-2">
+            <app-grid [$rowData]="measurements$" [colDefs]="colDefs"></app-grid>
+        </div>
+    </div>
+</div>

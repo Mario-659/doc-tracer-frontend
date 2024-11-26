@@ -23,10 +23,6 @@ export class MeasurementsComponent implements OnInit {
         this.measurements$ = this.dataService.getMeasurements();
     }
 
-    goToDetails(id: number): void {
-        this.router.navigate([`/measurements/${id}`]);
-    }
-
     colDefs: ColDef[] = [
         { headerName: 'ID', field: 'id', filter: 'agNumberColumnFilter', onCellClicked: (event) => this.goToDetails(event.data.id), cellClass: ['link-primary'] },
         { headerName: 'Covering Material', field: 'coveringMaterial', filter: 'agTextColumnFilter' },
@@ -37,4 +33,12 @@ export class MeasurementsComponent implements OnInit {
         { headerName: 'Created At', field: 'createdAt', filter: 'agDateColumnFilter' },
         { headerName: 'Updated At', field: 'updatedAt', filter: 'agDateColumnFilter' },
     ];
+
+    goToDetails(id: number): void {
+        this.router.navigate([`/measurements/${id}`]);
+    }
+
+    goToCreateMeasurement() {
+        this.router.navigate(['/create-measurement'])
+    }
 }
