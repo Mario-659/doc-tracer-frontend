@@ -104,9 +104,18 @@ export class EditMeasurementComponent implements OnInit {
     save(): void {
         if (!this.measurementForm.valid) return;
 
-        const formValues = this.measurementForm.value;
+        const updateRequest = this.prepareUpdateRequest(this.measurementForm.value);
 
-        const updateRequest = {
+        this.dataService.updateMeasurement(this.measurementId, updateRequest).subscribe(() => {
+            this.notificationService.showNotification(
+                new AppNotification(`Measurement with id ${this.measurementId} has been updated`, NotificationType.success)
+            );
+            this.goMeasurementDetails();
+        });
+    }
+
+    prepareUpdateRequest(formValues: any): any {
+        return {
             coveringMaterialId: formValues.coveringMaterialId,
             coveredMaterialId: formValues.coveredMaterialId,
             conditions: {
@@ -117,49 +126,8 @@ export class EditMeasurementComponent implements OnInit {
                 brightness: formValues.conditions.brightness,
             },
             comments: formValues.comments,
-            measurementDate: formValues.measurementDate,
+            measurementDate: new Date(formValues.measurementDate).toISOString(),
         };
-
-        this.dataService.updateMeasurement(this.measurementId, updateRequest).subscribe(() => {
-            this.notificationService.showNotification(
-                new AppNotification(`Measurement with id ${this.measurementId} has been updated`, NotificationType.success)
-            );
-            this.goMeasurementDetails();
-        });
-    }
-
-    getChangedFields(formValues: any, originalMeasurement: any): any {
-        const updateRequest: any = {};
-
-        if (formValues.coveringMaterial !== originalMeasurement.coveringMaterial) {
-            updateRequest.coveringMaterial = formValues.coveringMaterial;
-        }
-
-        if (formValues.coveredMaterial !== originalMeasurement.coveredMaterial) {
-            updateRequest.coveredMaterial = formValues.coveredMaterial;
-        }
-
-        if (formValues.userId !== originalMeasurement.userId) {
-            updateRequest.userId = formValues.userId;
-        }
-
-        if (formValues.deviceId !== originalMeasurement.deviceId) {
-            updateRequest.deviceId = formValues.deviceId;
-        }
-
-        if (formValues.conditionsId !== originalMeasurement.conditions?.id) {
-            updateRequest.conditionsId = formValues.conditionsId;
-        }
-
-        if (formValues.comments !== originalMeasurement.comments) {
-            updateRequest.comments = formValues.comments;
-        }
-
-        if (formValues.measurementDate !== originalMeasurement.measurementDate.split('T')[0]) {
-            updateRequest.measurementDate = new Date(formValues.measurementDate).toISOString();
-        }
-
-        return updateRequest;
     }
 
     goMeasurementDetails(): void {
