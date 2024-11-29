@@ -64,7 +64,7 @@ export class MeasuringDevicesMainComponent implements OnInit {
             valueFormatter: this.formatDate,
             flex: 2,
         },
-    ];
+    ]
 
     // goDeviceDetails(id: number) {
     //     this.router.navigate(["/devices", id])

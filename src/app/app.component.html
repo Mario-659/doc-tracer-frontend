@@ -1,22 +1,17 @@
-<app-notification/>
+<app-notification />
 
-<div *ngIf="authenticationPage else mainApp" class="bg-light">
-    <router-outlet/>
-<!--    <app-footer></app-footer>-->
+<div *ngIf="authenticationPage; else mainApp" class="bg-light">
+    <router-outlet />
+    <!--    <app-footer></app-footer>-->
 </div>
 
 <ng-template #mainApp>
     <div class="container-fluid vh-100 d-flex flex-row p-0">
-        <app-sidebar
-            class="col-auto p-0 sticky-top"
-            style="position: sticky; top: 0; height: 100vh; overflow-y: auto;">
+        <app-sidebar class="col-auto p-0 sticky-top" style="position: sticky; top: 0; height: 100vh; overflow-y: auto">
         </app-sidebar>
 
-        <div
-            class="col p-3 bg-light overflow-auto"
-            style="min-height: 100vh;">
+        <div class="col p-3 bg-light overflow-auto" style="min-height: 100vh">
             <router-outlet></router-outlet>
         </div>
     </div>
 </ng-template>
-

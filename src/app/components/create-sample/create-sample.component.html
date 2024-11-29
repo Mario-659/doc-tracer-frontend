@@ -37,10 +37,13 @@
                 id="measurementId"
                 class="form-select"
                 formControlName="measurementId"
-                [class.is-invalid]="sampleForm.get('measurementId')?.invalid && sampleForm.get('measurementId')?.touched"
+                [class.is-invalid]="
+                    sampleForm.get('measurementId')?.invalid && sampleForm.get('measurementId')?.touched
+                "
             >
                 <option *ngFor="let measurement of measurements" [value]="measurement.id">
-                    Id: {{measurement.id}}, {{ measurement.device }} - {{ measurement.measurementDate | date: 'medium' }}
+                    Id: {{ measurement.id }}, {{ measurement.device }} -
+                    {{ measurement.measurementDate | date: 'medium' }}
                 </option>
             </select>
             <div
@@ -61,14 +64,7 @@
             <json-editor [options]="editorOptions" formControlName="spectralData" id="spectralData"></json-editor>
         </div>
 
-        <input
-            type="file"
-            #csvUpload
-            style="display: none"
-            (change)="onCsvUpload($event)"
-            accept=".csv"
-        />
-
+        <input type="file" #csvUpload style="display: none" (change)="onCsvUpload($event)" accept=".csv" />
 
         <div class="mt-4">
             <button type="submit" class="btn btn-success" [disabled]="sampleForm.invalid">Save</button>

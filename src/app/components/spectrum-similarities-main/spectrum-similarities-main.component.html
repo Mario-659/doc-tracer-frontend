@@ -13,7 +13,8 @@
                         (change)="onMeasurementChange()"
                     >
                         <option *ngFor="let measurement of measurements" [ngValue]="measurement">
-                            {{ measurement.device }} - {{ measurement.measurementDate | date: 'medium' }} - {{ measurement.user }}
+                            {{ measurement.device }} - {{ measurement.measurementDate | date: 'medium' }} -
+                            {{ measurement.user }}
                         </option>
                     </select>
                 </div>
@@ -31,11 +32,7 @@
                                 {{ availableSample.name }}
                             </option>
                         </select>
-                        <button
-                            *ngIf="selectedSamples.length > 1"
-                            class="btn shadow-none"
-                            (click)="removeSample(i)"
-                        >
+                        <button *ngIf="selectedSamples.length > 1" class="btn shadow-none" (click)="removeSample(i)">
                             <span class="material-symbols-outlined d-block">close</span>
                         </button>
                     </div>
@@ -49,7 +46,6 @@
                         <span class="me-2">Add Sample</span>
                     </button>
                 </div>
-
 
                 <div class="mb-4">
                     <label class="py-2"><strong>Chart Controls</strong></label>

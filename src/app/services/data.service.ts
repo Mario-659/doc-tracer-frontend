@@ -72,23 +72,23 @@ export class DataService {
     }
 
     getMeasurements(): Observable<Measurement[]> {
-        return this.http.get<Measurement[]>(`${environment.apiUrl}/measurements`);
+        return this.http.get<Measurement[]>(`${environment.apiUrl}/measurements`)
     }
 
     getMeasurement(id: number): Observable<Measurement> {
-        return this.http.get<Measurement>(`${environment.apiUrl}/measurements/${id}`);
+        return this.http.get<Measurement>(`${environment.apiUrl}/measurements/${id}`)
     }
 
     createMeasurement(payload: MeasurementCreateRequest): Observable<Measurement> {
-        return this.http.post<Measurement>(`${environment.apiUrl}/measurements`, payload);
+        return this.http.post<Measurement>(`${environment.apiUrl}/measurements`, payload)
     }
 
     updateMeasurement(id: number, payload: Partial<MeasurementCreateRequest>): Observable<Measurement> {
-        return this.http.put<Measurement>(`${environment.apiUrl}/measurements/${id}`, payload);
+        return this.http.put<Measurement>(`${environment.apiUrl}/measurements/${id}`, payload)
     }
 
     deleteMeasurement(id: number): Observable<void> {
-        return this.http.delete<void>(`${environment.apiUrl}/measurements/${id}`);
+        return this.http.delete<void>(`${environment.apiUrl}/measurements/${id}`)
     }
 
     createSample(createRequest: CreateSampleRequest) {

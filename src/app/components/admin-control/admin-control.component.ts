@@ -20,29 +20,24 @@ import { AppNotification, NotificationType } from '../../models/notification'
 // }
 
 @Component({
-  selector: 'app-admin-control',
-  standalone: true,
-    imports: [
-        AgGridAngular,
-        AppGridComponent,
-        NgIf,
-        AsyncPipe,
-        NgForOf,
-    ],
-  templateUrl: './admin-control.component.html',
-  styleUrl: './admin-control.component.scss'
+    selector: 'app-admin-control',
+    standalone: true,
+    imports: [AgGridAngular, AppGridComponent, NgIf, AsyncPipe, NgForOf],
+    templateUrl: './admin-control.component.html',
+    styleUrl: './admin-control.component.scss',
 })
 export class AdminControlComponent implements OnInit {
     $users: Observable<UserResponse[]> | undefined
     private gridApi: GridApi<any> | undefined
-    private confirmationModal: any;
+    private confirmationModal: any
 
     protected modified: boolean = false
-    protected pendingChanges: any[] = [];
+    protected pendingChanges: any[] = []
 
     constructor(
         private dataService: DataService,
-        private notificationService: NotificationService) { }
+        private notificationService: NotificationService
+    ) {}
 
     ngOnInit() {
         this.loadData()
@@ -50,36 +45,36 @@ export class AdminControlComponent implements OnInit {
 
     loadData() {
         this.$users = this.dataService.getUsers().pipe(
-            map(users =>
-                users.map(user => ({
+            map((users) =>
+                users.map((user) => ({
                     ...user,
                     admin: user.roles.includes('ADMIN'),
                     viewer: user.roles.includes('VIEWER'),
                     editor: user.roles.includes('EDITOR'),
                 }))
             )
-        );
+        )
     }
 
     onGridReady(params: any) {
-        this.gridApi = params.api;
+        this.gridApi = params.api
     }
 
     onCellValueChanged(event: any) {
-        const { data } = event;
-        const currentRoles = data.roles || [];
+        const { data } = event
+        const currentRoles = data.roles || []
         const updatedRoles = Object.keys(Role)
-            .filter(role => data[role.toLowerCase()])
-            .map(role => role.toUpperCase());
+            .filter((role) => data[role.toLowerCase()])
+            .map((role) => role.toUpperCase())
 
-        const rolesToAdd = updatedRoles.filter(role => !currentRoles.includes(role));
-        const rolesToRemove = currentRoles.filter((role: any) => !updatedRoles.includes(role));
+        const rolesToAdd = updatedRoles.filter((role) => !currentRoles.includes(role))
+        const rolesToRemove = currentRoles.filter((role: any) => !updatedRoles.includes(role))
 
-        const hasRoleChanges = rolesToAdd.length > 0 || rolesToRemove.length > 0;
-        const hasActivationChange = data.active !== event.oldValue?.active;
+        const hasRoleChanges = rolesToAdd.length > 0 || rolesToRemove.length > 0
+        const hasActivationChange = data.active !== event.oldValue?.active
 
         if (hasRoleChanges || hasActivationChange) {
-            const existingChangeIndex = this.pendingChanges.findIndex(change => change.id === data.id);
+            const existingChangeIndex = this.pendingChanges.findIndex((change) => change.id === data.id)
             if (existingChangeIndex > -1) {
                 this.pendingChanges[existingChangeIndex] = {
                     id: data.id,
@@ -87,7 +82,7 @@ export class AdminControlComponent implements OnInit {
                     rolesToAdd,
                     rolesToRemove,
                     isActive: data.active,
-                };
+                }
             } else {
                 this.pendingChanges.push({
                     id: data.id,
@@ -95,41 +90,43 @@ export class AdminControlComponent implements OnInit {
                     rolesToAdd,
                     rolesToRemove,
                     isActive: data.active,
-                });
+                })
             }
         } else {
-            this.pendingChanges = this.pendingChanges.filter(change => change.id !== data.id);
+            this.pendingChanges = this.pendingChanges.filter((change) => change.id !== data.id)
         }
 
-        this.modified = this.pendingChanges.length > 0;
+        this.modified = this.pendingChanges.length > 0
     }
 
     saveModifiedRows() {
-        const confirmationModalElement = document.getElementById('confirmationModal');
+        const confirmationModalElement = document.getElementById('confirmationModal')
         if (confirmationModalElement) {
-            this.confirmationModal = new Modal(confirmationModalElement);
-            this.confirmationModal.show();
+            this.confirmationModal = new Modal(confirmationModalElement)
+            this.confirmationModal.show()
         }
     }
 
     confirmSave() {
         this.dataService.updateUsers(this.pendingChanges).subscribe({
             next: () => {
-                this.notificationService.showNotification(new AppNotification('Users have been successfully updated', NotificationType.success))
-                this.modified = false;
-                this.pendingChanges = [];
-                this.loadData();
-            }
-        });
+                this.notificationService.showNotification(
+                    new AppNotification('Users have been successfully updated', NotificationType.success)
+                )
+                this.modified = false
+                this.pendingChanges = []
+                this.loadData()
+            },
+        })
 
-        this.closeModal();
+        this.closeModal()
     }
 
     closeModal() {
-        this.confirmationModal.hide();
+        this.confirmationModal.hide()
     }
 
-    roleColumns: ColDef[] = Object.keys(Role).map(role => ({
+    roleColumns: ColDef[] = Object.keys(Role).map((role) => ({
         field: role.toLowerCase(),
         cellRenderer: 'agCheckboxCellRenderer',
         cellRendererParams: {
@@ -137,7 +134,7 @@ export class AdminControlComponent implements OnInit {
         },
         editable: true,
         flex: 1,
-    }));
+    }))
 
     colDefs: ColDef[] = [
         {
@@ -189,12 +186,11 @@ export class AdminControlComponent implements OnInit {
             filter: 'agDateColumnFilter',
             valueFormatter: this.formatDate,
             flex: 2,
-        }
-    ];
+        },
+    ]
 
     formatDate(params: any): string {
         const date = new Date(params.value)
         return date.toLocaleString()
     }
-
 }

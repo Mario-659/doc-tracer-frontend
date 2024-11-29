@@ -5,7 +5,14 @@
         <p class="display-6 py-4"></p>
         <div class="mt-2 mb-2">
             <div *ngIf="$users | async as rowData; else spinner">
-                <ag-grid-angular class="ag-theme-quartz" style="height: 500px" [rowData]="rowData" [columnDefs]="colDefs" (gridReady)="onGridReady($event)" (cellValueChanged)="onCellValueChanged($event)"/>
+                <ag-grid-angular
+                    class="ag-theme-quartz"
+                    style="height: 500px"
+                    [rowData]="rowData"
+                    [columnDefs]="colDefs"
+                    (gridReady)="onGridReady($event)"
+                    (cellValueChanged)="onCellValueChanged($event)"
+                />
             </div>
             <ng-template #spinner>
                 <div class="d-flex justify-content-center">
@@ -15,23 +22,37 @@
                 </div>
             </ng-template>
         </div>
-        <button type="button" class="btn btn-primary ms-2" [disabled]="!modified" (click)="saveModifiedRows()">Save changes</button>
+        <button type="button" class="btn btn-primary ms-2" [disabled]="!modified" (click)="saveModifiedRows()">
+            Save changes
+        </button>
     </div>
 </div>
-<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+<div
+    class="modal fade"
+    id="confirmationModal"
+    tabindex="-1"
+    aria-labelledby="confirmationModalLabel"
+    aria-hidden="true"
+>
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="confirmationModalLabel">Confirm Changes</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    (click)="closeModal()"
+                ></button>
             </div>
             <div class="modal-body">
                 <p>Are you sure you want to save the following changes?</p>
                 <ul>
                     <li *ngFor="let change of pendingChanges">
-                        <strong>User:</strong> {{ change.username }}<br>
-                        <strong>Roles to Add:</strong> {{ change.rolesToAdd.join(', ') || 'None' }}<br>
-                        <strong>Roles to Remove:</strong> {{ change.rolesToRemove.join(', ') || 'None' }}<br>
+                        <strong>User:</strong> {{ change.username }}<br />
+                        <strong>Roles to Add:</strong> {{ change.rolesToAdd.join(', ') || 'None' }}<br />
+                        <strong>Roles to Remove:</strong> {{ change.rolesToRemove.join(', ') || 'None' }}<br />
                         <strong>Active Status:</strong> {{ change.isActive ? 'Activate' : 'Deactivate' }}
                     </li>
                 </ul>
@@ -43,4 +64,3 @@
         </div>
     </div>
 </div>
-

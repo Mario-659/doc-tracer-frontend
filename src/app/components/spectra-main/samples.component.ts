@@ -75,7 +75,7 @@ export class SamplesComponent implements OnInit {
             valueFormatter: this.formatDate,
             flex: 2,
         },
-    ];
+    ]
 
     formatDate(params: any): string {
         const date = new Date(params.value)

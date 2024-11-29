@@ -15,16 +15,25 @@ import { ColDef } from 'ag-grid-community'
     styleUrls: ['./measurements.component.scss'],
 })
 export class MeasurementsComponent implements OnInit {
-    measurements$: Observable<Measurement[]> | undefined;
+    measurements$: Observable<Measurement[]> | undefined
 
-    constructor(private dataService: DataService, private router: Router) {}
+    constructor(
+        private dataService: DataService,
+        private router: Router
+    ) {}
 
     ngOnInit(): void {
-        this.measurements$ = this.dataService.getMeasurements();
+        this.measurements$ = this.dataService.getMeasurements()
     }
 
     colDefs: ColDef[] = [
-        { headerName: 'ID', field: 'id', filter: 'agNumberColumnFilter', onCellClicked: (event) => this.goToDetails(event.data.id), cellClass: ['link-primary'] },
+        {
+            headerName: 'ID',
+            field: 'id',
+            filter: 'agNumberColumnFilter',
+            onCellClicked: (event) => this.goToDetails(event.data.id),
+            cellClass: ['link-primary'],
+        },
         { headerName: 'Covering Material', field: 'coveringMaterial', filter: 'agTextColumnFilter' },
         { headerName: 'Covered Material', field: 'coveredMaterial', filter: 'agTextColumnFilter' },
         { headerName: 'User', field: 'user', filter: 'agTextColumnFilter' },
@@ -32,10 +41,10 @@ export class MeasurementsComponent implements OnInit {
         { headerName: 'Measurement Date', field: 'measurementDate', filter: 'agDateColumnFilter' },
         { headerName: 'Created At', field: 'createdAt', filter: 'agDateColumnFilter' },
         { headerName: 'Updated At', field: 'updatedAt', filter: 'agDateColumnFilter' },
-    ];
+    ]
 
     goToDetails(id: number): void {
-        this.router.navigate([`/measurements/${id}`]);
+        this.router.navigate([`/measurements/${id}`])
     }
 
     goToCreateMeasurement() {

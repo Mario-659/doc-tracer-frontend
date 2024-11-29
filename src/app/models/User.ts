@@ -1,11 +1,11 @@
 export enum Role {
     ADMIN = 'ROLE_ADMIN',
     EDITOR = 'ROLE_EDITOR',
-    VIEWER = 'ROLE_VIEWER'
+    VIEWER = 'ROLE_VIEWER',
 }
 
 export interface User {
-    username: string,
+    username: string
     roles: Role[]
     expirationTimestamp: number
 }

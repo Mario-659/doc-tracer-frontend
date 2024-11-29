@@ -7,18 +7,12 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { AppNotification, NotificationType } from '../../models/notification'
 import { DatePipe, NgForOf, NgIf } from '@angular/common'
 import { Measurement } from '../../models/api/measurement'
-import * as Papa from 'papaparse';
+import * as Papa from 'papaparse'
 
 @Component({
     selector: 'app-create-sample',
     standalone: true,
-    imports: [
-        ReactiveFormsModule,
-        NgIf,
-        NgJsonEditorModule,
-        NgForOf,
-        DatePipe,
-    ],
+    imports: [ReactiveFormsModule, NgIf, NgJsonEditorModule, NgForOf, DatePipe],
     templateUrl: './create-sample.component.html',
     styleUrl: './create-sample.component.scss',
 })
@@ -27,7 +21,7 @@ export class CreateSampleComponent implements OnInit {
     spectrumTypes = ['REFLECTANCE', 'ABSORPTION', 'FLUORESCENCE', 'TRANSMITTANCE']
     measurements: Measurement[] = []
     @ViewChild(JsonEditorComponent, { static: false }) editor: JsonEditorComponent | undefined
-    @ViewChild('csvUpload', { static: false }) csvUpload!: ElementRef<HTMLInputElement>;
+    @ViewChild('csvUpload', { static: false }) csvUpload!: ElementRef<HTMLInputElement>
     public editorOptions: JsonEditorOptions
 
     constructor(
@@ -35,7 +29,7 @@ export class CreateSampleComponent implements OnInit {
         private dataService: DataService,
         private notificationService: NotificationService,
         private router: Router,
-        private route: ActivatedRoute,
+        private route: ActivatedRoute
     ) {
         this.editorOptions = new JsonEditorOptions()
         this.editorOptions.modes = ['code', 'text', 'tree', 'view']
@@ -43,12 +37,12 @@ export class CreateSampleComponent implements OnInit {
 
         const jsonEditorInitValue = [
             {
-                "wavelength": 400,
-                "intensity": 24.3
+                wavelength: 400,
+                intensity: 24.3,
             },
             {
-                "more-data-points": NaN
-            }
+                'more-data-points': NaN,
+            },
         ]
 
         this.sampleForm = this.fb.group({
@@ -72,26 +66,24 @@ export class CreateSampleComponent implements OnInit {
     save(): void {
         if (!this.sampleForm.valid) {
             this.notificationService.showNotification(
-                new AppNotification('Please fill in all required fields', NotificationType.warning),
+                new AppNotification('Please fill in all required fields', NotificationType.warning)
             )
             return
         }
 
         const formValues = this.sampleForm.value
 
-        const parsedJson = formValues.spectralData;
+        const parsedJson = formValues.spectralData
         if (!this.validateSpectralData(parsedJson)) {
-            return;
+            return
         }
 
-        this.dataService.createSample(formValues).subscribe(
-            () => {
-                this.notificationService.showNotification(
-                    new AppNotification(`Sample has been created`, NotificationType.success),
-                )
-                this.goToSamples()
-            },
-        )
+        this.dataService.createSample(formValues).subscribe(() => {
+            this.notificationService.showNotification(
+                new AppNotification(`Sample has been created`, NotificationType.success)
+            )
+            this.goToSamples()
+        })
     }
 
     goToSamples(): void {
@@ -101,39 +93,37 @@ export class CreateSampleComponent implements OnInit {
     validateSpectralData(data: any): boolean {
         if (!Array.isArray(data)) {
             this.notificationService.showNotification(
-                new AppNotification(`Spectral data is not an array`, NotificationType.error),
+                new AppNotification(`Spectral data is not an array`, NotificationType.error)
             )
-            return false;
+            return false
         }
-
 
         if (data.length === 0) {
             this.notificationService.showNotification(
-                new AppNotification(`Spectral data array cannot be empty`, NotificationType.error),
+                new AppNotification(`Spectral data array cannot be empty`, NotificationType.error)
             )
-            return false;
+            return false
         }
-
 
         if (data.length === 1) {
             this.notificationService.showNotification(
-                new AppNotification(`Spectral data array must have size greater than 1`, NotificationType.error),
+                new AppNotification(`Spectral data array must have size greater than 1`, NotificationType.error)
             )
-            return false;
+            return false
         }
 
-        return true;
+        return true
     }
 
     onCsvUpload(event: Event): void {
-        const file = (event.target as HTMLInputElement).files?.[0];
+        const file = (event.target as HTMLInputElement).files?.[0]
         if (!file) {
-            return;
+            return
         }
 
-        const reader = new FileReader();
+        const reader = new FileReader()
         reader.onload = (e: any) => {
-            const csvData = e.target.result;
+            const csvData = e.target.result
             Papa.parse(csvData, {
                 header: true,
                 skipEmptyLines: true,
@@ -148,25 +138,24 @@ export class CreateSampleComponent implements OnInit {
                     return header.toLowerCase()
                 },
                 complete: (result: any) => {
-                    const data = result.data as { wavelength: number; intensity: number }[];
-                    this.sampleForm.patchValue({ spectralData: data });
+                    const data = result.data as { wavelength: number; intensity: number }[]
+                    this.sampleForm.patchValue({ spectralData: data })
                     this.notificationService.showNotification(
                         new AppNotification('CSV file imported successfully!', NotificationType.success)
-                    );
+                    )
                 },
                 error: () => {
                     this.notificationService.showNotification(
                         new AppNotification('Error parsing CSV file.', NotificationType.error)
-                    );
-                }
-            });
-        };
+                    )
+                },
+            })
+        }
 
-        reader.readAsText(file);
+        reader.readAsText(file)
     }
 
     triggerCsvUpload(): void {
-        this.csvUpload.nativeElement.click();
+        this.csvUpload.nativeElement.click()
     }
 }
-

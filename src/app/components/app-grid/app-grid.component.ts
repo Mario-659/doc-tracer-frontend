@@ -15,6 +15,5 @@ export class AppGridComponent {
     @Input() colDefs: ColDef[] | undefined
     @Input() $rowData: Observable<any> | undefined
 
-    constructor() {
-    }
+    constructor() {}
 }

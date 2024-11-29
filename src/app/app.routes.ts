@@ -6,7 +6,6 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { LogoutComponent } from './components/logout/logout.component'
 import { SamplesComponent } from './components/spectra-main/samples.component'
 import { SpectrumSimilaritiesMainComponent } from './components/spectrum-similarities-main/spectrum-similarities-main.component'
-import { SamplesMainComponent } from './components/samples-main/samples-main.component'
 import { MeasuringDevicesMainComponent } from './components/sample-devices-main/measuring-devices-main.component'
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component'
 import { SampleDetailsComponent } from './components/spectrum-details/sample-details.component'
@@ -33,67 +32,67 @@ export const routes: Routes = [
         path: 'measurements',
         component: MeasurementsComponent,
         canActivate: [authGuard, roleGuard],
-        data: {role: Role.VIEWER}
+        data: { role: Role.VIEWER },
     },
     {
         path: 'measurements/:id',
         component: MeasurementDetailsComponent,
         canActivate: [authGuard, roleGuard],
-        data: {role: Role.VIEWER}
+        data: { role: Role.VIEWER },
     },
     {
         path: 'measurements/:id/edit',
         component: EditMeasurementComponent,
         canActivate: [authGuard, roleGuard],
-        data: {role: Role.EDITOR}
+        data: { role: Role.EDITOR },
     },
     {
         path: 'create-measurement',
         component: NewMeasurementComponent,
         canActivate: [authGuard, roleGuard],
-        data: {role: Role.EDITOR}
+        data: { role: Role.EDITOR },
     },
     {
         path: 'samples',
         component: SamplesComponent,
         canActivate: [authGuard, roleGuard],
-        data: {role: Role.VIEWER}
+        data: { role: Role.VIEWER },
     },
     {
         path: 'samples/:id',
         component: SampleDetailsComponent,
         canActivate: [authGuard, roleGuard],
-        data: {role: Role.VIEWER}
+        data: { role: Role.VIEWER },
     },
     {
         path: 'create-sample',
         component: CreateSampleComponent,
         canActivate: [authGuard, roleGuard],
-        data: {role: Role.EDITOR}
+        data: { role: Role.EDITOR },
     },
     {
         path: 'samples/:id/edit',
         component: EditSampleComponent,
         canActivate: [authGuard, roleGuard],
-        data: {role: Role.EDITOR}
+        data: { role: Role.EDITOR },
     },
     {
         path: 'spectrum-similarities',
         component: SpectrumSimilaritiesMainComponent,
         canActivate: [authGuard, roleGuard],
-        data: {role: Role.VIEWER}
+        data: { role: Role.VIEWER },
     },
     {
         path: 'measuring-devices',
         component: MeasuringDevicesMainComponent,
         canActivate: [authGuard, roleGuard],
-        data: {role: Role.VIEWER}
+        data: { role: Role.VIEWER },
     },
     {
         path: 'admin-control',
         component: AdminControlComponent,
         canActivate: [authGuard, roleGuard],
-        data: {role: Role.ADMIN}
+        data: { role: Role.ADMIN },
     },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: '**', component: PageNotFoundComponent },

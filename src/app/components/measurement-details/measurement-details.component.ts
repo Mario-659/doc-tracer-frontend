@@ -11,12 +11,7 @@ import { ColDef } from 'ag-grid-community'
 @Component({
     selector: 'app-measurement-details',
     standalone: true,
-    imports: [
-        NgIf,
-        AsyncPipe,
-        DatePipe,
-        AgGridAngular,
-    ],
+    imports: [NgIf, AsyncPipe, DatePipe, AgGridAngular],
     templateUrl: './measurement-details.component.html',
     styleUrl: './measurement-details.component.scss',
 })
@@ -24,8 +19,11 @@ export class MeasurementDetailsComponent implements OnInit {
     measurement$: Observable<Measurement | undefined> | undefined
     samples$: Observable<Sample[] | undefined> | undefined
 
-    constructor(private route: ActivatedRoute, private dataService: DataService, private router: Router) {
-    }
+    constructor(
+        private route: ActivatedRoute,
+        private dataService: DataService,
+        private router: Router
+    ) {}
 
     ngOnInit(): void {
         const id = Number(this.route.snapshot.paramMap.get('id'))
@@ -36,8 +34,8 @@ export class MeasurementDetailsComponent implements OnInit {
     expandedSections = {
         properties: true,
         conditions: true,
-        samples: true
-    };
+        samples: true,
+    }
 
     sampleColumnDefs: ColDef[] = [
         {
@@ -70,8 +68,8 @@ export class MeasurementDetailsComponent implements OnInit {
             filter: 'agDateColumnFilter',
             flex: 1,
             valueFormatter: (params) => {
-                const date = new Date(params.value);
-                return date.toLocaleDateString();
+                const date = new Date(params.value)
+                return date.toLocaleDateString()
             },
         },
         {
@@ -81,19 +79,18 @@ export class MeasurementDetailsComponent implements OnInit {
             filter: 'agDateColumnFilter',
             flex: 1,
             valueFormatter: (params) => {
-                const date = new Date(params.value);
-                return date.toLocaleDateString();
+                const date = new Date(params.value)
+                return date.toLocaleDateString()
             },
         },
-    ];
-
+    ]
 
     toggleSection(section: keyof typeof this.expandedSections): void {
-        this.expandedSections[section] = !this.expandedSections[section];
+        this.expandedSections[section] = !this.expandedSections[section]
     }
 
     private goToSampleDetails(id: number) {
-       this.router.navigate(['/samples', id])
+        this.router.navigate(['/samples', id])
     }
 
     goToEditMeasurement(id: number) {

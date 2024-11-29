@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 import { AuthService } from './auth.service'
 import { Role } from '../models/User'
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class RoleService {
-
-    constructor(private authService: AuthService) { }
+    constructor(private authService: AuthService) {}
 
     public hasRole(role: Role): boolean {
-       return this.authService.loggedInUser$.value?.roles.includes(role) ?? false
+        return this.authService.loggedInUser$.value?.roles.includes(role) ?? false
     }
 }

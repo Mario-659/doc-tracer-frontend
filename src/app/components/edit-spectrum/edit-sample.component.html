@@ -18,7 +18,8 @@
             <label for="measurementId" class="form-label">Measurement</label>
             <select id="measurementId" class="form-select" formControlName="measurementId">
                 <option *ngFor="let measurement of measurements" [value]="measurement.id">
-                    Id: {{measurement.id}}, {{ measurement.device }} - {{ measurement.measurementDate | date: 'medium' }}
+                    Id: {{ measurement.id }}, {{ measurement.device }} -
+                    {{ measurement.measurementDate | date: 'medium' }}
                 </option>
             </select>
         </div>

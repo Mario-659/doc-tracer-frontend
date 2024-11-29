@@ -13,19 +13,16 @@ import { AuthService } from '../../services/auth.service'
 @Component({
     selector: 'app-new-measurement',
     standalone: true,
-    imports: [
-        ReactiveFormsModule,
-        NgForOf,
-    ],
+    imports: [ReactiveFormsModule, NgForOf],
     templateUrl: './new-measurement.component.html',
-    styleUrl: './new-measurement.component.scss'
+    styleUrl: './new-measurement.component.scss',
 })
 export class NewMeasurementComponent implements OnInit {
-    measurementForm: FormGroup;
-    devices: Device[] = [];
-    coveredMaterials: CoveredMaterial[] = [];
-    coveringMaterials: CoveringMaterial[] = [];
-    measurementId: number = -1;
+    measurementForm: FormGroup
+    devices: Device[] = []
+    coveredMaterials: CoveredMaterial[] = []
+    coveringMaterials: CoveringMaterial[] = []
+    measurementId: number = -1
 
     constructor(
         private fb: FormBuilder,
@@ -47,45 +44,45 @@ export class NewMeasurementComponent implements OnInit {
             }),
             comments: ['', Validators.maxLength(500)],
             measurementDate: ['', Validators.required],
-        });
+        })
     }
 
     ngOnInit(): void {
-        this.loadDevices();
-        this.loadCoveredMaterials();
-        this.loadCoveringMaterials();
+        this.loadDevices()
+        this.loadCoveredMaterials()
+        this.loadCoveringMaterials()
     }
 
     loadDevices(): void {
         this.dataService.getDevices().subscribe((devices) => {
-            this.devices = devices;
-        });
+            this.devices = devices
+        })
     }
 
     loadCoveredMaterials(): void {
         this.dataService.getCoveredMaterials().subscribe((materials) => {
             this.coveredMaterials = materials
-        });
+        })
     }
 
     loadCoveringMaterials(): void {
         this.dataService.getCoveringMaterials().subscribe((materials) => {
             this.coveringMaterials = materials
-        });
+        })
     }
 
     save(): void {
-        if (!this.measurementForm.valid) return;
+        if (!this.measurementForm.valid) return
 
-        const createRequest = this.prepareUpdateRequest(this.measurementForm.value);
+        const createRequest = this.prepareUpdateRequest(this.measurementForm.value)
         console.log(createRequest)
 
         this.dataService.createMeasurement(createRequest).subscribe((res) => {
             this.notificationService.showNotification(
                 new AppNotification(`Measurement with id ${res.id} has been created`, NotificationType.success)
-            );
-            this.goMeasurementDetails(res.id);
-        });
+            )
+            this.goMeasurementDetails(res.id)
+        })
     }
 
     prepareUpdateRequest(formValues: any): any {
@@ -102,16 +99,15 @@ export class NewMeasurementComponent implements OnInit {
             deviceId: formValues.deviceId,
             comments: formValues.comments,
             measurementDate: new Date(formValues.measurementDate).toISOString(),
-            username: this.authService.loggedInUser$.value?.username
-        };
+            username: this.authService.loggedInUser$.value?.username,
+        }
     }
 
     goMeasurementDetails(measurementId: number): void {
-        this.router.navigate([`/measurements/${measurementId}`]);
+        this.router.navigate([`/measurements/${measurementId}`])
     }
 
     cancel(): void {
-        this.router.navigate(['/measurements']);
+        this.router.navigate(['/measurements'])
     }
 }
-
