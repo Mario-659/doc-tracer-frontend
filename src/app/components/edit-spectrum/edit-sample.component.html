@@ -25,9 +25,16 @@
         </div>
 
         <div class="mb-3">
-            <label for="spectralData" class="form-label">Spectral Data (JSON)</label>
+            <div class="d-flex justify-content-between align-items-center">
+                <label for="spectralData" class="form-label">Spectral Data (JSON)</label>
+                <button type="button" class="btn btn-secondary btn-sm" (click)="triggerCsvUpload()">
+                    Import CSV
+                </button>
+            </div>
             <json-editor [options]="editorOptions" formControlName="spectralData" id="spectralData"></json-editor>
         </div>
+
+        <input type="file" #csvUpload style="display: none" (change)="onCsvUpload($event)" accept=".csv" />
 
         <button type="submit" class="btn btn-success" [disabled]="sampleForm.invalid">Save</button>
         <button type="button" class="btn btn-secondary ms-2" (click)="goSampleDetails()">Cancel</button>

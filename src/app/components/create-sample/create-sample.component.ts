@@ -128,7 +128,7 @@ export class CreateSampleComponent implements OnInit {
                 header: true,
                 skipEmptyLines: true,
                 transform(value: string, field: string | number): any {
-                    if (field === 'wavelenght') {
+                    if (field === 'wavelength') {
                         return parseInt(value)
                     } else {
                         return parseFloat(value)
@@ -156,6 +156,7 @@ export class CreateSampleComponent implements OnInit {
     }
 
     triggerCsvUpload(): void {
+        this.csvUpload.nativeElement.value = ''
         this.csvUpload.nativeElement.click()
     }
 }

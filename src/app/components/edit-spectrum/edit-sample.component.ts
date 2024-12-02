@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { DataService } from '../../services/data.service'
@@ -8,6 +8,7 @@ import { AppNotification, NotificationType } from '../../models/notification'
 import { JsonEditorComponent, JsonEditorOptions, NgJsonEditorModule } from 'ang-jsoneditor'
 import { SampleUpdateRequest } from '../../models/api/sample-update-request'
 import { Measurement } from '../../models/api/measurement'
+import * as Papa from 'papaparse'
 
 @Component({
     selector: 'app-edit-sample',
@@ -20,6 +21,7 @@ export class EditSampleComponent implements OnInit {
     sampleForm: FormGroup
     spectrumTypes = ['REFLECTANCE', 'ABSORPTION', 'FLUORESCENCE', 'TRANSMITTANCE']
     measurements: Measurement[] = []
+    @ViewChild('csvUpload', { static: false }) csvUpload!: ElementRef<HTMLInputElement>
     originalSample: any
 
     @ViewChild(JsonEditorComponent, { static: false }) editor: JsonEditorComponent | undefined
@@ -114,7 +116,54 @@ export class EditSampleComponent implements OnInit {
         return updateRequest
     }
 
+
+    onCsvUpload(event: Event): void {
+        const file = (event.target as HTMLInputElement).files?.[0]
+        if (!file) {
+            return
+        }
+
+        const reader = new FileReader()
+        reader.onload = (e: any) => {
+            const csvData = e.target.result
+            Papa.parse(csvData, {
+                header: true,
+                skipEmptyLines: true,
+                transform(value: string, field: string | number): any {
+                    if (field === 'wavelength') {
+                        return parseInt(value)
+                    } else {
+                        return parseFloat(value)
+                    }
+                },
+                transformHeader(header: string, index: number): string {
+                    return header.toLowerCase()
+                },
+                complete: (result: any) => {
+                    const data = result.data as { wavelength: number; intensity: number }[]
+                    this.sampleForm.patchValue({ spectralData: data })
+                    this.notificationService.showNotification(
+                        new AppNotification('CSV file imported successfully!', NotificationType.success)
+                    )
+                },
+                error: () => {
+                    this.notificationService.showNotification(
+                        new AppNotification('Error parsing CSV file.', NotificationType.error)
+                    )
+                },
+            })
+        }
+
+        reader.readAsText(file)
+    }
+
     goSampleDetails(): void {
         this.router.navigate([`/samples/${this.originalSample.id}`])
     }
+
+    triggerCsvUpload(): void {
+        this.csvUpload.nativeElement.value = ''
+        this.csvUpload.nativeElement.click()
+    }
+
 }
