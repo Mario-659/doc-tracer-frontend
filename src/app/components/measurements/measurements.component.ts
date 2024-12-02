@@ -38,9 +38,9 @@ export class MeasurementsComponent implements OnInit {
         { headerName: 'Covered Material', field: 'coveredMaterial', filter: 'agTextColumnFilter' },
         { headerName: 'User', field: 'user', filter: 'agTextColumnFilter' },
         { headerName: 'Device', field: 'device', filter: 'agTextColumnFilter' },
-        { headerName: 'Measurement Date', field: 'measurementDate', filter: 'agDateColumnFilter' },
-        { headerName: 'Created At', field: 'createdAt', filter: 'agDateColumnFilter' },
-        { headerName: 'Updated At', field: 'updatedAt', filter: 'agDateColumnFilter' },
+        { headerName: 'Measurement Date', field: 'measurementDate', filter: 'agDateColumnFilter', valueFormatter: this.formatDate },
+        { headerName: 'Created At', field: 'createdAt', filter: 'agDateColumnFilter', valueFormatter: this.formatDate },
+        { headerName: 'Updated At', field: 'updatedAt', filter: 'agDateColumnFilter', valueFormatter: this.formatDate },
     ]
 
     goToDetails(id: number): void {
@@ -49,5 +49,11 @@ export class MeasurementsComponent implements OnInit {
 
     goToCreateMeasurement() {
         this.router.navigate(['/create-measurement'])
+    }
+
+
+    formatDate(params: any): string {
+        const date = new Date(params.value)
+        return date.toLocaleString()
     }
 }
