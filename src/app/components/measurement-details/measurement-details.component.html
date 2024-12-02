@@ -3,9 +3,14 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="card-title">Measurement Details</h2>
-                <button class="btn btn-primary" (click)="goToEditMeasurement(measurement.id)">
-                    <i class="bi bi-pencil-square"></i> Edit Measurement
-                </button>
+                <div>
+                    <button class="btn btn-primary mx-2" (click)="goToEditMeasurement(measurement.id)">
+                        Edit Measurement
+                    </button>
+                    <button class="btn btn-danger" (click)="deleteMeasurement(measurement.id)">
+                        Delete
+                    </button>
+                </div>
             </div>
             <!--            <p class="card-subtitle py-2">Detailed information about selected measurement</p>-->
 
@@ -80,6 +85,37 @@
                             </div>
                         </div>
                     </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div
+        class="modal fade"
+        id="confirmationModal"
+        tabindex="-1"
+        aria-labelledby="confirmationModalLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirm Changes</h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        (click)="closeModal()"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete measurement with all of related samples?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+                    <button type="button" class="btn btn-primary" (click)="confirmDelete(measurement.id)">Confirm</button>
                 </div>
             </div>
         </div>
