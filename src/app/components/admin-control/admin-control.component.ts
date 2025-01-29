@@ -11,6 +11,7 @@ import { AsyncPipe, NgForOf, NgIf } from '@angular/common'
 import { Modal } from 'bootstrap'
 import { NotificationService } from '../../services/notification.service'
 import { AppNotification, NotificationType } from '../../models/notification'
+import { isValidDate } from 'rxjs/internal/util/isDate'
 
 // interface PendingChange {
 //     userId: string,
@@ -191,6 +192,16 @@ export class AdminControlComponent implements OnInit {
 
     formatDate(params: any): string {
         const date = new Date(params.value)
-        return date.toLocaleString()
+
+        if (isValidDate(date)) {
+            return date.toLocaleString();
+        } else {
+            return "User has never logged in"
+        }
+    }
+
+    isValidDate(d: any) {
+        // @ts-ignore
+        return d instanceof Date && !isNaN(d);
     }
 }

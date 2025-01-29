@@ -110,7 +110,6 @@ export class MeasurementDetailsComponent implements OnInit {
         }
     }
 
-
     confirmDelete(id: number): void {
         this.dataService.deleteMeasurement(id).subscribe({
             next: () => {
@@ -122,7 +121,6 @@ export class MeasurementDetailsComponent implements OnInit {
             },
         })
     }
-
 
     closeModal() {
         this.confirmationModal.hide()
