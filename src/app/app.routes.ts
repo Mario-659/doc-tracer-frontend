@@ -94,6 +94,6 @@ export const routes: Routes = [
         canActivate: [authGuard, roleGuard],
         data: { role: Role.ADMIN },
     },
-    { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+    { path: '', redirectTo: '/measurements', pathMatch: 'full' },
     { path: '**', component: PageNotFoundComponent },
 ]

@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
                 this.notificationService.showNotification(
                     new AppNotification('Login successful', NotificationType.success)
                 )
-                this.router.navigate(['/dashboard'])
+                this.router.navigate(['/measurements'])
             },
         })
     }
